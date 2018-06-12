@@ -1,6 +1,6 @@
 const Home = "Home";
 const Info = "Info";
-// const DeatilView = "DetailView";
+const DetailView = "DetailView";
 
 
-export{ Home, Info }
+export{ Home, Info, DetailView }

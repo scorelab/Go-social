@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Text, View, TouchableHighlight, Image} from "react-native";
-import { Info } from "..";
+import { DetailView, Info } from "..";
 import HeaderNavigationBar from "../../components/HeaderNavigationBar/HeaderNavigationBar";
 
 const backgroundColor = '#4885ed';
@@ -29,11 +29,9 @@ export default class HomeScreen extends Component {
                                             padding: 10,
                                             alignItems: 'center',
                                          }}
-                    onPress={() => {
-                        const { navigate } = this.props.navigation;
-                        navigate(Info);                                             
+                    onPress={() => {this.props.navigation.navigate('DetailView');                                             
                     }}>
-                    <Text style={{color: 'white', fontSize: 18}}>Navigate to Info</Text>
+                    <Text style={{color: 'white', fontSize: 18}}>DetailView</Text>
                 </TouchableHighlight>
             </View>
         </View>);

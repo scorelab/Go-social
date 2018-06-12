@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { Text, View, TouchableHighlight, Image} from "react-native";
-import { Info } from "..";
+import { Info, DeatilView } from "..";
 import HeaderNavigationBar from "../../components/HeaderNavigationBar/HeaderNavigationBar";
 
-const backgroundColor = '#4775ad';
+const backgroundColor = '#4734ac';
+
 export default class DetailScreen extends Component {
 
     render() {

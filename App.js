@@ -6,7 +6,7 @@ import HomeScreen from './app/screens/HomeScreen/homeScreen';
 import InfoScreen from './app/screens/InfoScreen/infoScreen';
 import DetailScreen from './app/screens/DetailScreen/detailScreen';
 //Screen names
-import { Home, Info } from './app/screens/index';
+import { Home, Info, DetailView } from './app/screens/index';
 //Screen size
 var {height, width} = Dimensions.get('window');
 
@@ -32,7 +32,9 @@ const Drawer = DrawerNavigator(
 )
 export default StackNavigator(
     {
-      
+      Drawer: {
+          screen:Drawer
+      },
       Home: {
         path: '/',
         screen: HomeScreen,
@@ -40,6 +42,9 @@ export default StackNavigator(
       Info: {
         path: '/info',
         screen: InfoScreen,
+      },
+      DetailView:{
+        screen: DetailScreen
       }
 
     },

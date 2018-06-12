@@ -31,9 +31,9 @@ export default class InfoScreen extends Component {
                                             alignItems: 'center',
                                          }}
                     onPress={() => {
-                        this.props.navigation.goBack();                        
+                        this.props.navigation.navigate('DetailView');                        
                     }}>
-                    <Text style={{color: 'white', fontSize: 18}}>Back to Home</Text>
+                    <Text style={{color: 'white', fontSize: 18}}>Detail View</Text>
                 </TouchableHighlight>
             </View>
         </View>);
