@@ -5,8 +5,9 @@ import { StackNavigator, DrawerNavigator } from 'react-navigation';
 import HomeScreen from './app/screens/HomeScreen/homeScreen';
 import InfoScreen from './app/screens/InfoScreen/infoScreen';
 import DetailScreen from './app/screens/DetailScreen/detailScreen';
+import LoginScreen from './app/screens/LoginScreen/loginScreen';
 //Screen names
-import { Home, Info, DetailView } from './app/screens/index';
+import { Home, Info, DetailView, Login } from './app/screens/index';
 //Screen size
 var {height, width} = Dimensions.get('window');
 
@@ -45,11 +46,14 @@ export default StackNavigator(
       },
       DetailView:{
         screen: DetailScreen
+      },
+      Login:{
+          screen:LoginScreen
       }
 
     },
     {
-        initialRouteName: "Drawer",
+        initialRouteName: "Login",
         headerMode: "none"
     }
 )
