@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, View, TouchableHighlight, Image} from "react-native";
+import { Text, View, TouchableHighlight, Image, Button, AsyncStorage} from "react-native";
 import { Info, DeatilView } from "..";
 import HeaderNavigationBar from "../../components/HeaderNavigationBar/HeaderNavigationBar";
 
@@ -35,7 +35,13 @@ export default class DetailScreen extends Component {
                     }}>
                     <Text style={{color: 'white', fontSize: 18}}>Navigate Back</Text>
                 </TouchableHighlight>
+
+                <Button title="Sign me out :)" onPress={this._signOutAsync} />
             </View>
         </View>);
     }
+    _signOutAsync = async () => {
+    await AsyncStorage.clear();
+    this.props.navigation.navigate('Auth');
+  };
 }

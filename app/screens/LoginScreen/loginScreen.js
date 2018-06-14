@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text, Image, TextInput } from "react-native";
+import { StyleSheet, View, Text, Image, TextInput, Button, AsyncStorage } from "react-native";
 
 export default class LoginScreen extends Component {
 
@@ -22,10 +22,16 @@ export default class LoginScreen extends Component {
                         style={styles.input}
                     />
                 </View>
+                <Button title="Sign in!" onPress={this._signInAsync} />
             </View>
 
         );
     }
+
+    _signInAsync = async () => {
+    await AsyncStorage.setItem('userToken', 'token_abc');
+    this.props.navigation.navigate('App');
+  };
 }
 
 const styles = StyleSheet.create({
