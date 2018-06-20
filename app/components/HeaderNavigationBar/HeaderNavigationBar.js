@@ -1,18 +1,15 @@
 import React, { Component } from "react";
 import { Text, View, TouchableHighlight, Image } from "react-native";
+import styles from './styles'
 
 export default class HeaderNavigationBar extends Component {
     render() {
-        return (<View style={{
-            height: 55,
-            flexDirection: 'row',
-            justifyContent: 'flex-start',
-            alignItems: 'center'
-        }}>
-            <TouchableHighlight style={{ marginLeft: 10, marginTop: 10 }}
+        return (
+        <View style={styles.navigationBar}>
+            <TouchableHighlight style={styles.leftIconContainer}
                 onPress={() => { this.props.navigation.openDrawer() }}>
                 <Image
-                    style={{ width: 32, height: 32 }}
+                    style={styles.navBarIcon}
                     source={require("../../icons/menu-icon.png")}
                 />
             </TouchableHighlight>
