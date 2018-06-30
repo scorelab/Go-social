@@ -1,0 +1,3 @@
+rootProject.name = 'Go_social'
+
+include ':app'
