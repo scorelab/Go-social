@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { Text, View, TouchableHighlight, Image} from "react-native";
+import { ScrollView, Text, View, TouchableHighlight, Image} from "react-native";
 import { DetailView, Info } from "..";
-import HeaderNavigationBar from "../../components/HeaderNavigationBar/HeaderNavigationBar";
+import HeaderNavigationBar from '../../components/HeaderNavigationBar/HeaderNavigationBar';
+import HomePostComponent from '../../components/HomePostComponent/HomePostComponent';
 
-const backgroundColor = '#4885ed';
+const backgroundColor = '#ffffff';
 export default class HomeScreen extends Component {
 
     render() {
@@ -12,15 +13,15 @@ export default class HomeScreen extends Component {
             flexDirection: 'column',
         }}>      
             <HeaderNavigationBar {...this.props} />      
-            <View style={{
-                flex: 1,
+            <ScrollView contentContainerStyle={{
                 backgroundColor: backgroundColor,
                 alignItems: 'center',
-                justifyContent: 'center'
-            }}>
-                <Text style={{ fontWeight: 'bold', fontSize: 22, color: 'white' }}>
-                    This is Home Screen
-                </Text>
+                justifyContent: 'flex-start'
+            }}> 
+                <HomePostComponent/>
+                <HomePostComponent/>
+                <HomePostComponent/>
+                
                 <TouchableHighlight style={{ 
                                             margin: 20, 
                                             width: 200, 
@@ -33,7 +34,7 @@ export default class HomeScreen extends Component {
                     }}>
                     <Text style={{color: 'white', fontSize: 18}}>DetailView</Text>
                 </TouchableHighlight>
-            </View>
+            </ScrollView>
         </View>);
     }
 }
