@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Text, Image, TextInput, Button, AsyncStorage } from "react-native";
 
+import styles from './style';
+
 export default class LoginScreen extends Component {
 
     render(){
@@ -8,7 +10,6 @@ export default class LoginScreen extends Component {
             <View style={styles.container}>
                 <View style={styles.logoContainer}>
                     <Image style={styles.logo} source={require('../../images/android-icon.png')}/>
-                    <Text>Login Screen</Text>
                 </View>
                 <View style={styles.formContainer}>
                     <TextInput
@@ -33,30 +34,3 @@ export default class LoginScreen extends Component {
     this.props.navigation.navigate('App');
   };
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex:1,
-        backgroundColor:'#03A9F4'
-    },
-    logoContainer: {
-        alignItems: 'center',
-        flexGrow: 1,
-        justifyContent: 'center'
-    },
-    logo: {
-        width:100,
-        height:100,
-
-    },
-    formContainer: {
-        padding:20
-    },
-    input:{
-        height:40,
-        backgroundColor:'rgba(255,255,255,0.2)',
-        marginBottom: 20,
-        color: '#FFF',
-        paddingHorizontal: 10
-    }
-});
