@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { AppRegistry, Dimensions, ActivityIndicator, AsyncStorage, View, StyleSheet, StatusBar } from 'react-native';
 import { StackNavigator, DrawerNavigator, createStackNavigator, createSwitchNavigator, TabNavigator, TabBarBottom, createBottomTabNavigator } from 'react-navigation';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/FontAwesome';
 
 //Components
 import HomeScreen from './app/screens/HomeScreen/homeScreen';
@@ -114,21 +114,20 @@ const AppStack = createBottomTabNavigator(
         const { routeName } = navigation.state;
         let iconName;
         if (routeName === 'Home') {
-          iconName = `ios-home${focused ? '' : '-outline'}`;
+          iconName = 'home';
         } else if (routeName === 'Messages') {
-          iconName = `ios-chatbubbles${focused ? '' : '-outline'}`;
+          iconName = 'comment';
 
         } else if (routeName === 'Camera') {
-          iconName = `ios-camera${focused ? '' : '-outline'}`;
+          iconName = 'camera';
         
         } else if (routeName === 'Notifications') {
-          iconName = `ios-notifications${focused ? '' : '-outline'}`;
+          iconName = 'bell';
         
         } else if (routeName === 'Profile') {
-          iconName = `ios-person${focused ? '' : '-outline'}`;
+          iconName = 'user';
         }
-
-        return <Ionicons name={iconName} size={30} color={tintColor} />;
+        return <Ionicons name={iconName} size={25} color={tintColor} />;
       },
     }),
     tabBarOptions: {
