@@ -8,6 +8,7 @@ import HomeScreen from './app/screens/HomeScreen/homeScreen';
 import InfoScreen from './app/screens/InfoScreen/infoScreen';
 import DetailScreen from './app/screens/DetailScreen/detailScreen';
 import LoginScreen from './app/screens/LoginScreen/loginScreen';
+import ChatListScreen from './app/screens/ChatListScreen/chatListScreen';
 //Screen names
 import { Home, Info, DetailView, Login } from './app/screens/index';
 //Screen size
@@ -102,7 +103,7 @@ const AppStack2 = createStackNavigator(
 const AppStack = createBottomTabNavigator(
   {
     Home: { screen: HomeScreen },
-    Messages : { screen: InfoScreen },
+    Messages : { screen: ChatListScreen },
     Camera : { screen: InfoScreen },
     Notifications : { screen: InfoScreen },
     Profile: { screen: DetailScreen },
