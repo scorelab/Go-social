@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { View, Text } from "react-native";
 
-export default class RegisterScreen extends Component {
+export default class RegisterScreenEmail extends Component {
 
     render(){
         return(
-            <View><Text>Register Screen</Text></View>
+            <View><Text>RegisterScreenEmail Screen</Text></View>
         );
     }
 }
