@@ -9,6 +9,7 @@ import InfoScreen from './app/screens/InfoScreen/infoScreen';
 import DetailScreen from './app/screens/DetailScreen/detailScreen';
 import LoginScreen from './app/screens/LoginScreen/loginScreen';
 import ChatListScreen from './app/screens/ChatListScreen/chatListScreen';
+import SignupScreen from './app/screens/SignupScreen/signupScreen'
 //Screen names
 import { Home, Info, DetailView, Login } from './app/screens/index';
 //Screen size
@@ -67,38 +68,15 @@ const AuthStack = createStackNavigator(
     {
         Login:{
             screen:LoginScreen
+        },
+        Signup:{
+            screen:SignupScreen
         }
     },{
         initialRouteName:"Login",
         headerMode:"none"
     }
 )
-const AppStack2 = createStackNavigator(
-    {
-      Drawer: {
-          screen:Drawer
-      },
-      Home: {
-        path: '/',
-        screen: HomeScreen,
-      },
-      Info: {
-        path: '/info',
-        screen: InfoScreen,
-      },
-      DetailView:{
-        screen: DetailScreen
-      },
-      Login:{
-          screen:LoginScreen
-      }
-
-    },
-    {
-        initialRouteName: "Drawer",
-        headerMode: "none"
-    }
-);
 
 const AppStack = createBottomTabNavigator(
   {
