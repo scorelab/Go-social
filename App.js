@@ -6,7 +6,7 @@ import Ionicons from 'react-native-vector-icons/FontAwesome';
 //Components
 import HomeScreen from './app/screens/HomeScreen/homeScreen';
 import InfoScreen from './app/screens/InfoScreen/infoScreen';
-import DetailScreen from './app/screens/DetailScreen/detailScreen';
+import ProfileScreen from './app/screens/ProfileScreen/profileScreen';
 import LoginScreen from './app/screens/LoginScreen/loginScreen';
 import ChatListScreen from './app/screens/ChatListScreen/chatListScreen';
 import SignupScreen from './app/screens/SignupScreen/signupScreen'
@@ -84,7 +84,7 @@ const AppStack = createBottomTabNavigator(
     Messages : { screen: ChatListScreen },
     Camera : { screen: InfoScreen },
     Notifications : { screen: InfoScreen },
-    Profile: { screen: DetailScreen },
+    Profile: { screen: ProfileScreen },
 
   },
   {
