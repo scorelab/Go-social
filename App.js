@@ -9,7 +9,9 @@ import InfoScreen from './app/screens/InfoScreen/infoScreen';
 import ProfileScreen from './app/screens/ProfileScreen/profileScreen';
 import LoginScreen from './app/screens/LoginScreen/loginScreen';
 import ChatListScreen from './app/screens/ChatListScreen/chatListScreen';
-import SignupScreen from './app/screens/SignupScreen/signupScreen'
+import SignupScreen from './app/screens/SignupScreen/signupScreen';
+import NotificationScreen from './app/screens/NotificationScreen/notificationScreen';
+
 //Screen names
 import { Home, Info, DetailView, Login } from './app/screens/index';
 //Screen size
@@ -83,7 +85,7 @@ const AppStack = createBottomTabNavigator(
     Home: { screen: HomeScreen },
     Messages : { screen: ChatListScreen },
     Camera : { screen: InfoScreen },
-    Notifications : { screen: InfoScreen },
+    Notifications : { screen: NotificationScreen },
     Profile: { screen: ProfileScreen },
 
   },
