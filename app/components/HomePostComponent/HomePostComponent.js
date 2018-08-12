@@ -10,7 +10,7 @@ export default class HomePostComponent extends Component {
             <View style={style.cardView}>
                 <View style={style.cardTitleBar}>
                     <View style={style.userAvatarArea}>
-                        <Image source={require('../../images/user_01.png')} style={style.userAvatarImage}/>
+                        <Image source={require('../../images/user_image_1.jpg')} style={style.userAvatarImage}/>
                     </View>
                     <View style={style.cardTitleArea}>
                         <View style={style.nameLine}>
