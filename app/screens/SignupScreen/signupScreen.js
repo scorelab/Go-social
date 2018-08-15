@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Text, Image, TextInput, Button, AsyncStorage, BackHandler, TouchableOpacity, Alert, KeyboardAvoidingView } from "react-native";
 import Btn from 'react-native-micro-animated-button';
+import styles from './style'
 
-import styles from './style';
-
-export default class LoginScreen extends Component {
+export default class SignUpScreen extends Component {
 
     render(){
         return(
@@ -29,31 +28,36 @@ export default class LoginScreen extends Component {
                         placeholderTextColor="rgba(255,255,255,0.7)"
                         style={styles.input}
                     />
+                    <TextInput
+                        placeholder="Confirm Pasword"
+                        secureTextEntry={true}
+                        placeholderTextColor="rgba(255,255,255,0.7)"
+                        style={styles.input}
+                    />
                 </View>
                 </KeyboardAvoidingView>
                 <Btn
-                    label="Sign In"
+                    label="Sign Up"
                     labelStyle={styles.buttonText}
-                    onPress={this._signInAsync}
+                    onPress={this.signInAsync}
                     ref={ref => (this.btn = ref)}
                     successIcon="check"
                     scaleOnSuccess={true}
                     style={styles.loginButton}
                 />
-                <TouchableOpacity>
-                <Text style={styles.text}>Fogot Password?</Text>
-                </TouchableOpacity>
-                <View style={styles.signUpTextArea}>
-                    <TouchableOpacity onPress={()=> this.props.navigation.navigate('Signup')}>
-                    <Text style={styles.text}>Don't have an account?<Text style={{color:'#0066cc'}}> Sign Up</Text></Text>
+                <View style={styles.signInTextArea}>
+                    <TouchableOpacity onPress={()=> this.props.navigation.goBack()}>
+                    <Text style={styles.text}>Already have an account?<Text style={{color:'#0066cc'}}> Sign In</Text></Text>
                     </TouchableOpacity>
                 </View>
             </View>
+
         );
     }
 
-    _signInAsync = async () => {
-    await AsyncStorage.setItem('userToken', 'token_abc');
-    this.props.navigation.navigate('App');
-  };
+    signInAsync = async () => {
+        this.btn.success();
+        await AsyncStorage.multiSet([['userToken', 'token_abc'], ['didIntroRun', 'YES']]);
+        this.props.navigation.navigate('App');
+    };
 }
