@@ -5,7 +5,7 @@ import Ionicons from 'react-native-vector-icons/FontAwesome';
 
 //Components
 import HomeScreen from './app/screens/HomeScreen/homeScreen';
-import InfoScreen from './app/screens/InfoScreen/infoScreen';
+import MapScreen from './app/screens/MapScreen/mapScreen';
 import ProfileScreen from './app/screens/ProfileScreen/profileScreen';
 import LoginScreen from './app/screens/LoginScreen/loginScreen';
 import ChatListScreen from './app/screens/ChatListScreen/chatListScreen';
@@ -53,7 +53,7 @@ let routeConfigs = {
     },
     Info: {
         path: '/info',
-        screen: InfoScreen,
+        screen: MapScreen,
     }
 };
 let drawerNavigatorConfig = {    
@@ -84,7 +84,7 @@ const AppStack = createBottomTabNavigator(
   {
     Home: { screen: HomeScreen },
     Messages : { screen: ChatListScreen },
-    Camera : { screen: InfoScreen },
+    Map : { screen: MapScreen },
     Notifications : { screen: NotificationScreen },
     Profile: { screen: ProfileScreen },
 
@@ -99,8 +99,8 @@ const AppStack = createBottomTabNavigator(
         } else if (routeName === 'Messages') {
           iconName = 'comment';
 
-        } else if (routeName === 'Camera') {
-          iconName = 'camera';
+        } else if (routeName === 'Map') {
+          iconName = 'map';
         
         } else if (routeName === 'Notifications') {
           iconName = 'bell';
