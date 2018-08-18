@@ -5,11 +5,15 @@ let deviceHeight = Dimensions.get('window').height;
 export default StyleSheet.create({
   
     container: {
-        ...StyleSheet.absoluteFillObject,
-        height: 400,
-        width: 400,
-        justifyContent: 'flex-end',
-        alignItems: 'center',
+        // ...StyleSheet.absoluteFillObject,
+        flex: 1,
+        justifyContent: 'flex-start',
+        alignItems: 'center'
+    },
+    mapArea:{
+        // ...StyleSheet.absoluteFillObject,
+        width: deviceWidth,
+        height: deviceHeight * 0.5
     },
     map: {
         ...StyleSheet.absoluteFillObject,

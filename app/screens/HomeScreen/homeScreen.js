@@ -12,7 +12,7 @@ export default class HomeScreen extends Component {
             flex: 1,
             flexDirection: 'column',
         }}>      
-            <HeaderNavigationBar {...this.props} />      
+            <HeaderNavigationBar title={"Home"} />      
             <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsVerticalScrollIndicator={false}> 
                 <HomePostComponent/>
                 <HomePostComponent/>

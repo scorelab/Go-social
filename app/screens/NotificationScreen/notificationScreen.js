@@ -12,7 +12,7 @@ export default class NotificationScreen extends Component {
             flex: 1,
             flexDirection: 'column',
         }}>
-            <HeaderNavigationBar {...this.props} />
+            <HeaderNavigationBar title={"Notifications"} {...this.props} />
             <View style={styles.container}>
             <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsVerticalScrollIndicator={false}>   
                 <NotificationBanner 

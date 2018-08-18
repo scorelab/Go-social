@@ -3,16 +3,16 @@ import { View, Text, Button, AsyncStorage, StatusBar, Image, ScrollView } from '
 import styles from './style'
 import ConversationBanner from '../../components/ConversationBanner/conversationBanner'
 import SuggestCardView from '../../components/SuggestionsCardView/suggestionsCardView'
+import HeaderNavigationBar from "../../components/HeaderNavigationBar/HeaderNavigationBar";
 
 export default class ChatListScreen extends Component {
 
     render() {
         return(
             <View style={styles.container}>
-                <StatusBar barStyle="light-content" />
-            
+                <HeaderNavigationBar title={"Messages"} {...this.props} />
                 <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsVerticalScrollIndicator={false}>
-                    <Text style={styles.headerText}>MESSAGES</Text>
+                    {/* <Text style={styles.headerText}>MESSAGES</Text> */}
                     <View style={styles.suggestUserArea} >
                     <View style={styles.latesMessageArea}>
                         <View style={styles.subHeaderArea}>
