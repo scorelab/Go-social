@@ -1,4 +1,5 @@
 import { StyleSheet, Dimensions } from 'react-native';
+import { COLOR_GRAY } from '../../config/styles' ;
 let deviceWidth = Dimensions.get('window').width;
 let deviceHeight = Dimensions.get('window').height;
 
@@ -12,7 +13,7 @@ export default StyleSheet.create({
     },
     scrollView:{
         width:deviceWidth,
-        backgroundColor:'#E8E8E8',
+        backgroundColor:COLOR_GRAY,
        
         
     },

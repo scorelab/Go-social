@@ -1,4 +1,5 @@
 import { StyleSheet, Dimensions } from 'react-native';
+import { COLOR_GRAY } from '../../config/styles' ;
 let deviceWidth = Dimensions.get('window').width;
 let deviceHeight = Dimensions.get('window').height;
 
@@ -8,13 +9,13 @@ export default StyleSheet.create({
         flex: 1,
         justifyContent: 'flex-start',
         alignItems: 'center',
-        backgroundColor: '#fff',
+        backgroundColor: COLOR_GRAY,
     },
     coverImageArea:{
         backgroundColor:'red',
         height: deviceHeight*0.3,
         position:'absolute',
-        top:0
+        top:55
     },
     profileImage:{
         marginTop:deviceHeight*0.3 - 80,

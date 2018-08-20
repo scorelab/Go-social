@@ -8,10 +8,7 @@ import styles from './style';
 export default class HomeScreen extends Component {
 
     render() {
-        return (<View style={{
-            flex: 1,
-            flexDirection: 'column',
-        }}>      
+        return (<View style={styles.container}>      
             <HeaderNavigationBar title={"Home"} />      
             <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsVerticalScrollIndicator={false}> 
                 <HomePostComponent/>
