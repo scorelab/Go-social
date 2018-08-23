@@ -5,14 +5,14 @@ import HeaderNavigationBar from "../../components/HeaderNavigationBar/HeaderNavi
 import NotificationBanner from '../../components/NotificationBanner/notificationBanner';
 import styles from './style'
 
-export default class InfoScreen extends Component {
+export default class NotificationScreen extends Component {
 
     render() {
         return (<View style={{
             flex: 1,
             flexDirection: 'column',
         }}>
-            <HeaderNavigationBar {...this.props} />
+            <HeaderNavigationBar title={"Notifications"} {...this.props} />
             <View style={styles.container}>
             <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsVerticalScrollIndicator={false}>   
                 <NotificationBanner 

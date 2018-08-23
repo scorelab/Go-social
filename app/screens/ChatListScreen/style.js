@@ -1,4 +1,5 @@
 import { StyleSheet, Dimensions } from 'react-native';
+import { COLOR_GRAY } from '../../config/styles' ;
 let deviceWidth = Dimensions.get('window').width;
 let deviceHeight = Dimensions.get('window').height;
 
@@ -6,15 +7,10 @@ export default StyleSheet.create({
   
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#fff',
-        paddingTop:30
+        flexDirection: 'column',
     },
     suggestUserArea:{
-        // backgroundColor:'green',
         width:deviceWidth,
-        // paddingBottom:10
     },
     userCardView:{
         backgroundColor:'blue',
@@ -48,7 +44,7 @@ export default StyleSheet.create({
     },
     scrollView:{
         width:deviceWidth,
-        backgroundColor:'#E8E8E8'
+        backgroundColor:COLOR_GRAY
         
     },
     scrollViewContent:{
