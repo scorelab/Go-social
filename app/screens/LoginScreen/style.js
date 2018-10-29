@@ -45,9 +45,22 @@ export default StyleSheet.create({
         backgroundColor:'#fff',
         marginBottom:20
     },
+    loginButtonFacebook:{
+        width: deviceWidth*0.8,
+        height:45,
+        borderRadius:5,
+        borderWidth:0,
+        backgroundColor:'#3B5998',
+        marginBottom:20,
+        marginTop:10
+    },
     buttonText: {
         fontSize:16,
         color:'#3d9bf9'
+    },
+    buttonTextFacebookButton: {
+        fontSize:16,
+        color:'#fff'
     },
     imgBackground: {
         width:deviceWidth*0.3,
@@ -58,6 +71,7 @@ export default StyleSheet.create({
     },
     signUpTextArea:{
         position:'absolute',
-        bottom:25
+        bottom:25,
+        alignItems:'center'
     }
 });

@@ -4,7 +4,7 @@ Community of today used to use mobile phones to make their life easier and Commu
 ## setup the project
 Note: make sure you have setup react native development enviroment in your machine
 
-`git clone https://github.com/dinithminura/Go-social.git`
+`git clone https://github.com/scorelab/Go-social.git`
 
 `cd Go-social`
 
