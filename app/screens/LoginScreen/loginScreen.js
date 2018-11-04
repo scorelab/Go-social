@@ -12,7 +12,7 @@ export default class LoginScreen extends Component {
                 <KeyboardAvoidingView behavior="position">
                 <View style={styles.logoContainer}>
                 <Image
-                    source={require('../../images/android-icon.png')}
+                    source={require('../../images/logo.png')}
                     style={styles.logo}
                 />
                 </View>
@@ -41,7 +41,7 @@ export default class LoginScreen extends Component {
                     style={styles.loginButton}
                 />
                 <TouchableOpacity>
-                <Text style={styles.text}>Fogot Password?</Text>
+                <Text style={styles.text}>Forgot Password?</Text>
                 </TouchableOpacity>
 
                 <View style={styles.signUpTextArea}>
