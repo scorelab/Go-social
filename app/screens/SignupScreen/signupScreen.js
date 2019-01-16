@@ -11,7 +11,7 @@ export default class SignUpScreen extends Component {
                 <KeyboardAvoidingView behavior="position">
                 <View style={styles.logoContainer}>
                 <Image
-                    source={require('../../images/android-icon.png')}
+                    source={require('../../images/logo.png')}
                     style={styles.logo}
                 />
                 </View>

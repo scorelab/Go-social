@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import { AppRegistry, Dimensions, ActivityIndicator, AsyncStorage, View, StyleSheet, StatusBar } from 'react-native';
-import { StackNavigator, DrawerNavigator, createStackNavigator, createSwitchNavigator, TabNavigator, TabBarBottom, createBottomTabNavigator } from 'react-navigation';
+import { createStackNavigator, createSwitchNavigator, createBottomTabNavigator, createAppContainer } from 'react-navigation';
 import Ionicons from 'react-native-vector-icons/FontAwesome';
 
 //Components
@@ -46,26 +46,6 @@ const styles = StyleSheet.create({
   },
 });
 
-let routeConfigs = {
-    Home: {
-        path: '/',
-        screen: HomeScreen,
-    },
-    Info: {
-        path: '/info',
-        screen: MapScreen,
-    }
-};
-let drawerNavigatorConfig = {    
-    initialRouteName: Home,
-    drawerWidth: width / 2,
-    drawerPosition: 'left'
-};
-
-const Drawer = DrawerNavigator(
-    routeConfigs,
-    drawerNavigatorConfig
-)
 const AuthStack = createStackNavigator(
     {
         Login:{
@@ -119,7 +99,7 @@ const AppStack = createBottomTabNavigator(
 );
 
 
-export default createSwitchNavigator (
+const AppNavigator = createSwitchNavigator (
     {
         AuthLoading:AuthLoadingScreen,
         App: AppStack,
@@ -129,4 +109,7 @@ export default createSwitchNavigator (
         initialRouteName:'AuthLoading'
     }
 )
+
+const AppContainer = createAppContainer(AppNavigator);
+export default AppContainer;
   
