@@ -10,9 +10,11 @@ export default StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center',
         backgroundColor: '#fff',
+        width:'100%',
+
     },
     scrollView:{
-        width:deviceWidth,
+        width:'100%',
         backgroundColor:COLOR_GRAY,
        
         
