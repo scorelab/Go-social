@@ -11,7 +11,7 @@ import LoginScreen from './app/screens/LoginScreen/loginScreen';
 import ChatListScreen from './app/screens/ChatListScreen/chatListScreen';
 import SignupScreen from './app/screens/SignupScreen/signupScreen';
 import NotificationScreen from './app/screens/NotificationScreen/notificationScreen';
-
+import ForgotPasswordScreen from './app/screens/ForgotPasswordScreen/forgotPasswordScreen';
 //Screen names
 import { Home, Info, DetailView, Login } from './app/screens/index';
 //Screen size
@@ -53,6 +53,9 @@ const AuthStack = createStackNavigator(
         },
         Signup:{
             screen:SignupScreen
+        },
+        ForgotPassword:{
+          screen:ForgotPasswordScreen
         }
     },{
         initialRouteName:"Login",
