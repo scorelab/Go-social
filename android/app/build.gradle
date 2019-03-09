@@ -95,7 +95,7 @@ def enableSeparateBuildPerCPUArchitecture = false
 def enableProguardInReleaseBuilds = false
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 28
     buildToolsVersion "27.0.3"
 
     defaultConfig {
