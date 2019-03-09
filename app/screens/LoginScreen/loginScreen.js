@@ -45,15 +45,6 @@ export default class LoginScreen extends Component {
                 </TouchableOpacity>
 
                 <View style={styles.signUpTextArea}>
-                <Btn
-                    label="Login with Facebook"
-                    labelStyle={styles.buttonTextFacebookButton}
-                    onPress={this._signInAsync}
-                    ref={ref => (this.btn = ref)}
-                    successIcon="check"
-                    scaleOnSuccess={true}
-                    style={styles.loginButtonFacebook}
-                />
                     <TouchableOpacity onPress={()=> this.props.navigation.navigate('Signup')}>
                     <Text style={styles.text}>Don't have an account?<Text style={{color:'#0066cc'}}> Sign Up</Text></Text>
                     </TouchableOpacity>

@@ -138,6 +138,8 @@ android {
 }
 
 dependencies {
+    implementation 'com.facebook.android:facebook-android-sdk:4.34.0'
+    implementation project(':react-native-fbsdk')
     compile project(':react-native-vector-icons')
     compile project(':react-native-gesture-handler')
     // compile project(':react-native-maps')
