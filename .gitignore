@@ -40,7 +40,7 @@ config/config.js
 
 
 ios/Go_social.xcodeproj/project.pbxproj
-.vscode
+.vscode/
 
 # BUCK
 buck-out/
