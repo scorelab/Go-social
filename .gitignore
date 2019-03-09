@@ -38,6 +38,10 @@ npm-debug.log
 yarn-error.log
 config/config.js
 
+
+ios/Go_social.xcodeproj/project.pbxproj
+.vscode
+
 # BUCK
 buck-out/
 \.buckd/
