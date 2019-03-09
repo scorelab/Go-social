@@ -10,13 +10,18 @@ export default StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center',
         backgroundColor: COLOR_GRAY,
+        width:'100%'        
     },
+
     coverImageArea:{
-        backgroundColor:'red',
-        height: deviceHeight*0.3,
+        // backgroundColor:'red',
+        alignSelf:'center',
+        height: '30%',
+        width:'auto',
         position:'absolute',
         top:55
     },
+
     profileImage:{
         marginTop:deviceHeight*0.3 - 80,
         width:160,
@@ -39,8 +44,6 @@ export default StyleSheet.create({
         lineHeight:16,
         // fontWeight:'bold'
     }
-
-    
 
    
 });
