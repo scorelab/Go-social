@@ -10,6 +10,7 @@
     "firebase": "^5.7.3",
     "react": "16.3.1",
     "react-native": "^0.58.6",
+    "react-native-fbsdk": "^0.8.0",
     "react-native-gesture-handler": "^1.0.12",
     "react-native-maps": "^0.22.1",
     "react-native-micro-animated-button": "0.0.28",
