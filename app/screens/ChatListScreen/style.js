@@ -8,9 +8,10 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
+    width:'100%'
   },
   suggestUserArea: {
-    width: deviceWidth,
+    width: '100%',
   },
   userCardView: {
     backgroundColor: 'blue',
@@ -22,11 +23,11 @@ export default StyleSheet.create({
   latestMessageArea: {
     marginTop: 10,
     // backgroundColor:'red',
-    width: deviceWidth,
+    width: '100%',
     alignItems: 'center',
   },
   subHeaderArea: {
-    width: deviceWidth * 0.9,
+    width: '90%',
     marginBottom: 10,
   },
   horizontalScrollView: {
@@ -43,7 +44,7 @@ export default StyleSheet.create({
     position: 'absolute',
   },
   scrollView: {
-    width: deviceWidth,
+    width: '100%',
     backgroundColor: COLOR_GRAY,
 
   },
