@@ -4,35 +4,30 @@ import Btn from 'react-native-micro-animated-button';
 
 import styles from './style';
 
-export default class LoginScreen extends Component {
+export default class ForgotPasswordScreen extends Component {
 
     render(){
         return(
             <View style={styles.container}>
+                
                 <KeyboardAvoidingView behavior="position">
                 <View style={styles.logoContainer}>
                 <Image
                     source={require('../../images/logo.png')}
                     style={styles.logo}
                 />
-                </View>
+                </View>                
                 <View style={styles.formContainer}>
                     <TextInput
                         placeholder="Email"
                         keyboardType = "email-address"
                         placeholderTextColor="rgba(255,255,255,0.7)"
                         style={styles.input}
-                    />
-                    <TextInput
-                        placeholder="Pasword"
-                        secureTextEntry={true}
-                        placeholderTextColor="rgba(255,255,255,0.7)"
-                        style={styles.input}
-                    />
+                    />                    
                 </View>
                 </KeyboardAvoidingView>
                 <Btn
-                    label="Sign In"
+                    label="Reset Password"
                     labelStyle={styles.buttonText}
                     onPress={this._signInAsync}
                     ref={ref => (this.btn = ref)}
@@ -40,10 +35,11 @@ export default class LoginScreen extends Component {
                     scaleOnSuccess={true}
                     style={styles.loginButton}
                 />
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('ForgotPassword')}>
-                <Text style={styles.text}>Forgot Password?</Text>
-                </TouchableOpacity>
 
+                <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+                    <Text style={styles.text}>Go Back To Login</Text>
+                </TouchableOpacity>
+                 
                 <View style={styles.signUpTextArea}>
                 <Btn
                     label="Login with Facebook"
