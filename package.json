@@ -9,7 +9,7 @@
   "dependencies": {
     "firebase": "^5.7.3",
     "react": "16.3.1",
-    "react-native": "^0.57.8",
+    "react-native": "^0.58.6",
     "react-native-gesture-handler": "^1.0.12",
     "react-native-maps": "^0.22.1",
     "react-native-micro-animated-button": "0.0.28",
@@ -19,7 +19,7 @@
   "devDependencies": {
     "babel-jest": "23.6.0",
     "jest": "23.6.0",
-    "metro-react-native-babel-preset": "^0.51.1",
+    "metro-react-native-babel-preset": "^0.53.0",
     "react-test-renderer": "16.7.0"
   },
   "jest": {
