@@ -12,7 +12,7 @@ export default StyleSheet.create({
     },
     mapArea:{
         // ...StyleSheet.absoluteFillObject,
-        width: deviceWidth,
+        width: '100%',
         height: deviceHeight * 0.5
     },
     map: {

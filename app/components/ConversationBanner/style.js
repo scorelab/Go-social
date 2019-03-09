@@ -7,7 +7,7 @@ export default StyleSheet.create({
   
     cardContainer: {
         flex:1,
-        width:deviceWidth*0.9,
+        width:'90%',
         backgroundColor:'#fff',
         borderRadius:5,
         // height:200,
