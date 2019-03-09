@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Text, Image, TextInput, Button, AsyncStorage, BackHandler, TouchableOpacity, Alert, KeyboardAvoidingView } from "react-native";
 import Btn from 'react-native-micro-animated-button';
+import { LoginButton, AccessToken } from 'react-native-fbsdk';
 
 import styles from './style';
 
@@ -43,7 +44,7 @@ export default class LoginScreen extends Component {
                 <TouchableOpacity onPress={() => this.props.navigation.navigate('ForgotPassword')}>
                 <Text style={styles.text}>Forgot Password?</Text>
                 </TouchableOpacity>
-
+                <LoginButton/>
                 <View style={styles.signUpTextArea}>
                     <TouchableOpacity onPress={()=> this.props.navigation.navigate('Signup')}>
                     <Text style={styles.text}>Don't have an account?<Text style={{color:'#0066cc'}}> Sign Up</Text></Text>
