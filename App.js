@@ -17,6 +17,7 @@ import { Home, Info, DetailView, Login } from './app/screens/index';
 //Screen size
 var {height, width} = Dimensions.get('window');
 
+
 class AuthLoadingScreen extends Component {
   constructor() {
     super();
