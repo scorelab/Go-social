@@ -1,16 +1,19 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Text, Image, TextInput, Button, AsyncStorage, BackHandler, TouchableOpacity, Alert, KeyboardAvoidingView } from "react-native";
-import Btn from "react-native-micro-animated-button";
 import { LoginButton, AccessToken, LoginManager } from "react-native-fbsdk";
 import { f, auth } from "../../../config/config.js";
-
-import styles from "./style";
+import Btn from 'react-native-micro-animated-button';
+import * as EmailValidator from 'email-validator';
+import styles from './style';
 
 export default class LoginScreen extends Component {
-  constructor(props) {
-    super(props);
-  }
-
+    constructor(props) {
+        super(props);
+        this.state = {
+            email: '',
+            Pasword:'',                      
+        }
+    };
   componentDidMount() {
     this.fireBaseListner = f.auth().onAuthStateChanged(auth => {
       if (auth) {
@@ -25,6 +28,7 @@ export default class LoginScreen extends Component {
       }
     });
   }
+
 
   redirectUser(user) {
     this.props.navigate("App");
@@ -84,8 +88,21 @@ export default class LoginScreen extends Component {
       .ref("users")
       .child(uid)
       .update({ ...userData, ...defaults });
-  };
+  }; 
 
+ _signInAsync = async () => {
+        if (EmailValidator.validate(this.state.email) === true) {
+            if(this.state.Pasword != ""){
+                await AsyncStorage.setItem('userToken', 'token_abc');
+                this.props.navigation.navigate('App');
+            }else{
+                alert("Enter the password")
+            }
+        } else {
+            alert("Please enter A Valid Email")
+        } 
+    }
+ 
   render() {
     return (
       <View style={styles.container}>
@@ -111,15 +128,9 @@ export default class LoginScreen extends Component {
             />
           </View>
         </KeyboardAvoidingView>
-        <Btn
-          label="Sign In"
-          labelStyle={styles.buttonText}
-          onPress={this._signInAsync}
-          ref={ref => (this.btn = ref)}
-          successIcon="check"
-          scaleOnSuccess={true}
-          style={styles.loginButton}
-        />
+        <TouchableOpacity onPress={this._signInAsync} style={styles.loginButton} >
+                    <Text style={styles.buttonText}>Sign In</Text>
+         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate("ForgotPassword")}
         >
@@ -131,9 +142,7 @@ export default class LoginScreen extends Component {
           color="#841584"
         />
         <View style={styles.signUpTextArea}>
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate("Signup")}
-          >
+          <TouchableOpacity onPress={() => this.props.navigation.navigate("Signup")} >
             <Text style={styles.text}>
               Don't have an account?
               <Text style={{ color: "#0066cc" }}> Sign Up</Text>
@@ -144,8 +153,4 @@ export default class LoginScreen extends Component {
     );
   }
 
-  _signInAsync = async () => {
-    await AsyncStorage.setItem("userToken", "token_abc");
-    this.props.navigation.navigate("App");
-  };
 }

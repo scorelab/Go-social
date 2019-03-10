@@ -40,7 +40,9 @@ export default StyleSheet.create({
         borderRadius:5,
         borderWidth:0,
         backgroundColor:'#fff',
-        marginBottom:20
+        marginBottom:20,
+        alignItems:'center',
+        justifyContent:'center'
     },
     buttonText: {
         fontSize:16,
