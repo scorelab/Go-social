@@ -69,7 +69,8 @@ export default StyleSheet.create({
         resizeMode:'contain'
     },
     text:{
-        color:'#fff'
+        color:'#fff',
+        marginBottom: 10
     },
     signUpTextArea:{
         position:'absolute',
