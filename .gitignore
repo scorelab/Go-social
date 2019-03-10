@@ -59,4 +59,8 @@ buck-out/
 */fastlane/screenshots
 
 # Bundle artifact
+
 *.jsbundle
+
+#tests
+*.snap
