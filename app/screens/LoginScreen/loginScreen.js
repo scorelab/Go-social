@@ -147,5 +147,6 @@ export default class LoginScreen extends Component {
   _signInAsync = async () => {
     await AsyncStorage.setItem("userToken", "token_abc");
     this.props.navigation.navigate("App");
+    
   };
 }
