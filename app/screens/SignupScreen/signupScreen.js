@@ -3,13 +3,14 @@ import { StyleSheet, View, Text, Image, TextInput, Button, AsyncStorage, BackHan
 import Btn from 'react-native-micro-animated-button';
 import styles from './style'
 import * as EmailValidator from 'email-validator';
-
+import { f, auth } from "../../../config/config.js";
 export default class SignUpScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
             email: '',
-            Pasword: '',
+            name: '',
+            Password: '',
             ConfirmPassword: ''
         }
     };
@@ -25,6 +26,12 @@ export default class SignUpScreen extends Component {
                     </View>
                     <View style={styles.formContainer}>
                         <TextInput
+                            placeholder="Name"                            
+                            placeholderTextColor="rgba(255,255,255,0.7)"
+                            style={styles.input}
+                            onChangeText={(text) => this.setState({ name: text })}
+                        />
+                        <TextInput
                             placeholder="Email"
                             keyboardType="email-address"
                             placeholderTextColor="rgba(255,255,255,0.7)"
@@ -36,7 +43,7 @@ export default class SignUpScreen extends Component {
                             secureTextEntry={true}
                             placeholderTextColor="rgba(255,255,255,0.7)"
                             style={styles.input}
-                            onChangeText={(text) => this.setState({ Pasword: text })}
+                            onChangeText={(text) => this.setState({ Password: text })}
                         />
                         <TextInput
                             placeholder="Confirm Pasword"
@@ -47,7 +54,7 @@ export default class SignUpScreen extends Component {
                         />
                     </View>
                 </KeyboardAvoidingView>
-                <TouchableOpacity onPress={this.signInAsync} style={styles.loginButton} >
+                <TouchableOpacity onPress={this.signUpAsync} style={styles.loginButton} >
                     <Text style={styles.buttonText}>Sign Up</Text>
                 </TouchableOpacity>
                 <View style={styles.signInTextArea}>
@@ -59,20 +66,39 @@ export default class SignUpScreen extends Component {
 
         );
     }
+    register() {
+        
+        let email = this.state.email;  
+        let name = this.state.name;        
+        let password = this.state.Password;
 
+        const { navigate } = this.props.navigation;
 
-    signInAsync = async () => {
+        f.auth().createUserWithEmailAndPassword(email, password)
+            .then(function (data) {
+                data.user.updateProfile({
+                    displayName: name                    
+                }).then(
+                    function () {
+                        console.log("Updated User Data..");
+                    },
+                    function (error) {
+                        console.log("Error Updating User Data.." + error);
+                    }
+                );            
+                alert("Welcome to Go Social!");                
+                navigate('App');
+            }).catch(function (error) {
+                var errorMessage = error.message;
+                console.log("Error = " + errorMessage);
+                alert(errorMessage);
+            });
+    }
+
+    signUpAsync = async () => {
         if (EmailValidator.validate(this.state.email) === true) {
-            if (this.state.Pasword === this.state.ConfirmPassword) {
-                f.auth().createUserWithEmailAndPassword(this.state.email, this.state.Pasword).catch(function (error) {
-                    // Handle Errors here.
-                    var errorCode = error.code;
-                    var errorMessage = error.message;
-                    // ...
-                });
-
-                await AsyncStorage.multiSet([['userToken', 'token_abc'], ['didIntroRun', 'YES']]);
-                this.props.navigation.navigate('App');
+            if (this.state.Password === this.state.ConfirmPassword) {
+                this.register();                
             } else {
                 alert("password Missmatch")
             }
