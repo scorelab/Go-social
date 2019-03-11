@@ -12,8 +12,6 @@ export default class MapScreen extends Component {
         return (
         <View style ={styles.container}>
             
-            <View style={styles.mapArea}> 
-            
             <MapView
                 provider={PROVIDER_GOOGLE}
                 style={styles.map}
@@ -26,7 +24,6 @@ export default class MapScreen extends Component {
             >
             </MapView>
             <HeaderNavigationBar title={"Locations"} {...this.props} />
-            </View>
         </View>);
     }
 }

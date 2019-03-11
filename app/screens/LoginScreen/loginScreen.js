@@ -152,13 +152,4 @@ export default class LoginScreen extends Component {
       </View>
     );
   }
-
-<<<<<<< HEAD
-  _signInAsync = async () => {
-    await AsyncStorage.setItem("userToken", "token_abc");
-    this.props.navigation.navigate("App");
-    
-  };
-=======
->>>>>>> 5cffc095ac7d2671c3808ce338f293cd93de0e54
 }

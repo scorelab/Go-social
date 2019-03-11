@@ -6,9 +6,7 @@ export default StyleSheet.create({
   
     container: {
         // ...StyleSheet.absoluteFillObject,
-        flex: 1,
-        justifyContent: 'flex-start',
-        alignItems: 'center'
+        flex: 1
     },
     mapArea:{
         // ...StyleSheet.absoluteFillObject,
