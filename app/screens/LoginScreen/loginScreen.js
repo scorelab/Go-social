@@ -7,40 +7,50 @@ import * as EmailValidator from 'email-validator';
 import styles from './style';
 
 export default class LoginScreen extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            email: '',
-            Pasword:'',                      
-        }
-    };
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      Password: '',
+    }
+  };
   componentDidMount() {
-    this.fireBaseListner = f.auth().onAuthStateChanged(auth => {
-      if (auth) {
-        this.firebaseRef = f.database().ref(users);
-        this.firebaseRef.child(auth.uid).on("value", snap => {
-          const user = snap.val();
-          if (user != null) {
-            this.firebaseRef.child(auth.id).off("value");
-            this.redirectUser(user);
-          }
-        });
+    var that = this
+    f.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        that.redirectUser()
       }
     });
   }
 
 
-  redirectUser(user) {
-    this.props.navigate("App");
+  redirectUser() {
+    const { navigate } = this.props.navigation;
+    navigate('App');
   }
 
   onPressLogin() {
     LoginManager.logInWithReadPermissions(["public_profile", "email"]).then(
       result => this._handleCallBack(result),
-      function(error) {
+      function (error) {
         alert("Login fail with error: " + error);
       }
     );
+  }
+
+  login() {
+    let email = this.state.email;
+    let password = this.state.Password;
+
+    let { navigate } = this.props.navigation;
+
+    f.auth().signInWithEmailAndPassword(email, password)
+      .then(function (data) {
+        navigate('App');
+      }).catch(function (error) {
+        var errorMessage = error.message;
+        alert(errorMessage.toString());
+      });
   }
 
   _handleCallBack(result) {
@@ -52,19 +62,19 @@ export default class LoginScreen extends Component {
         const token = data.accessToken;
         fetch(
           "https://graph.facebook.com/v2.8/me?fields=id,first_name,last_name,gender,birthday&access_token=" +
-            token
+          token
         )
           .then(response => response.json())
           .then(json => {
             const imageSize = 120;
             const facebookID = json.id;
             const fbImage = `https://graph.facebook.com/${facebookID}/picture?height=${imageSize}`;
-            this.authenticate(data.accessToken).then(function(result) {
+            this.authenticate(data.accessToken).then(function (result) {
               const { uid } = result;
               _this.createUser(uid, json, token, fbImage);
             });
           })
-          .catch(function(err) {
+          .catch(function (err) {
             console.log(err);
           });
       });
@@ -88,21 +98,20 @@ export default class LoginScreen extends Component {
       .ref("users")
       .child(uid)
       .update({ ...userData, ...defaults });
-  }; 
+  };
 
- _signInAsync = async () => {
-        if (EmailValidator.validate(this.state.email) === true) {
-            if(this.state.Pasword != ""){
-                await AsyncStorage.setItem('userToken', 'token_abc');
-                this.props.navigation.navigate('App');
-            }else{
-                alert("Enter the password")
-            }
-        } else {
-            alert("Please enter A Valid Email")
-        } 
+  _signInAsync = async () => {
+    if (EmailValidator.validate(this.state.email) === true) {
+      if (this.state.Pasword != "") {
+        this.login();
+      } else {
+        alert("Enter the password")
+      }
+    } else {
+      alert("Please enter A Valid Email")
     }
- 
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -119,18 +128,20 @@ export default class LoginScreen extends Component {
               keyboardType="email-address"
               placeholderTextColor="rgba(255,255,255,0.7)"
               style={styles.input}
+              onChangeText={(text) => this.setState({ email: text })}
             />
             <TextInput
               placeholder="Pasword"
               secureTextEntry={true}
               placeholderTextColor="rgba(255,255,255,0.7)"
               style={styles.input}
+              onChangeText={(text) => this.setState({ Password: text })}
             />
           </View>
         </KeyboardAvoidingView>
         <TouchableOpacity onPress={this._signInAsync} style={styles.loginButton} >
-                    <Text style={styles.buttonText}>Sign In</Text>
-         </TouchableOpacity>
+          <Text style={styles.buttonText}>Sign In</Text>
+        </TouchableOpacity>
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate("ForgotPassword")}
         >
