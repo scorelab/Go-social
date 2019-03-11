@@ -7,7 +7,12 @@
     "test": "jest"
   },
   "dependencies": {
+<<<<<<< HEAD
     "firebase": "^5.8.6",
+=======
+    "email-validator": "^2.0.4",
+    "firebase": "^5.7.3",
+>>>>>>> 5cffc095ac7d2671c3808ce338f293cd93de0e54
     "react": "16.3.1",
     "react-native": "^0.58.6",
     "react-native-fbsdk": "^0.8.0",
