@@ -3,7 +3,7 @@ import { Text, View, ScrollView, Image, Button, AsyncStorage } from "react-nativ
 import { Info, DeatilView } from "..";
 import HeaderNavigationBar from "../../components/HeaderNavigationBar/HeaderNavigationBar";
 import styles from './style'
-
+import { f } from "../../../config/config.js";
 export default class ProfileScreen extends Component {
 
     render() {
@@ -21,15 +21,19 @@ export default class ProfileScreen extends Component {
                             <Text style={styles.nameFont}>John Doe</Text>
                             <Text style={styles.cityFont}>Los Angeles</Text>
                         </View>
-                        <Button title="Sign Out" onPress={this._signOutAsync} />
+                        <Button title="Sign Out" onPress={this.logout} />
                     </View>
                 </ScrollView>
 
             </View>
         );
     }
-    _signOutAsync = async () => {
-        await AsyncStorage.clear();
-        this.props.navigation.navigate('Auth');
-    };
+    logout = () => {        
+        f.auth().signOut();
+        const { navigate } = this.props.navigation;
+        navigate('Login');
+
+
+    }
+
 }

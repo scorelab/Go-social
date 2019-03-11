@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "email-validator": "^2.0.4",
-    "firebase": "^5.7.3",
+    "firebase": "^5.8.6",
     "react": "16.3.1",
     "react-native": "^0.58.6",
     "react-native-fbsdk": "^0.8.0",
@@ -26,6 +26,8 @@
   },
   "jest": {
     "preset": "react-native",
-    "transform": { "^.+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js" }
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js"
+    }
   }
 }
