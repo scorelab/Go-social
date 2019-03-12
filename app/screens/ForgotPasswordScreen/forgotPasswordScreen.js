@@ -58,15 +58,16 @@ export default class ForgotPasswordScreen extends Component {
         );
     }
 
-    resetPassword = () => {
-        // alert(this.state.email);
+    resetPassword = () => {        
         if (EmailValidator.validate(this.state.email) === true) {
+            var that = this;
             f.auth().sendPasswordResetEmail(this.state.email).then(function() {
                 alert("Please Check Your Email To Reset Your Password")
+                let { navigate } = that.props.navigation;
+                navigate('Login');
               }).catch(function(error) {
                 alert(error)
-              });
-              
+              });              
         } else {
             alert("Please enter A Valid Email")
         }
