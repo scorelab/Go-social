@@ -54,7 +54,8 @@ export default StyleSheet.create({
 
     },
     text:{
-        color:'#fff'
+        color:'#fff',
+        marginBottom: 10
     },
     signInTextArea:{
         position:'absolute',
