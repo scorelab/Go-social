@@ -16,10 +16,10 @@ Note: Make sure that you have installed latest stable Nodejs (verison 8.3 or new
 
 [Download](https://developer.android.com/studio/index.html) and install Android Studio, Choose a "Custom" setup when prompted to select an installation type. Make sure the boxes next to all of the following are checked:
 
-* Android SDK
-* Android SDK Platform
-* Performance (Intel ® HAX)
-* Android Virtual Device
+*  Android SDK
+*  Android SDK Platform
+*  Performance (Intel ® HAX)
+*  Android Virtual Device
 
 Android Studio installs the latest Android SDK by default. Building a React Native app with native code, however, requires the `Android 9 (Pie)` SDK in particular. Additional Android SDKs can be installed through the SDK Manager in Android Studio.
 
@@ -27,8 +27,8 @@ The SDK Manager can be accessed from the "Welcome to Android Studio" screen. Cli
 
 Select the "SDK Platforms" tab from within the SDK Manager, then check the box next to "Show Package Details" in the bottom right corner. Look for and expand the `Android 9 (Pie)` entry, then make sure the following items are checked:
 
-* `Android SDK Platform 28`
-* `Intel x86 Atom_64 Syste Image` or `Google APIs Intel x86 Atom System Image`
+*  `Android SDK Platform 28`
+*  `Intel x86 Atom_64 Syste Image` or `Google APIs Intel x86 Atom System Image`
 
 Next, select the "SDK Tools" tab and check the box next to "Show Package Details" here as well. Look for and expand the "Android SDK Build-Tools" entry, then make sure that 28.0.3 is selected.
 
