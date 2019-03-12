@@ -1,7 +1,7 @@
 import React, { Component } from "react"
-import { AppRegistry, Dimensions, ActivityIndicator, AsyncStorage, View, StyleSheet, StatusBar } from 'react-native';
-import { createStackNavigator, createSwitchNavigator, createBottomTabNavigator, createAppContainer } from 'react-navigation';
-import Ionicons from 'react-native-vector-icons/FontAwesome';
+import { AppRegistry, Dimensions, ActivityIndicator, AsyncStorage, View, StyleSheet, StatusBar } from "react-native";
+import { createStackNavigator, createSwitchNavigator, createBottomTabNavigator, createAppContainer } from "react-navigation";
+import Ionicons from "react-native-vector-icons/FontAwesome";
 
 //Components
 import HomeScreen from './app/screens/HomeScreen/homeScreen';
