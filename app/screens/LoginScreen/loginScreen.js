@@ -112,6 +112,8 @@ export default class LoginScreen extends Component {
     }
   }
 
+  
+
   render() {
     return (
       <View style={styles.container}>
@@ -151,6 +153,11 @@ export default class LoginScreen extends Component {
           onPress={this.onPressLogin.bind(this)}
           title="Login with facebook"
           color="#841584"
+        />
+        <Button
+          onPress={() => this.props.navigation.navigate('App')}
+          title="Skip Login "
+          color="#000"          
         />
         <View style={styles.signUpTextArea}>
           <TouchableOpacity onPress={() => this.props.navigation.navigate("Signup")} >
