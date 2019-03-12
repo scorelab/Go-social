@@ -3,7 +3,7 @@ import { Platform, StyleSheet, View, Text, Image, TextInput, Button, AsyncStorag
 import Btn from 'react-native-micro-animated-button';
 import * as EmailValidator from 'email-validator';
 import styles from './style';
-
+import { f, auth } from "../../../config/config.js";
 export default class ForgotPasswordScreen extends Component {
     constructor(props) {
         super(props);
@@ -61,7 +61,12 @@ export default class ForgotPasswordScreen extends Component {
     resetPassword = () => {
         // alert(this.state.email);
         if (EmailValidator.validate(this.state.email) === true) {
-            alert("Reset code Send to Your Email")
+            f.auth().sendPasswordResetEmail(this.state.email).then(function() {
+                alert("Please Check Your Email To Reset Your Password")
+              }).catch(function(error) {
+                alert(error)
+              });
+              
         } else {
             alert("Please enter A Valid Email")
         }
