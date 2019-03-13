@@ -5,11 +5,19 @@ let deviceHeight = Dimensions.get('window').height;
 
 export default StyleSheet.create({
   
+    firstContainer: {
+        flex:1,
+        backgroundColor:'#3d9bf9'
+    },
     container: {
         flex:1,
         backgroundColor:'#3d9bf9',
         alignItems:'center',
         justifyContent:'flex-start'
+    },
+
+    scrollStyle: {
+        flex:1
     },
     logoContainer: {
         alignItems: 'center',
@@ -30,7 +38,7 @@ export default StyleSheet.create({
         width:deviceWidth*0.8,
         borderRadius:5,
         backgroundColor:'rgba(255,255,255,0.15)',
-        marginBottom: 20,
+        marginBottom: 15,
         color: '#FFF',
         paddingHorizontal: 10
     },
@@ -40,7 +48,7 @@ export default StyleSheet.create({
         borderRadius:5,
         borderWidth:0,
         backgroundColor:'#fff',
-        marginBottom:20,
+        marginBottom:15,
         alignItems:'center',
         justifyContent:'center'
     },
@@ -55,11 +63,10 @@ export default StyleSheet.create({
     },
     text:{
         color:'#fff',
-        marginBottom: 10
+        marginBottom: 5
     },
-    signInTextArea:{
-        position:'absolute',
-        bottom:25
-        // marginTop:60
+    signInTextArea:{        
+        alignItems:'center',
+        marginTop:25       
     }
 });

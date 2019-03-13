@@ -6,7 +6,8 @@ import {
   TextInput,
   Button,
   TouchableOpacity,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  ScrollView
 } from "react-native";
 import styles from "./style";
 import * as EmailValidator from "email-validator";
@@ -98,6 +99,8 @@ export default class SignUpScreen extends Component {
 
   render() {
     return (
+      <View style={styles.firstContainer}>
+        <ScrollView style={styles.scrollStyle}>
       <View style={styles.container}>
         <KeyboardAvoidingView behavior="position">
           <View style={styles.logoContainer}>
@@ -159,6 +162,9 @@ export default class SignUpScreen extends Component {
           </TouchableOpacity>
         </View>
       </View>
+      </ScrollView>
+      </View>
+      
     );
   }
   register() {
