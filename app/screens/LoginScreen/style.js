@@ -6,11 +6,19 @@ let deviceHeight = Dimensions.get('window').height;
 
 export default StyleSheet.create({
   
+    firstContainer: {
+        flex:1,
+        backgroundColor:'#3d9bf9'
+    },
     container: {
         flex:1,
         backgroundColor:'#3d9bf9',
         alignItems:'center',
         justifyContent:'flex-start'
+    },
+
+    scrollStyle: {
+        flex:1
     },
     logoContainer: {
         //width:deviceWidth*0.4,
@@ -72,9 +80,8 @@ export default StyleSheet.create({
         color:'#fff',
         marginBottom: 10
     },
-    signUpTextArea:{
-        position:'absolute',
-        bottom:25,
-        alignItems:'center'
+    signUpTextArea:{        
+        alignItems:'center',
+        marginTop:25       
     }
 });
