@@ -111,8 +111,7 @@ export default class LoginScreen extends Component {
       alert("Please enter A Valid Email")
     }
   }
-
-  
+ 
 
   render() {
     return (
