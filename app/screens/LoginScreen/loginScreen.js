@@ -141,66 +141,66 @@ export default class LoginScreen extends Component {
     return (
       <View style={styles.firstContainer}>
         <ScrollView style={styles.scrollStyle}>
-        <View style={styles.container}>
-          <KeyboardAvoidingView behavior="position">
-            <View style={styles.logoContainer}>
-              <Image
-                source={require("../../images/logo.png")}
-                style={styles.logo}
-              />
-            </View>
-            <View style={styles.formContainer}>
-              <TextInput
-                placeholder="Email"
-                keyboardType="email-address"
-                placeholderTextColor="rgba(255,255,255,0.7)"
-                style={styles.input}
-                onChangeText={text => this.setState({ email: text })}
-              />
-              <TextInput
-                placeholder="Pasword"
-                secureTextEntry={true}
-                placeholderTextColor="rgba(255,255,255,0.7)"
-                style={styles.input}
-                onChangeText={text => this.setState({ Password: text })}
-              />
-            </View>
-          </KeyboardAvoidingView>
-          <TouchableOpacity
-            onPress={this._signInAsync}
-            style={styles.loginButton}
-          >
-            <Text style={styles.buttonText}>Sign In</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate("ForgotPassword")}
-          >
-            <Text style={styles.text}>Forgot Password?</Text>
-          </TouchableOpacity>
-
-          <Button
-            onPress={this.onPressLogin.bind(this)}
-            title="Login with facebook"
-            color="#841584"
-          />          
-
-          <View style={styles.signUpTextArea}>
+          <View style={styles.container}>
+            <KeyboardAvoidingView behavior="position">
+              <View style={styles.logoContainer}>
+                <Image
+                  source={require("../../images/logo.png")}
+                  style={styles.logo}
+                />
+              </View>
+              <View style={styles.formContainer}>
+                <TextInput
+                  placeholder="Email"
+                  keyboardType="email-address"
+                  placeholderTextColor="rgba(255,255,255,0.7)"
+                  style={styles.input}
+                  onChangeText={text => this.setState({ email: text })}
+                />
+                <TextInput
+                  placeholder="Pasword"
+                  secureTextEntry={true}
+                  placeholderTextColor="rgba(255,255,255,0.7)"
+                  style={styles.input}
+                  onChangeText={text => this.setState({ Password: text })}
+                />
+              </View>
+            </KeyboardAvoidingView>
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate("Signup")}
+              onPress={this._signInAsync}
+              style={styles.loginButton}
             >
-              <Text style={styles.text}>
-                Don't have an account?
-              <Text style={{ color: "#0066cc" }}> Sign Up</Text>
-              </Text>
+              <Text style={styles.buttonText}>Sign In</Text>
             </TouchableOpacity>
-          </View>
 
-          <Button
-            onPress={() => this.props.navigation.navigate('App')}
-            title="Skip Login "
-            color="#000"
-          />
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate("ForgotPassword")}
+            >
+              <Text style={styles.text}>Forgot Password?</Text>
+            </TouchableOpacity>
+
+            <Button
+              onPress={this.onPressLogin.bind(this)}
+              title="Login with facebook"
+              color="#841584"
+            />
+
+            <View style={styles.signUpTextArea}>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate("Signup")}
+              >
+                <Text style={styles.text}>
+                  Don't have an account?
+              <Text style={{ color: "#0066cc" }}> Sign Up</Text>
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            <Button
+              onPress={() => this.props.navigation.navigate('App')}
+              title="Skip Login "
+              color="#000"
+            />
           </View>
         </ScrollView>
 
