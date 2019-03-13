@@ -6,7 +6,8 @@ import {
   TextInput,
   Button,
   TouchableOpacity,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  ScrollView
 } from "react-native";
 import styles from "./style";
 import * as EmailValidator from "email-validator";
@@ -26,7 +27,7 @@ export default class SignUpScreen extends Component {
 
   componentDidMount() {
     var that = this;
-    f.auth().onAuthStateChanged(function(user) {
+    f.auth().onAuthStateChanged(function (user) {
       if (user) {
         that.redirectUser();
       }
@@ -41,7 +42,7 @@ export default class SignUpScreen extends Component {
   onPressLogin() {
     LoginManager.logInWithReadPermissions(["public_profile", "email"]).then(
       result => this._handleCallBack(result),
-      function(error) {
+      function (error) {
         alert("Login fail with error: " + error);
       }
     );
@@ -56,19 +57,19 @@ export default class SignUpScreen extends Component {
         const token = data.accessToken;
         fetch(
           "https://graph.facebook.com/v2.8/me?fields=id,first_name,last_name,gender,birthday&access_token=" +
-            token
+          token
         )
           .then(response => response.json())
           .then(json => {
             const imageSize = 120;
             const facebookID = json.id;
             const fbImage = `https://graph.facebook.com/${facebookID}/picture?height=${imageSize}`;
-            this.authenticate(data.accessToken).then(function(result) {
+            this.authenticate(data.accessToken).then(function (result) {
               const { uid } = result;
               _this.createUser(uid, json, token, fbImage);
             });
           })
-          .catch(function(err) {
+          .catch(function (err) {
             console.log(err);
           });
       });
@@ -98,67 +99,72 @@ export default class SignUpScreen extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <KeyboardAvoidingView behavior="position">
-          <View style={styles.logoContainer}>
-            <Image
-              source={require("../../images/logo.png")}
-              style={styles.logo}
-            />
-          </View>
-          <View style={styles.formContainer}>
-            <TextInput
-              placeholder="Name"
-              placeholderTextColor="rgba(255,255,255,0.7)"
-              style={styles.input}
-              onChangeText={text => this.setState({ name: text })}
-            />
-            <TextInput
-              placeholder="Email"
-              keyboardType="email-address"
-              placeholderTextColor="rgba(255,255,255,0.7)"
-              style={styles.input}
-              onChangeText={text => this.setState({ email: text })}
-            />
-            <TextInput
-              placeholder="Pasword"
-              secureTextEntry={true}
-              placeholderTextColor="rgba(255,255,255,0.7)"
-              style={styles.input}
-              onChangeText={text => this.setState({ Password: text })}
-            />
-            <TextInput
-              placeholder="Confirm Pasword"
-              secureTextEntry={true}
-              placeholderTextColor="rgba(255,255,255,0.7)"
-              style={styles.input}
-              onChangeText={text => this.setState({ ConfirmPassword: text })}
-            />
-          </View>
-        </KeyboardAvoidingView>
-        <TouchableOpacity onPress={this.signUpAsync} style={styles.loginButton}>
-          <Text style={styles.buttonText}>Sign Up</Text>
-        </TouchableOpacity>
+      <View style={styles.firstContainer}>
+        <ScrollView style={styles.scrollStyle}>
+          <View style={styles.container}>
+            <KeyboardAvoidingView behavior="position">
+              <View style={styles.logoContainer}>
+                <Image
+                  source={require("../../images/logo.png")}
+                  style={styles.logo}
+                />
+              </View>
+              <View style={styles.formContainer}>
+                <TextInput
+                  placeholder="Name"
+                  placeholderTextColor="rgba(255,255,255,0.7)"
+                  style={styles.input}
+                  onChangeText={text => this.setState({ name: text })}
+                />
+                <TextInput
+                  placeholder="Email"
+                  keyboardType="email-address"
+                  placeholderTextColor="rgba(255,255,255,0.7)"
+                  style={styles.input}
+                  onChangeText={text => this.setState({ email: text })}
+                />
+                <TextInput
+                  placeholder="Pasword"
+                  secureTextEntry={true}
+                  placeholderTextColor="rgba(255,255,255,0.7)"
+                  style={styles.input}
+                  onChangeText={text => this.setState({ Password: text })}
+                />
+                <TextInput
+                  placeholder="Confirm Pasword"
+                  secureTextEntry={true}
+                  placeholderTextColor="rgba(255,255,255,0.7)"
+                  style={styles.input}
+                  onChangeText={text => this.setState({ ConfirmPassword: text })}
+                />
+              </View>
+            </KeyboardAvoidingView>
+            <TouchableOpacity onPress={this.signUpAsync} style={styles.loginButton}>
+              <Text style={styles.buttonText}>Sign Up</Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity>
-          <Text style={styles.text}>or</Text>
-        </TouchableOpacity>
+            <TouchableOpacity>
+              <Text style={styles.text}>or</Text>
+            </TouchableOpacity>
 
-        <Button
-          onPress={this.onPressLogin.bind(this)}
-          title="Sign Up with facebook"
-          color="#841584"
-        />
+            <Button
+              onPress={this.onPressLogin.bind(this)}
+              title="Sign Up with facebook"
+              color="#841584"
+            />
 
-        <View style={styles.signInTextArea}>
-          <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
-            <Text style={styles.text}>
-              Already have an account?
+            <View style={styles.signInTextArea}>
+              <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+                <Text style={styles.text}>
+                  Already have an account?
               <Text style={{ color: "#0066cc" }}> Sign In</Text>
-            </Text>
-          </TouchableOpacity>
-        </View>
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </ScrollView>
       </View>
+
     );
   }
   register() {
@@ -170,23 +176,23 @@ export default class SignUpScreen extends Component {
 
     f.auth()
       .createUserWithEmailAndPassword(email, password)
-      .then(function(data) {
+      .then(function (data) {
         data.user
           .updateProfile({
             displayName: name
           })
           .then(
-            function() {
+            function () {
               console.log("Updated User Data..");
             },
-            function(error) {
+            function (error) {
               console.log("Error Updating User Data.." + error);
             }
           );
         alert("Welcome to Go Social!");
         navigate("App");
       })
-      .catch(function(error) {
+      .catch(function (error) {
         var errorMessage = error.message;
         console.log("Error = " + errorMessage);
         alert(errorMessage);
