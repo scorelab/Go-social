@@ -4,7 +4,7 @@ import HeaderNavigationBar from "../../components/HeaderNavigationBar/HeaderNavi
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import styles from "./style";
 import Search from "./Search/searchView.js";
-import Directions from "./Directions/directionCalculation.js";
+import Directions from "./Directions/directions.js";
 import markerImage from "./assets/icon.png";
 import { getPixelSize } from "./util.js";
 
@@ -26,11 +26,13 @@ export default class MapScreen extends Component {
           }
         });
       }, //success
-      () => {}, //error
+      (error) => {
+        console.log(error);
+      }, //error
       {
         timeout: 2000,
         enableHighAccuracy: true,
-        maximumAge: 1000
+        maximumAge: 10000
       }
     );
   }
