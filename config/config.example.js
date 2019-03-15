@@ -10,7 +10,10 @@ var config = {
   };
   firebase.initializeApp(config);
 
+  var MAP_API_KEY = "AIzaSyDmwJddIPTcALyZtj7p9mFFlkMvpMkati8";
+
   export const f = firebase;
   export const database = firebase.database();
   export const auth = firebase.auth();
   export const storage = firebase.storage();
+  export const MAP_API = MAP_API_KEY;

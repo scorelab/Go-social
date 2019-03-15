@@ -6,79 +6,51 @@ Community of today used to use mobile phones to make their life easier and commu
 
 ## setup the project
 
-#### **Installing reac-native in Windows**
+> NOTE : If you don't have installed react-native yet use [this link](https://facebook.github.io/react-native/docs/getting-started) to install and configure react-native. **Make sure to use react-native cli rather than using expo cli**.
 
-##### *For macOS and Linux Use this* [link](https://facebook.github.io/react-native/docs/getting-started.html)
 
-Note: Make sure that you have installed latest stable Nodejs (verison 8.3 or newer), Python2 and JDK (Java SE Development Kit - Version 8 or newer)
- 
-**Setup android studio with sdk**
+## Configure Go-social
 
-[Download](https://developer.android.com/studio/index.html) and install Android Studio, Choose a "Custom" setup when prompted to select an installation type. Make sure the boxes next to all of the following are checked:
+*  clone the project
 
-*  Android SDK
-*  Android SDK Platform
-*  Performance (Intel ® HAX)
-*  Android Virtual Device
+    `git clone https://github.com/scorelab/Go-social.git`
 
-Android Studio installs the latest Android SDK by default. Building a React Native app with native code, however, requires the `Android 9 (Pie)` SDK in particular. Additional Android SDKs can be installed through the SDK Manager in Android Studio.
+*  change the directory to the project folder
 
-The SDK Manager can be accessed from the "Welcome to Android Studio" screen. Click on "Configure", then select "SDK Manager".
+    `cd Go-social`
 
-Select the "SDK Platforms" tab from within the SDK Manager, then check the box next to "Show Package Details" in the bottom right corner. Look for and expand the `Android 9 (Pie)` entry, then make sure the following items are checked:
+*  install the node modules with following command
 
-*  `Android SDK Platform 28`
-*  `Intel x86 Atom_64 Syste Image` or `Google APIs Intel x86 Atom System Image`
+    `npm install`
+### configer the config.example.js file (IMPORTANT)
 
-Next, select the "SDK Tools" tab and check the box next to "Show Package Details" here as well. Look for and expand the "Android SDK Build-Tools" entry, then make sure that 28.0.3 is selected.
+> Open the project in any text editor you would use. Open the `config.example.js` file in the `config` folder. And follow the following steps
 
-Finally, click "Apply" to download and install the Android SDK and related build tools.
+*  Use [this link](https://console.firebase.google.com/u/0/) to **create a firebase** project for the Go-social application. It is free for everyone.
 
-**Configure the ANDROID_HOME environment variable**
+*  Use [this link](https://cloud.google.com/maps-platform/) to **generate google map api key** for the map view in G-social. This is not necessary. You can use the given api key. But it is not guaranteed that the given key will always work. It is better to have your own key. Enable all maps, routes, places in your key.
 
-Open the System pane under System and Security in the Windows Control Panel, then click on Change settings.... Open the Advanced tab and click on Environment Variables.... Click on New... to create a new `ANDROID_HOME` user variable that points to the path to your Android SDK:
+*  Now you need a **facebook app id** if you want to enable facebook login for Go-social. Use [this link](https://developers.facebook.com/) for that. And make sure to enable both email/password and facebook sign in method in firebase/
 
-The SDK is installed, by default, at the following location:
-```
-c:\Users\YOUR_USERNAME\AppData\Local\Android\Sdk
-```
+So place you firebase details and google map api key in **config.example.js** file and **rename it** to **config.js**.
 
-##### Add platform-tools to Path
+*In order to work google map and facebook login you have to do some extra works. Follow these steps.*
 
-Open the System pane under System and Security in the Windows Control Panel, then click on Change settings.... Open the Advanced tab and click on Environment Variables.... Select the Path variable, then click Edit. Click New and add the path to platform-tools to the list.
+1.  find the file name `AndroidManifest.xml` which is located in `android/app/src/main` path. Place you **google map api key** in there.
 
-The default location for this folder is:
-```
-c:\Users\YOUR_USERNAME\AppData\Local\Android\Sdk\platform-tools
-```
+    > Ex : <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value=**"AIzaSyDmwJddIPTcALyZtj7p9mFFlkMvpMkati8"**/>
+        
+1.  Find the file name as `strings.xml` located in  `android/app/src/main/res/values`. Place your **facebook app id** in there.
 
-Then in your project directry opena a cmd and paste the following command in it.
+    > Ex: <string name="facebook_app_id">**2349388348405699**</string>
+        
+So now your are ready to run Go-social.
+## Run Go-social
 
-`npm install -g react-native-cli`
->**Note** : If you are using a pyhsical device to run the native app, Make sure to do following steps also.
-> 
-> Run the following in a command prompt:
-> 
-> `$ adb -s <device name> reverse tcp:8081 tcp:8081`
-> 
-> To find the device name, run the following adb command:
-> 
-> `$ adb devices`
 
-### Run Go-social
 
-clone the project
+*  run the app 
 
-`git clone https://github.com/scorelab/Go-social.git`
-
-change the directory to the project folder
-
-`cd Go-social`
-
-install the node modules with following command
-
-`npm install`
-
-run the app 
-
-`react-native run-android`
+    `react-native run-android`
