@@ -14,5 +14,20 @@ export default StyleSheet.create({
   },
   map: {
     ...StyleSheet.absoluteFillObject
+  },
+  cardStyle: {
+    marginTop: "auto"
+  },
+  rowElements: { flexDirection: "row" },
+  touchableOpacityFilter: {
+    alignItems: "center",
+    backgroundColor: "#28DDFB",
+    padding: 10,
+    margin: 10,
+    borderRadius: 50
+  },
+  touchableText: {
+    color: "white",
+    fontSize: 14
   }
 });

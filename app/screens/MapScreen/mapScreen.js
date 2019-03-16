@@ -1,17 +1,69 @@
 import React, { Component, Fragment } from "react";
-import { Text, View, TouchableHighlight, Image } from "react-native";
+import { Text, View, TouchableOpacity } from "react-native";
 import HeaderNavigationBar from "../../components/HeaderNavigationBar/HeaderNavigationBar";
-import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
+import MapView, { PROVIDER_GOOGLE, Marker, Polygon } from "react-native-maps";
 import styles from "./style";
-import Search from "./Search/searchView.js";
-import Directions from "./Directions/directions.js";
-import markerImage from "./assets/icon.png";
-import { getPixelSize } from "./util.js";
+import Search from "../../components/SearchAndFixLocation/searchView.js";
+import { Card, Icon } from "react-native-elements";
 
+let id = 0;
 export default class MapScreen extends Component {
   state = {
     region: null,
-    destination: null
+    destination: null,
+    search: false,
+    surface: false,
+    multiplePoints: false,
+    markers: [],
+    polygons: [],
+    editing: null,
+    creatingHole: false
+  };
+
+  onPress(e) {
+    const { editing, creatingHole } = this.state;
+    if (!editing) {
+      this.setState({
+        editing: {
+          id: id++,
+          coordinates: [e.nativeEvent.coordinate],
+          holes: []
+        }
+      });
+    } else if (!creatingHole) {
+      this.setState({
+        editing: {
+          ...editing,
+          coordinates: [...editing.coordinates, e.nativeEvent.coordinate]
+        }
+      });
+    } else {
+      const holes = [...editing.holes];
+      holes[holes.length - 1] = [
+        ...holes[holes.length - 1],
+        e.nativeEvent.coordinate
+      ];
+      this.setState({
+        editing: {
+          ...editing,
+          id: id++, // keep incrementing id to trigger display refresh
+          coordinates: [...editing.coordinates],
+          holes
+        }
+      });
+    }
+  }
+
+  onMapPress = e => {
+    this.setState({
+      markers: [
+        ...this.state.markers,
+        {
+          coordinate: e.nativeEvent.coordinate,
+          key: `foo${id++}`
+        }
+      ]
+    });
   };
 
   async componentDidMount() {
@@ -26,7 +78,7 @@ export default class MapScreen extends Component {
           }
         });
       }, //success
-      (error) => {
+      error => {
         console.log(error);
       }, //error
       {
@@ -50,10 +102,44 @@ export default class MapScreen extends Component {
     });
   };
 
-  render() {
-    const { region, destination } = this.state;
+  updateSearchState = () => {
+    this.setState({
+      search: true,
+      surface: false,
+      multiplePoints: false,
+      draggable: false
+    });
+  };
 
-    console.log(region);
+  updateMultiplePoints = () => {
+    this.setState({
+      search: false,
+      surface: false,
+      multiplePoints: true,
+      draggable: false
+    });
+  };
+
+  updateSurfaceArea = () => {
+    this.setState({
+      search: false,
+      surface: true,
+      multiplePoints: false,
+      draggable: false
+    });
+  };
+
+  render() {
+    const { region, destination, search, surface, multiplePoints } = this.state;
+
+    const mapOptions = {
+      scrollEnabled: true
+    };
+
+    if (this.state.editing) {
+      mapOptions.scrollEnabled = false;
+      mapOptions.onPanDrag = e => this.onPress(e);
+    }
     return (
       <View style={styles.container}>
         <MapView
@@ -62,34 +148,79 @@ export default class MapScreen extends Component {
           region={region}
           showsUserLocation
           loadingEnabled
-          ref={el => (this.mapView = el)}
+          onPress={
+            surface
+              ? e => this.onPress(e)
+              : multiplePoints
+              ? this.onMapPress
+              : null
+          }
         >
+          {multiplePoints &&
+            this.state.markers.map(marker => (
+              <Marker
+                coordinate={marker.coordinate}
+                title={marker.key}
+                key={marker.key}
+              />
+            ))}
           {destination && (
             <Fragment>
-              <Directions
-                origin={region}
-                destination={destination}
-                onReady={result => {
-                  this.mapView.fitToCoordinates(result.coordinates, {
-                    edgePadding: {
-                      right: getPixelSize(50),
-                      left: getPixelSize(50),
-                      top: getPixelSize(50),
-                      bottom: getPixelSize(50)
-                    }
-                  });
-                }}
-              />
-              <Marker
-                coordinate={destination}
-                anchor={{ x: 0, y: 0 }}
-                image={markerImage}
-              />
+              <Marker coordinate={destination} />
             </Fragment>
+          )}
+
+          {surface &&
+            this.state.polygons.map(polygon => (
+              <Polygon
+                key={polygon.id}
+                coordinates={polygon.coordinates}
+                holes={polygon.holes}
+                strokeColor="#F00"
+                fillColor="rgba(255,0,0,0.5)"
+                strokeWidth={1}
+              />
+            ))}
+
+          {surface && this.state.editing && (
+            <Polygon
+              key={this.state.editing.id}
+              coordinates={this.state.editing.coordinates}
+              holes={this.state.editing.holes}
+              strokeColor="#000"
+              fillColor="rgba(255,0,0,0.5)"
+              strokeWidth={1}
+            />
           )}
         </MapView>
         <HeaderNavigationBar title={"Locations"} {...this.props} />
-        <Search onLocationSelected={this.handleLocationSelected} />
+        {search && <Search onLocationSelected={this.handleLocationSelected} />}
+
+        <Card title="OPTIONS" containerStyle={styles.cardStyle}>
+          <View style={styles.rowElements}>
+          
+            <TouchableOpacity
+              style={styles.touchableOpacityFilter}
+              onPress={this.updateSearchState}
+            >
+              <Text style={styles.touchableText}>Fixed Point</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.touchableOpacityFilter}
+              onPress={this.updateMultiplePoints}
+            >
+              <Text style={styles.touchableText}>Multiple Points</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.touchableOpacityFilter}
+              onPress={this.updateSurfaceArea}
+            >
+              <Text style={styles.touchableText}>Surface Area</Text>
+            </TouchableOpacity>
+          </View>
+        </Card>
       </View>
     );
   }
