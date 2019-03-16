@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
-import HeaderNavigationBar from "../../components/HeaderNavigationBar/HeaderNavigationBar";
+import HeaderNavigationBar from "./HeaderNavigationBar/HeaderNavigationBar.js";
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import styles from "./style";
 

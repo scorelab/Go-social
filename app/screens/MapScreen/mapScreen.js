@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Text, View, TouchableOpacity, Button } from "react-native";
+import { Text, View, TouchableOpacity } from "react-native";
 import HeaderNavigationBar from "../../components/HeaderNavigationBar/HeaderNavigationBar";
 import MapView, { PROVIDER_GOOGLE, Marker, Polygon } from "react-native-maps";
 import styles from "./style";
