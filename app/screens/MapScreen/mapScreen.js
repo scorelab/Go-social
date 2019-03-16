@@ -4,6 +4,7 @@ import HeaderNavigationBar from "../../components/HeaderNavigationBar/HeaderNavi
 import MapView, { PROVIDER_GOOGLE, Marker, Polygon } from "react-native-maps";
 import styles from "./style";
 import Search from "../../components/SearchAndFixLocation/searchView.js";
+import { Card, Icon } from "react-native-elements";
 
 let id = 0;
 export default class MapScreen extends Component {
@@ -11,7 +12,6 @@ export default class MapScreen extends Component {
     region: null,
     destination: null,
     search: false,
-    draggable: false,
     surface: false,
     multiplePoints: false,
     markers: [],
@@ -19,7 +19,6 @@ export default class MapScreen extends Component {
     editing: null,
     creatingHole: false
   };
-
 
   onPress(e) {
     const { editing, creatingHole } = this.state;
@@ -55,7 +54,7 @@ export default class MapScreen extends Component {
     }
   }
 
-  onMapPress = (e) => {
+  onMapPress = e => {
     this.setState({
       markers: [
         ...this.state.markers,
@@ -130,25 +129,8 @@ export default class MapScreen extends Component {
     });
   };
 
-  updateDraggableState = () => {
-    console.log(this.state.markers);
-    // this.setState({
-    //   search: false,
-    //   surface: false,
-    //   multiplePoints: false,
-    //   draggable: true
-    // });
-  };
-
   render() {
-    const {
-      region,
-      destination,
-      search,
-      surface,
-      multiplePoints,
-      draggable
-    } = this.state;
+    const { region, destination, search, surface, multiplePoints } = this.state;
 
     const mapOptions = {
       scrollEnabled: true
@@ -167,7 +149,11 @@ export default class MapScreen extends Component {
           showsUserLocation
           loadingEnabled
           onPress={
-            surface ? e => this.onPress(e) : multiplePoints ? this.onMapPress : null
+            surface
+              ? e => this.onPress(e)
+              : multiplePoints
+              ? this.onMapPress
+              : null
           }
         >
           {multiplePoints &&
@@ -183,20 +169,6 @@ export default class MapScreen extends Component {
               <Marker coordinate={destination} />
             </Fragment>
           )}
-
-          {draggable &&
-            (console.log("draggable"),
-            (
-              <Marker
-                coordinate={this.state.destination}
-                onSelect={e => log("onSelect", e)}
-                onDrag={e => log("onDrag", e)}
-                onDragStart={e => log("onDragStart", e)}
-                onDragEnd={e => log("onDragEnd", e)}
-                onPress={e => log("onPress", e)}
-                draggable
-              />
-            ))}
 
           {surface &&
             this.state.polygons.map(polygon => (
@@ -224,58 +196,31 @@ export default class MapScreen extends Component {
         <HeaderNavigationBar title={"Locations"} {...this.props} />
         {search && <Search onLocationSelected={this.handleLocationSelected} />}
 
-        <View
-          style={{
-            justifyContent: "flex-end",
-            alignItems: "flex-end",
-            marginTop: "auto"
-          }}
-        >
-          <TouchableOpacity
-            style={{
-              alignItems: "center",
-              backgroundColor: "#4885ed",
-              padding: 10,
-              margin: 10
-            }}
-            onPress={this.updateSearchState}
-          >
-            <Text>Fixed Point</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              alignItems: "center",
-              backgroundColor: "#4885ed",
-              padding: 10,
-              margin: 10
-            }}
-            onPress={this.updateMultiplePoints}
-          >
-            <Text>Multiple Points</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              alignItems: "center",
-              backgroundColor: "#4885ed",
-              margin: 10,
-              padding: 10
-            }}
-            onPress={this.updateSurfaceArea}
-          >
-            <Text>Surface Area</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              alignItems: "center",
-              backgroundColor: "#4885ed",
-              margin: 10,
-              padding: 10
-            }}
-            onPress={this.updateDraggableState}
-          >
-            <Text>Draggable</Text>
-          </TouchableOpacity>
-        </View>
+        <Card title="OPTIONS" containerStyle={styles.cardStyle}>
+          <View style={styles.rowElements}>
+          
+            <TouchableOpacity
+              style={styles.touchableOpacityFilter}
+              onPress={this.updateSearchState}
+            >
+              <Text style={styles.touchableText}>Fixed Point</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.touchableOpacityFilter}
+              onPress={this.updateMultiplePoints}
+            >
+              <Text style={styles.touchableText}>Multiple Points</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.touchableOpacityFilter}
+              onPress={this.updateSurfaceArea}
+            >
+              <Text style={styles.touchableText}>Surface Area</Text>
+            </TouchableOpacity>
+          </View>
+        </Card>
       </View>
     );
   }
