@@ -10,29 +10,34 @@ export default StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center',
         backgroundColor: COLOR_GRAY,
-        width:'100%'        
+        width:'100%'
     },
 
     coverImageArea:{
         // backgroundColor:'red',
         alignSelf:'center',
-        height: '30%',
+        height: '5%',
         width:'auto',
         position:'absolute',
-        top:55
+        top:10
+    },
+
+    coverImage:{
+        height: 150
     },
 
     profileImage:{
         marginTop:deviceHeight*0.3 - 80,
-        width:160,
-        height:160,
+        marginRight: deviceWidth*0.7,
+        width:80,
+        height:80,
         borderRadius:80
     },
 
     contentArea: {
-        marginTop:10,
+        marginTop:1,
         alignItems:'center',
-        marginBottom:100     
+        marginBottom:50     
     },
     nameFont: {
         fontSize:18,
@@ -43,7 +48,23 @@ export default StyleSheet.create({
         fontSize:16,
         lineHeight:16,
         // fontWeight:'bold'
-    }
+    },
+    input: {
+        marginTop: deviceHeight*0.01,
+        marginLeft: deviceWidth*0.01,
+        height: 45,
+        width: deviceWidth * 0.98,
+        borderRadius: 5,
+        backgroundColor: 'rgba(149, 176, 183, 1)',
+        marginBottom: 15,
+        color: '#FFF',
+        paddingHorizontal: 10
+    },
+    saveButton: {
+        marginTop:100,
+        marginBottom: 100,
+        height:45,
+    },
 
    
 });
