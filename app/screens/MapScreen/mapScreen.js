@@ -20,39 +20,6 @@ export default class MapScreen extends Component {
     creatingHole: false
   };
 
-  finish() {
-    const { polygons, editing } = this.state;
-    this.setState({
-      polygons: [...polygons, editing],
-      editing: null,
-      creatingHole: false
-    });
-  }
-
-  createHole() {
-    const { editing, creatingHole } = this.state;
-    if (!creatingHole) {
-      this.setState({
-        creatingHole: true,
-        editing: {
-          ...editing,
-          holes: [...editing.holes, []]
-        }
-      });
-    } else {
-      const holes = [...editing.holes];
-      if (holes[holes.length - 1].length === 0) {
-        holes.pop();
-        this.setState({
-          editing: {
-            ...editing,
-            holes
-          }
-        });
-      }
-      this.setState({ creatingHole: false });
-    }
-  }
 
   onPress(e) {
     const { editing, creatingHole } = this.state;
@@ -88,7 +55,7 @@ export default class MapScreen extends Component {
     }
   }
 
-  onMapPress (e) {
+  onMapPress = (e) => {
     this.setState({
       markers: [
         ...this.state.markers,
@@ -164,12 +131,13 @@ export default class MapScreen extends Component {
   };
 
   updateDraggableState = () => {
-    this.setState({
-      search: false,
-      surface: false,
-      multiplePoints: false,
-      draggable: true
-    });
+    console.log(this.state.markers);
+    // this.setState({
+    //   search: false,
+    //   surface: false,
+    //   multiplePoints: false,
+    //   draggable: true
+    // });
   };
 
   render() {
@@ -199,7 +167,7 @@ export default class MapScreen extends Component {
           showsUserLocation
           loadingEnabled
           onPress={
-            multiplePoints && !surface ? e => this.onPress(e) : e => this.onMapPress(e)
+            surface ? e => this.onPress(e) : multiplePoints ? this.onMapPress : null
           }
         >
           {multiplePoints &&
@@ -212,7 +180,7 @@ export default class MapScreen extends Component {
             ))}
           {destination && (
             <Fragment>
-              <Marker draggable coordinate={destination} />
+              <Marker coordinate={destination} />
             </Fragment>
           )}
 
@@ -255,51 +223,6 @@ export default class MapScreen extends Component {
         </MapView>
         <HeaderNavigationBar title={"Locations"} {...this.props} />
         {search && <Search onLocationSelected={this.handleLocationSelected} />}
-
-        <View
-          style={{
-            flexDirection: "row",
-            marginVertical: 20,
-            backgroundColor: "transparent"
-          }}
-        >
-          {surface && this.state.editing && (
-            <TouchableOpacity
-              onPress={() => this.createHole()}
-              style={{
-                backgroundColor: "rgba(255,255,255,0.7)",
-                paddingHorizontal: 18,
-                paddingVertical: 12,
-                borderRadius: 20,
-                width: 80,
-                paddingHorizontal: 12,
-                alignItems: "center",
-                marginHorizontal: 10
-              }}
-            >
-              <Text>
-                {this.state.creatingHole ? "Finish Hole" : "Create Hole"}
-              </Text>
-            </TouchableOpacity>
-          )}
-          {surface && this.state.editing && (
-            <TouchableOpacity
-              onPress={() => this.finish()}
-              style={{
-                backgroundColor: "rgba(255,255,255,0.7)",
-                paddingHorizontal: 18,
-                paddingVertical: 12,
-                borderRadius: 20,
-                width: 80,
-                paddingHorizontal: 12,
-                alignItems: "center",
-                marginHorizontal: 10
-              }}
-            >
-              <Text>Finish</Text>
-            </TouchableOpacity>
-          )}
-        </View>
 
         <View
           style={{
