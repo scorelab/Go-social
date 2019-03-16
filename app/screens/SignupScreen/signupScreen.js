@@ -13,6 +13,7 @@ import styles from "./style";
 import * as EmailValidator from "email-validator";
 import { AccessToken, LoginManager } from "react-native-fbsdk";
 import { f, auth } from "../../../config/config.js";
+import { SocialIcon  } from 'react-native-elements';
 
 export default class SignUpScreen extends Component {
   constructor(props) {
@@ -147,12 +148,10 @@ export default class SignUpScreen extends Component {
               <Text style={styles.text}>or</Text>
             </TouchableOpacity>
 
-            <Button
-              onPress={this.onPressLogin.bind(this)}
-              title="Sign Up with facebook"
-              color="#841584"
-            />
-
+            <TouchableOpacity onPress={this.onPressLogin.bind(this)}>
+                <SocialIcon style={{width:200}} title='Sign Up With Facebook'  button  type='facebook' />
+            </TouchableOpacity>
+            
             <View style={styles.signInTextArea}>
               <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
                 <Text style={styles.text}>

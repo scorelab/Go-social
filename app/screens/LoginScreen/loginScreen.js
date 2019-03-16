@@ -13,7 +13,7 @@ import { AccessToken, LoginManager } from "react-native-fbsdk";
 import { f, auth } from "../../../config/config.js";
 import * as EmailValidator from "email-validator";
 import styles from "./style";
-
+import { SocialIcon  } from 'react-native-elements';
 export default class LoginScreen extends Component {
   constructor(props) {
     super(props);
@@ -179,12 +179,10 @@ export default class LoginScreen extends Component {
               <Text style={styles.text}>Forgot Password?</Text>
             </TouchableOpacity>
 
-            <Button
-              onPress={this.onPressLogin.bind(this)}
-              title="Login with facebook"
-              color="#841584"
-            />
-
+            <TouchableOpacity onPress={this.onPressLogin.bind(this)}>
+                <SocialIcon style={{width:200}} title='Sign In With Facebook'  button  type='facebook' />
+            </TouchableOpacity>
+            
             <View style={styles.signUpTextArea}>
               <TouchableOpacity
                 onPress={() => this.props.navigation.navigate("Signup")}
