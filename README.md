@@ -22,7 +22,7 @@ Community of today used to use mobile phones to make their life easier and commu
 *  install the node modules with following command
 
     `npm install`
-### configer the config.example.js file (IMPORTANT)
+### configure the config.example.js file (IMPORTANT)
 
 > Open the project in any text editor you would use. Open the `config.example.js` file in the `config` folder. And follow the following steps
 
@@ -54,3 +54,7 @@ So now your are ready to run Go-social.
 *  run the app 
 
     `react-native run-android`
+    
+    Then Enable the Remote Js Debugging.
+
+    
