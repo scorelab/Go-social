@@ -10,6 +10,7 @@ export default StyleSheet.create({
         flex: 1,
         justifyContent: 'flex-start',
         alignItems: 'center',
+        
     },
     scrollView:{
         width:deviceWidth,
@@ -21,18 +22,25 @@ export default StyleSheet.create({
         paddingBottom:10
     },
     text: {
-        height: 30,
-        width: deviceWidth * 0.8,
-        borderRadius: 50,
-        borderWidth:1,
-        borderColor:'#b2beb5',
+        height: '30%',
+        width: '90%', 
         backgroundColor: 'rgba(255,255,255,0.15)',
         marginVertical:10,
         color: '#000',
         paddingHorizontal: 10,  
         fontSize:16,
-        textAlignVertical:'center'             
-    },    
+        textAlignVertical:'top'             
+    },
+    nameText:{
+        height: 'auto',
+        width: '90%', 
+        backgroundColor: 'rgba(255,255,255,0.15)',
+        marginVertical:10,
+        color: '#000',
+        paddingHorizontal: 10,  
+        fontSize:16,
+        textAlignVertical:'center' 
+    },  
     postButton:{
         width:'100%',        
         justifyContent:'center',
@@ -46,6 +54,20 @@ export default StyleSheet.create({
         marginVertical:5
     },
     row:{
-        flexDirection:'row'
+        flexDirection:'row',
+        width:'90%',
+        marginVertical:5,
+        marginHorizontal:15
+    },
+    card:{
+        padding:0,
+        width:'100%',
+        height:'auto'
+    },
+    list:{
+        padding: 0,
+        width:'100%',
+        borderWidth:1,
+        borderTopColor:'#000'
     }  
 });

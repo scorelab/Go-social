@@ -12,6 +12,7 @@ import ChatListScreen from './app/screens/ChatListScreen/chatListScreen';
 import SignupScreen from './app/screens/SignupScreen/signupScreen';
 import NotificationScreen from './app/screens/NotificationScreen/notificationScreen';
 import ForgotPasswordScreen from './app/screens/ForgotPasswordScreen/forgotPasswordScreen';
+import NewPostScreen from './app/screens/NewPostScreen/NewPostScreen';
 //Screen names
 import { Home, Info, DetailView, Login } from './app/screens/index';
 //Screen size
@@ -57,6 +58,9 @@ const AuthStack = createStackNavigator(
         },
         ForgotPassword:{
           screen:ForgotPasswordScreen
+        },
+        NewPost:{
+          screen:NewPostScreen
         }
     },{
         initialRouteName:"Login",
@@ -71,7 +75,6 @@ const AppStack = createBottomTabNavigator(
     Map : { screen: MapScreen },
     Notifications : { screen: NotificationScreen },
     Profile: { screen: ProfileScreen },
-
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({
