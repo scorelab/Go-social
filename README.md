@@ -26,7 +26,11 @@ The community of today used to use mobile phones to make their life easier and c
 
 > Open the project in any text editor you would use. Open the `config.example.js` file in the `config` folder. And follow the following steps
 
-*  Use [this link](https://console.firebase.google.com/u/0/) to **create a firebase** project for the Go-social application. It is free for everyone.
+*  Use [this link](https://console.firebase.google.com/) to **create a firebase** project for the Go-social application. It is free for everyone.
+
+*  Update the **Sign in method** of Firebase [project](https://firebase.google.com/docs/auth/android/password-auth#before_you_begin) that you want to use as **Enabled**
+
+*  Create a **Firebase Database** and Update the Ruleset of the realtime database to **Read/Write Allow**.
 
 *  Use [this link](https://cloud.google.com/maps-platform/) to **generate google map api key** for the map view in G-social. This is not necessary. You can use the given api key. But it is not guaranteed that the given key will always work. It is better to have your own key. Enable all maps, routes, places in your key.
 
