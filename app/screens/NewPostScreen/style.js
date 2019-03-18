@@ -33,7 +33,7 @@ export default StyleSheet.create({
     },
     nameText:{
         height: 'auto',
-        width: '90%', 
+        width: '60%', 
         backgroundColor: 'rgba(255,255,255,0.15)',
         marginVertical:10,
         color: '#000',
@@ -69,5 +69,25 @@ export default StyleSheet.create({
         width:'100%',
         borderWidth:1,
         borderTopColor:'#000'
-    }  
+    },  
+    share:{
+        padding: 0,
+        width:'auto',        
+        borderWidth:1,
+        borderTopColor:'#000',
+        backgroundColor:COLOR_GRAY,
+        alignSelf:'flex-end'      
+    },
+    shareView:{
+        justifyContent:'flex-end',
+        alignItems:'flex-end'
+    },
+    selectedImage:{ 
+        width: 100, 
+        height: 100
+     },
+     reset:{
+         textAlign:'center',
+         color:'red'
+     }  
 });
