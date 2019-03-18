@@ -28,13 +28,13 @@ class AuthLoadingScreen extends Component {
   _bootstrapAsync = async () => {
     const userToken = await AsyncStorage.getItem('userToken');
 
-    this.props.navigation.navigate(userToken ? 'App' : 'Auth');
+    this.props.navigation.navigate(userToken ? 'Auth' : 'Auth');
   };
 
   render() {
     return (
       <View style={styles.container}>
-        <ActivityIndicator />
+        <ActivityIndicator/>
       </View>
     );
   }
@@ -48,33 +48,22 @@ const styles = StyleSheet.create({
   },
 });
 
-const AuthStack = createStackNavigator(
-    {
-        Login:{
-            screen:LoginScreen
-        },
-        Signup:{
-            screen:SignupScreen
-        },
-        ForgotPassword:{
-          screen:ForgotPasswordScreen
-        },
-        NewPost:{
-          screen:NewPostScreen
-        }
-    },{
-        initialRouteName:"Login",
-        headerMode:"none"
-    }
-)
-
 const AppStack = createBottomTabNavigator(
   {
     Home: { screen: HomeScreen },
     Messages : { screen: ChatListScreen },
     Map : { screen: MapScreen },
     Notifications : { screen: NotificationScreen },
-    Profile: { screen: ProfileScreen },
+    Profile: { screen: ProfileScreen },  
+    // NewPost:{ 
+    //   screen:NewPostScreen,
+    //   defaultNavigationOptions: {        
+    //     tabBarVisible : false,
+    //     header: null,
+    //     headerLeft: null,
+    //     headerRight: null,
+    //   },
+    //}      
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({
@@ -105,18 +94,29 @@ const AppStack = createBottomTabNavigator(
   }  
 );
 
-
-const AppNavigator = createSwitchNavigator (
-    {
-        AuthLoading:AuthLoadingScreen,
-        App: AppStack,
-        Auth : AuthStack,
-    },
-    {
-        initialRouteName:'AuthLoading'
-    }
+const AuthStack = createStackNavigator(
+  {
+      Login:{
+          screen:LoginScreen
+      },
+      Signup:{
+          screen:SignupScreen
+      },
+      ForgotPassword:{
+        screen:ForgotPasswordScreen
+      },
+      NewPost:{ 
+        screen:NewPostScreen
+      },
+      App:{
+        screen:AppStack
+      }        
+  },{
+      initialRouteName:"Login",        
+      headerMode:"none"
+  }
 )
 
-const AppContainer = createAppContainer(AppNavigator);
+const AppContainer = createAppContainer(AuthStack);
 export default AppContainer;
   
