@@ -2,7 +2,7 @@
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/fbf9f8e1bb7b4d2cbb1ca569014ed45b)](https://app.codacy.com/app/shehand/Go-social?utm_source=github.com&utm_medium=referral&utm_content=shehand/Go-social&utm_campaign=Badge_Grade_Dashboard)
 
-Community of today used to use mobile phones to make their life easier and community based mobile applications are famous among them. There are several kind of community based applications in use and most of them are relating to a specific domain. But core components have similar features. Address this issue and saving development time by introducing a common app template with customizable components for community based mobile applications, is the main purpose of this project.
+The community of today used to use mobile phones to make their life easier and community-based mobile applications are famous among them. There are several kinds of community-based applications in use and most of them are relating to a specific domain. But core components have similar features. Address this issue and saving development time by introducing a common app template with customizable components for community-based mobile applications, is the main purpose of this project.
 
 ## setup the project
 
@@ -26,7 +26,11 @@ Community of today used to use mobile phones to make their life easier and commu
 
 > Open the project in any text editor you would use. Open the `config.example.js` file in the `config` folder. And follow the following steps
 
-*  Use [this link](https://console.firebase.google.com/u/0/) to **create a firebase** project for the Go-social application. It is free for everyone.
+*  Use [this link](https://console.firebase.google.com/) to **create a firebase** project for the Go-social application. It is free for everyone.
+
+*  Update the **Sign in method** of Firebase [project](https://firebase.google.com/docs/auth/android/password-auth#before_you_begin) that you want to use as **Enabled**
+
+*  Create a **Firebase Database** and Update the Ruleset of the realtime database to **Read/Write Allow**.
 
 *  Use [this link](https://cloud.google.com/maps-platform/) to **generate google map api key** for the map view in G-social. This is not necessary. You can use the given api key. But it is not guaranteed that the given key will always work. It is better to have your own key. Enable all maps, routes, places in your key.
 
