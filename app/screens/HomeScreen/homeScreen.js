@@ -8,7 +8,7 @@ export default class HomeScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <HeaderNavigationBar title={"Home"} />                          
+                <HeaderNavigationBar title={"Home"} />                                         
                 <TouchableOpacity style={styles.postButton} onPress={() => this.props.navigation.navigate("NewPost")}>
                     <View style={styles.row}>
                         <Image style={styles.profileImage} source={require('../../images/user_image_1.jpg')} />
