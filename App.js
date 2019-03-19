@@ -70,26 +70,26 @@ const AppStack = createBottomTabNavigator(
       tabBarIcon: ({ focused, tintColor }) => {
         const { routeName } = navigation.state;
         let iconName;
-        if (routeName === 'Home') {
-          iconName = 'home';
-        } else if (routeName === 'Messages') {
-          iconName = 'comment';
+        if (routeName === "Home") {
+          iconName = "home";
+        } else if (routeName === "Messages") {
+          iconName = "comment";
 
-        } else if (routeName === 'Map') {
-          iconName = 'map';
+        } else if (routeName === "Map") {
+          iconName = "map";
         
-        } else if (routeName === 'Notifications') {
-          iconName = 'bell';
+        } else if (routeName === "Notifications") {
+          iconName = "bell";
         
-        } else if (routeName === 'Profile') {
-          iconName = 'user';
+        } else if (routeName === "Profile") {
+          iconName = "user";
         }
         return <Ionicons name={iconName} size={25} color={tintColor} />;
       },
     }),
     tabBarOptions: {
-      activeTintColor: '#3d9bf9',
-      inactiveTintColor: 'gray',
+      activeTintColor: "#3d9bf9",
+      inactiveTintColor: "gray",
     },
   }  
 );
