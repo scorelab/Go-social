@@ -1,19 +1,19 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet, Dimensions } from "react-native";
 
-let deviceWidth = Dimensions.get('window').width;
-let deviceHeight = Dimensions.get('window').height;
+let deviceWidth = Dimensions.get("window").width;
+let deviceHeight = Dimensions.get("window").height;
 
 export default StyleSheet.create({
   
     cardContainer: {
-        backgroundColor:'#fff',
+        backgroundColor:"#fff",
         borderRadius:5,
         width: deviceWidth * 0.25,
         height: deviceWidth * 0.3,
         marginLeft:10,
         marginRight:10,
-        alignItems:'center',
-        justifyContent:'center',
+        alignItems:"center",
+        justifyContent:"center",
     },
     userImage:{
         height:60,
@@ -22,7 +22,7 @@ export default StyleSheet.create({
         marginBottom:5
     },
     detailRow:{
-        width:'100%',
+        width:"100%",
         paddingLeft:10,
         paddingRight:10,
         paddingBottom:5,
@@ -30,10 +30,10 @@ export default StyleSheet.create({
     },
     thumbnailRow:{
         flex:1,
-        width:'100%',
+        width:"100%",
         // backgroundColor:'red',
-        flexDirection:'row',
-        justifyContent:'space-evenly',
+        flexDirection:"row",
+        justifyContent:"space-evenly",
         paddingTop:30,
         paddingLeft:10,
         paddingRight:10,
@@ -44,16 +44,16 @@ export default StyleSheet.create({
 
     nameText:{
         fontSize:14,
-        color:'#4e5861',
-        fontWeight:'bold'
+        color:"#4e5861",
+        fontWeight:"bold"
     },
     meaasageText:{
         fontSize:16,
-        color:'#95a3ad'
+        color:"#95a3ad"
     },
     paraText:{
         fontSize:16,
-        color:'#555f68'
+        color:"#555f68"
     }
     
 });
