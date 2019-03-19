@@ -142,6 +142,7 @@ dependencies {
     implementation project(':react-native-fbsdk')
     compile project(':react-native-vector-icons')
     compile project(':react-native-gesture-handler')
+    compile project(':react-native-image-picker')
     // compile project(':react-native-maps')
     implementation project(':react-native-vector-icons')
     implementation fileTree(dir: "libs", include: ["*.jar"])
