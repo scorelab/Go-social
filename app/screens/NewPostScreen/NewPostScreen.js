@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ScrollView, Text, View, TouchableOpacity, Image, PermissionsAndroid, ActivityIndicator } from "react-native";
+import { ScrollView, Text, View, TouchableOpacity, Image, PermissionsAndroid, ActivityIndicator , KeyboardAvoidingView } from "react-native";
 import { DetailView, Info } from "..";
 import HeaderNavigationBar from '../../components/HeaderNavigationBar/HeaderNavigationBar';
 import styles from './style';
@@ -149,16 +149,15 @@ export default class NewPostScreen extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
+            <View style={styles.container}>        
                 <HeaderNavigationBar title={"New Post"} />
                 {this.state.uploading == true ? (
-                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                        <Text style={{ fontSize: 15, marginVertical: 10 }}>{this.state.progress}%</Text>
+                    <View style={styles.progresView}>
+                        <Text style={styles.progressText}>{this.state.progress}%</Text>
                         <ActivityIndicator size="large" color="#0000ff" />
-                        <Text style={{ fontSize: 15, marginVertical: 10 }} >Publishing ...</Text>
+                        <Text style={styles.progressText}>Publishing ...</Text>
                     </View>
                 ) : (
-
                         <View>
                             <View style={styles.row}>
                                 <Image style={styles.profileImage} source={require('../../images/user_image_1.jpg')} />
@@ -181,7 +180,7 @@ export default class NewPostScreen extends Component {
                                         <View></View>
                                     )}
                             </View>
-                            <View style={{justifyContent:'center', alignItems:'center'}}>
+                            <View style={styles.selectedImageView}>
                                 {this.state.imageSelected == true ? (
                                     <View>
                                         <Image source={{ uri: this.state.pickedImage }} style={styles.selectedImage} />
@@ -229,8 +228,7 @@ export default class NewPostScreen extends Component {
 
                             </ScrollView>
                         </View>
-                    )}
-
+                    )}            
             </View>
         );
     }
