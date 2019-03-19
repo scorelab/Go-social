@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
-import { View, Text, Image, TouchableOpacity} from 'react-native'
-import styles from './style'
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import React, { Component } from "react";
+import { View, Text, Image, TouchableOpacity} from "react-native";
+import styles from "./style";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 
 export default class CardView extends Component {

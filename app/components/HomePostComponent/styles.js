@@ -1,7 +1,7 @@
-import { StyleSheet, Dimensions } from 'react-native';
-import { COLOR_PRIMARY, COLOR_SECONDARY, COLOR_LIGHT } from '../../config/styles' ;
+import { StyleSheet, Dimensions } from "react-native";
+import { COLOR_PRIMARY, COLOR_SECONDARY, COLOR_LIGHT } from "../../config/styles";
 
-var {height, width} = Dimensions.get('window');
+var {height, width} = Dimensions.get("window");
 
 let cardViewHeight = height * 0.7;
 let cardViewWidth = width * 0.9;
@@ -15,9 +15,9 @@ cardView: {
     backgroundColor: COLOR_LIGHT,
     maxHeight: cardViewHeight,
     width: cardViewWidth,
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "center",
     marginBottom:15,
     marginTop:10,
     borderRadius:5,
@@ -28,8 +28,8 @@ cardTitleBar: {
     // backgroundColor: COLOR_LIGHT,
     height: cardTitleBarHeight,
     width: cardViewWidth,
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
+    flexDirection: "row",
+    justifyContent: "flex-start",
     marginBottom:5,
     paddingLeft:10,
     // borderRadius:5,
@@ -46,7 +46,7 @@ userAvatarImage: {
     borderRadius: userAvatarImageHeight
 },
 cardTitleArea: {
-    flexDirection:'column',
+    flexDirection:"column",
     marginLeft: 10,
     marginRight:10
 },
@@ -72,17 +72,17 @@ postImageArea: {
 postImage: {
     width:cardViewWidth-20,
     height:220,
-    resizeMode:'center'
+    resizeMode:"center"
 },
 
 // Font Styles
 nameFont: {
     fontSize:16,
     lineHeight:16,
-    fontWeight:'bold'
+    fontWeight:"bold"
 },
 postContentFont: {
-    textAlign:'justify'
+    textAlign:"justify"
 }
 
 });
