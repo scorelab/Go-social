@@ -22,12 +22,12 @@ export default StyleSheet.create({
   touchableOpacityFilter: {
     alignItems: "center",
     backgroundColor: "#28DDFB",
-    padding: 10,
-    margin: 10,
+    padding: 9,
+    margin: 8,
     borderRadius: 50
   },
   touchableText: {
     color: "white",
-    fontSize: 14
+    fontSize: 15
   }
 });

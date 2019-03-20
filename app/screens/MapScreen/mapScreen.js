@@ -4,9 +4,10 @@ import HeaderNavigationBar from "../../components/HeaderNavigationBar/HeaderNavi
 import MapView, { PROVIDER_GOOGLE, Marker, Polygon } from "react-native-maps";
 import styles from "./style";
 import Search from "../../components/SearchAndFixLocation/searchView.js";
-import { Card, Icon } from "react-native-elements";
+import { Card } from "react-native-elements";
 
 let id = 0;
+const DISTANCE = 0.01;
 export default class MapScreen extends Component {
   state = {
     region: null,
@@ -17,7 +18,7 @@ export default class MapScreen extends Component {
     markers: [],
     polygons: [],
     editing: null,
-    creatingHole: false
+    // draggableRegion: null
   };
 
   onPress(e) {
@@ -76,6 +77,12 @@ export default class MapScreen extends Component {
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421
           }
+          // draggableRegion: {
+          //   latitude,
+          //   longitude,
+          //   latitudeDelta: 0.0922,
+          //   longitudeDelta: 0.0421
+          // }
         });
       }, //success
       error => {
@@ -106,8 +113,7 @@ export default class MapScreen extends Component {
     this.setState({
       search: true,
       surface: false,
-      multiplePoints: false,
-      draggable: false
+      multiplePoints: false
     });
   };
 
@@ -115,8 +121,7 @@ export default class MapScreen extends Component {
     this.setState({
       search: false,
       surface: false,
-      multiplePoints: true,
-      draggable: false
+      multiplePoints: true
     });
   };
 
@@ -124,8 +129,7 @@ export default class MapScreen extends Component {
     this.setState({
       search: false,
       surface: true,
-      multiplePoints: false,
-      draggable: false
+      multiplePoints: false
     });
   };
 
@@ -145,7 +149,7 @@ export default class MapScreen extends Component {
         <MapView
           provider={PROVIDER_GOOGLE}
           style={styles.map}
-          region={region}
+          initialRegion={region}
           showsUserLocation
           loadingEnabled
           onPress={
@@ -156,6 +160,13 @@ export default class MapScreen extends Component {
               : null
           }
         >
+          {/* <Marker
+            coordinate={this.state.draggableRegion}
+            title="key"
+            key="key"
+            onDragEnd={e => console.log(e.nativeEvent.coordinate)}
+            draggable
+          /> */}
           {multiplePoints &&
             this.state.markers.map(marker => (
               <Marker
@@ -198,7 +209,6 @@ export default class MapScreen extends Component {
 
         <Card title="OPTIONS" containerStyle={styles.cardStyle}>
           <View style={styles.rowElements}>
-          
             <TouchableOpacity
               style={styles.touchableOpacityFilter}
               onPress={this.updateSearchState}
