@@ -45,7 +45,8 @@ export default StyleSheet.create({
     nameText:{
         fontSize:14,
         color:"#4e5861",
-        fontWeight:"bold"
+        fontWeight:"bold",
+        textAlign:'center'
     },
     meaasageText:{
         fontSize:16,

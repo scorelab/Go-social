@@ -13,6 +13,7 @@ import SignupScreen from "./app/screens/SignupScreen/signupScreen";
 import NotificationScreen from "./app/screens/NotificationScreen/notificationScreen";
 import ForgotPasswordScreen from "./app/screens/ForgotPasswordScreen/forgotPasswordScreen";
 import NewPostScreen from "./app/screens/NewPostScreen/NewPostScreen";
+import MessageScreen from "./app/screens/MessaginScreen/messaginScreen";
 //Screen names
 import { Home, Info, DetailView, Login } from "./app/screens/index";
 //Screen size
@@ -54,16 +55,7 @@ const AppStack = createBottomTabNavigator(
     Messages : { screen: ChatListScreen },
     Map : { screen: MapScreen },
     Notifications : { screen: NotificationScreen },
-    Profile: { screen: ProfileScreen },  
-    // NewPost:{ 
-    //   screen:NewPostScreen,
-    //   defaultNavigationOptions: {        
-    //     tabBarVisible : false,
-    //     header: null,
-    //     headerLeft: null,
-    //     headerRight: null,
-    //   },
-    //}      
+    Profile: { screen: ProfileScreen }    
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({
@@ -108,11 +100,15 @@ const AuthStack = createStackNavigator(
       NewPost:{ 
         screen:NewPostScreen
       },
+      MessageView:{ 
+        screen:MessageScreen
+      },
       App:{
         screen:AppStack
       }        
   },{
-      initialRouteName:"Login",        
+      initialRouteName:"Login", 
+      mode: 'modal',       
       headerMode:"none"
   }
 )
