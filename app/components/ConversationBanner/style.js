@@ -41,9 +41,13 @@ export default StyleSheet.create({
     },
     userNameRow:{
         flex:0.4,
+        flexDirection:'row',
+        flexWrap:'wrap',        
         // width:deviceWidth * 0.8,
         // backgroundColor:'yellow',
-        paddingTop:10
+        paddingTop:10,
+        justifyContent:'space-between',
+        alignItems:'flex-start'
     },
     meaasageRow:{
         flex:0.6,

@@ -14,7 +14,7 @@ import SuggestCardView from '../../components/SuggestionsCardView/suggestionsCar
 import HeaderNavigationBar from "../../components/HeaderNavigationBar/HeaderNavigationBar";
 
 export default class ChatListScreen extends Component {
-
+    
     render() {
         return (
             <View style={styles.container}>
@@ -43,30 +43,35 @@ export default class ChatListScreen extends Component {
                         </View>
                         <ConversationBanner
                             name='Toney Herford'
+                            posted='2 days ago'                                                       
                             userImage={require('../../images/user_image_1.jpg')}
                             message="Hello Jhon, I would like to invite you to participate ..."
                             count="5"
                         />
                         <ConversationBanner
                             name='Toney Herford'
+                            posted='2 days ago'                            
                             userImage={require('../../images/user_image_1.jpg')}
                             message="Hello Jhon, I would like to invite you to participate ..."
                             count="2"
                         />
                         <ConversationBanner
                             name='Toney Herford'
+                            posted='2 days ago'                            
                             userImage={require('../../images/user_image_1.jpg')}
                             message="Hello Jhon, I would like to invite you to participate ..."
                             count="3"
                         />
                         <ConversationBanner
                             name='Toney Herford'
+                            posted='2 days ago'                            
                             userImage={require('../../images/user_image_1.jpg')}
                             message="Hello Jhon, I would like to invite you to participate ..."
                             count="7"
                         />
                         <ConversationBanner
                             name='Toney Herford'
+                            posted='2 days ago'                            
                             userImage={require('../../images/user_image_1.jpg')}
                             message="Hello Jhon, I would like to invite you to participate ..."
                             count="2"
