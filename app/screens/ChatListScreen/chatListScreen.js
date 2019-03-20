@@ -15,6 +15,9 @@ import HeaderNavigationBar from "../../components/HeaderNavigationBar/HeaderNavi
 
 export default class ChatListScreen extends Component {
     
+    viewChat = () => {
+        this.props.navigation.navigate('MessageView')
+    }
     render() {
         return (
             <View style={styles.container}>
@@ -28,13 +31,13 @@ export default class ChatListScreen extends Component {
                             </View>
                         </View>
                         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={styles.horizontalScrollView}>
-                            <SuggestCardView name={"Cherryl"} userImage={require('../../images/user_image_1.jpg')} />
-                            <SuggestCardView name={"Cherryl"} userImage={require('../../images/user_image_1.jpg')} />
-                            <SuggestCardView name={"Cherryl"} userImage={require('../../images/user_image_1.jpg')} />
-                            <SuggestCardView name={"Cherryl"} userImage={require('../../images/user_image_1.jpg')} />
-                            <SuggestCardView name={"Cherryl"} userImage={require('../../images/user_image_1.jpg')} />
-                            <SuggestCardView name={"Cherryl"} userImage={require('../../images/user_image_1.jpg')} />
-                            <SuggestCardView name={"Cherryl"} userImage={require('../../images/user_image_1.jpg')} />
+                            <SuggestCardView onPress={this.viewChat} name={"Cherryl"} userImage={require('../../images/user_image_1.jpg')} />
+                            <SuggestCardView onPress={this.viewChat} name={"Cherryl"} userImage={require('../../images/user_image_1.jpg')} />
+                            <SuggestCardView onPress={this.viewChat} name={"Cherryl"} userImage={require('../../images/user_image_1.jpg')} />
+                            <SuggestCardView onPress={this.viewChat} name={"Cherryl"} userImage={require('../../images/user_image_1.jpg')} />
+                            <SuggestCardView onPress={this.viewChat} name={"Cherryl"} userImage={require('../../images/user_image_1.jpg')} />
+                            <SuggestCardView onPress={this.viewChat} name={"Cherryl"} userImage={require('../../images/user_image_1.jpg')} />
+                            <SuggestCardView onPress={this.viewChat} name={"Cherryl"} userImage={require('../../images/user_image_1.jpg')} />
                         </ScrollView>
                     </View>
                     <View style={styles.latestMessageArea}>
@@ -43,35 +46,40 @@ export default class ChatListScreen extends Component {
                         </View>
                         <ConversationBanner
                             name='Toney Herford'
-                            posted='2 days ago'                                                       
+                            posted='2 days ago'
+                            onPress={this.viewChat}                                                       
                             userImage={require('../../images/user_image_1.jpg')}
                             message="Hello Jhon, I would like to invite you to participate ..."
                             count="5"
                         />
                         <ConversationBanner
                             name='Toney Herford'
-                            posted='2 days ago'                            
+                            posted='2 days ago'
+                            onPress={this.viewChat}                            
                             userImage={require('../../images/user_image_1.jpg')}
                             message="Hello Jhon, I would like to invite you to participate ..."
                             count="2"
                         />
                         <ConversationBanner
                             name='Toney Herford'
-                            posted='2 days ago'                            
+                            posted='2 days ago'
+                            onPress={this.viewChat}                            
                             userImage={require('../../images/user_image_1.jpg')}
                             message="Hello Jhon, I would like to invite you to participate ..."
                             count="3"
                         />
                         <ConversationBanner
                             name='Toney Herford'
-                            posted='2 days ago'                            
+                            posted='2 days ago'
+                            onPress={this.viewChat}                            
                             userImage={require('../../images/user_image_1.jpg')}
                             message="Hello Jhon, I would like to invite you to participate ..."
                             count="7"
                         />
                         <ConversationBanner
                             name='Toney Herford'
-                            posted='2 days ago'                            
+                            posted='2 days ago'
+                            onPress={this.viewChat}                            
                             userImage={require('../../images/user_image_1.jpg')}
                             message="Hello Jhon, I would like to invite you to participate ..."
                             count="2"

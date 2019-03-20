@@ -11,7 +11,8 @@ navigationBar: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    width:"100%"
+    width:"100%",      
+    top: 0,
 },
 leftIconContainer: {
     marginLeft: 10,
