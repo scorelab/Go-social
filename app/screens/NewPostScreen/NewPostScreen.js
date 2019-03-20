@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { ScrollView, Text, View, TouchableOpacity, Image, PermissionsAndroid, ActivityIndicator , KeyboardAvoidingView } from "react-native";
 import { DetailView, Info } from "..";
-import HeaderNavigationBar from '../../components/HeaderNavigationBar/HeaderNavigationBar';
+import ModalHeaderNavigationBar from '../../components/ModalHeaderNavigationBar/modalHeaderNavigationBar';
 import styles from './style';
 import { Card, ListItem, Button } from 'react-native-elements';
 import { TextInput } from "react-native-gesture-handler";
@@ -150,7 +150,7 @@ export default class NewPostScreen extends Component {
     render() {
         return (
             <View style={styles.container}>        
-                <HeaderNavigationBar title={"New Post"} />
+                <ModalHeaderNavigationBar onPress={() => this.props.navigation.goBack()} title={"New Post"} />
                 {this.state.uploading == true ? (
                     <View style={styles.progresView}>
                         <Text style={styles.progressText}>{this.state.progress}%</Text>
@@ -158,7 +158,7 @@ export default class NewPostScreen extends Component {
                         <Text style={styles.progressText}>Publishing ...</Text>
                     </View>
                 ) : (
-                        <View>
+                        <View>                           
                             <View style={styles.row}>
                                 <Image style={styles.profileImage} source={require('../../images/user_image_1.jpg')} />
                                 <Text style={styles.nameText}>John Doe</Text>

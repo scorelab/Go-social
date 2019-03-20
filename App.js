@@ -54,16 +54,7 @@ const AppStack = createBottomTabNavigator(
     Messages : { screen: ChatListScreen },
     Map : { screen: MapScreen },
     Notifications : { screen: NotificationScreen },
-    Profile: { screen: ProfileScreen },  
-    // NewPost:{ 
-    //   screen:NewPostScreen,
-    //   defaultNavigationOptions: {        
-    //     tabBarVisible : false,
-    //     header: null,
-    //     headerLeft: null,
-    //     headerRight: null,
-    //   },
-    //}      
+    Profile: { screen: ProfileScreen }    
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({
@@ -112,7 +103,8 @@ const AuthStack = createStackNavigator(
         screen:AppStack
       }        
   },{
-      initialRouteName:"Login",        
+      initialRouteName:"Login", 
+      mode: 'modal',       
       headerMode:"none"
   }
 )
