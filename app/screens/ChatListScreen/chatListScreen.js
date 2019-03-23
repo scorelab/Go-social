@@ -18,10 +18,39 @@ export default class ChatListScreen extends Component {
         super(props);
         this.state = {
             chatList: [],
-            loaded: false
+            loaded: false,
+            userList: []
         }
     }
-    fetchchats = (userId) => {
+
+    fetchUsers = () => {
+        var that = this;
+        var userId = f.auth().currentUser.uid;
+        database.ref('users').orderByChild('posted').once('value', (function (snapshot) {
+            const exsist = (snapshot.val() != null);
+            if (exsist) {
+                data = snapshot.val();
+                // console.log(data);
+                var userList = that.state.userList;
+                for (var user in data) {
+                    let userObj = data[user];
+                    let uId = user;
+                    if (uId != userId) {
+                        userList.push({
+                            id: uId,
+                            url: userObj.avatar,
+                            name: userObj.firstName
+                        });
+                    }
+                }
+                console.log(that.state.userList)
+            }
+        }), function (errorObject) {
+            console.log("The read failed: " + errorObject.code);
+        });
+    }
+
+    fetchchats = () => {
 
         var that = this;
         var userId = f.auth().currentUser.uid;
@@ -67,43 +96,43 @@ export default class ChatListScreen extends Component {
 
     }
     timePlural = (s) => {
-        if(s==1){
+        if (s == 1) {
             return ' ago'
-        }else{
+        } else {
             return 's ago'
         }
     }
 
     timeConvertor = (timestamp) => {
         var a = new Date(timestamp * 1000);
-        var seconds = Math.floor((new Date() - a)/ 1000 );
+        var seconds = Math.floor((new Date() - a) / 1000);
 
-        var interval = Math.floor(seconds/31536000);
-        if(interval >= 1){
-            return interval+' Year'+this.timePlural(interval);
+        var interval = Math.floor(seconds / 31536000);
+        if (interval >= 1) {
+            return interval + ' Year' + this.timePlural(interval);
         }
 
-        var interval = Math.floor(seconds/2592000);
-        if(interval >= 1){
-            return interval+' Month'+this.timePlural(interval);
+        var interval = Math.floor(seconds / 2592000);
+        if (interval >= 1) {
+            return interval + ' Month' + this.timePlural(interval);
         }
 
-        var interval = Math.floor(seconds/86400);
-        if(interval >= 1){
-            return interval+' Day'+this.timePlural(interval);
+        var interval = Math.floor(seconds / 86400);
+        if (interval >= 1) {
+            return interval + ' Day' + this.timePlural(interval);
         }
 
-        var interval = Math.floor(seconds/3600);
-        if(interval >= 1){
-            return interval+' Hour'+this.timePlural(interval);
+        var interval = Math.floor(seconds / 3600);
+        if (interval >= 1) {
+            return interval + ' Hour' + this.timePlural(interval);
         }
 
-        var interval = Math.floor(seconds/60);
-        if(interval >= 1){
-            return interval+' Minute'+this.timePlural(interval);
+        var interval = Math.floor(seconds / 60);
+        if (interval >= 1) {
+            return interval + ' Minute' + this.timePlural(interval);
         }
 
-        return Math.floor(seconds)+' Second'+this.timePlural(seconds)
+        return Math.floor(seconds) + ' Second' + this.timePlural(seconds)
     }
 
 
@@ -114,9 +143,10 @@ export default class ChatListScreen extends Component {
         return this.state.chatList.map((items, index) => {
             return (
                 <ConversationBanner
+                    key={items.id}
                     name={items.name}
                     posted={this.timeConvertor(items.posted)}
-                    onPress={() => this.props.navigation.navigate('MessageView', {userId: items.id})}
+                    onPress={() => this.props.navigation.navigate('MessageView', { userId: items.id })}
                     userImage={require('../../images/user_image_1.jpg')}
                     message={items.lastMessage}
                     count="2"
@@ -127,9 +157,10 @@ export default class ChatListScreen extends Component {
     }
     componentDidMount = () => {
         this.fetchchats()
+        this.fetchUsers()
     }
     viewChat = (userId) => {
-        this.props.navigation.navigate('MessageView', {userId: userId})
+        this.props.navigation.navigate('MessageView', { userId: userId })
     }
     render() {
         return (
