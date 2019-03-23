@@ -267,7 +267,7 @@ export default class messaginScreen extends Component {
                     <MyMessage message={"I am fine Thank You"} posted={"2 min ago"} />
                     <FriendMessage message={"Hello How Are You"} posted={"2 min ago"} />
                     <MyMessage message={"I am fine Thank You"} posted={"2 min ago"} />
-                    {/* {this.renderMessages()} */}
+                    {this.renderMessages()}
                 </ScrollView>
 
                 <KeyboardAvoidingView enabled={true} behavior={'height'}>
