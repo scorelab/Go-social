@@ -181,7 +181,7 @@ export default class SignUpScreen extends Component {
             displayName: name
           })
           .then(
-            function () {
+            function () {              
               console.log("Updated User Data..");
             },
             function (error) {
