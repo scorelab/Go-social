@@ -23,7 +23,6 @@ export default class ChatListScreen extends Component {
             <View style={styles.container}>
                 <HeaderNavigationBar title={"Messages"} {...this.props} />
                 <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsVerticalScrollIndicator={false}>
-                    {/* <Text style={styles.headerText}>MESSAGES</Text> */}
                     <View style={styles.suggestUserArea} >
                         <View style={styles.latestMessageArea}>
                             <View style={styles.subHeaderArea}>
