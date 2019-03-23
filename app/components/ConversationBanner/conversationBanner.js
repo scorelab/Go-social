@@ -32,7 +32,7 @@ export default class CardView extends Component {
                             <Text style={styles.nameText}>{this.props.name}</Text>
                             <Text style={styles.nameText}>{this.props.posted}</Text>                            
                         </View>                        
-                        <View style={styles.meaasageRow}><Text style={styles.meaasageText}>{this.props.message}</Text></View>
+                        <View style={styles.meaasageRow}><Text numberOfLines={2} style={styles.meaasageText}>{this.props.message}</Text></View>
                     </View>
                 </TouchableOpacity>
             </View>

@@ -15,6 +15,7 @@ export default class messaginScreen extends Component {
             newMessageId: this.uniqueId(),
             newChatId: this.uniqueId(),
             loaded: false,
+            loggedin: false
         }
     }
 
@@ -28,9 +29,9 @@ export default class messaginScreen extends Component {
 
     check = () => {
         var params = this.props.navigation.state.params;
-        console.log("Friend ID IS"+params.userId)
+        console.log("Friend ID IS" + params.userId)
         if (params) {
-            
+
             if (params.userId) {
                 this.setState({
                     friendId: params.userId
@@ -46,7 +47,7 @@ export default class messaginScreen extends Component {
                 });
 
                 this.fetchMessages(params.userId);
-                
+
             }
         }
 
@@ -141,62 +142,64 @@ export default class messaginScreen extends Component {
     }
 
     sendMessage = () => {
-        
-        var that = this;
-        var date = Date.now();
-        var posted = Math.floor(date / 1000)
-        var userId = f.auth().currentUser.uid;        
-        database.ref('users').child(userId).child('userChats').child(this.state.friendId).once('value').then(function (snapshot) {
-            const exist = (snapshot.exists());
-            if (exist) {
-                data = snapshot.val();
-                let cId = (Object.keys(data)[0]);
-                var newMessage = {
-                    sendby: userId,
-                    message: that.state.newMessage,
-                    status: 0,
-                    posted: posted
+        if (this.state.loggedin == true) {
+
+            var that = this;
+            var date = Date.now();
+            var posted = Math.floor(date / 1000)
+            var userId = f.auth().currentUser.uid;
+            database.ref('users').child(userId).child('userChats').child(this.state.friendId).once('value').then(function (snapshot) {
+                const exist = (snapshot.exists());
+                if (exist) {
+                    data = snapshot.val();
+                    let cId = (Object.keys(data)[0]);
+                    var newMessage = {
+                        sendby: userId,
+                        message: that.state.newMessage,
+                        status: 0,
+                        posted: posted
+
+                    }
+                    that.setState({
+                        newMessageId: that.uniqueId(),
+                    })
+                    database.ref('/chatMessages/' + cId + '/' + that.state.newMessageId).set(newMessage);
+                    database.ref('/users/' + userId + '/userChats/' + that.state.friendId + '/' + cId).update({ posted: posted, lastMessage: that.state.newMessage });
+                    database.ref('/users/' + that.state.friendId + '/userChats/' + userId + '/' + cId).update({ posted: posted, lastMessage: that.state.newMessage });
+                    that.setState({
+                        newMessage: '',
+                    })
+                } else {
+                    // alert("no HIll")
+                    var chatUserf = {
+                        lastMessage: that.state.newMessage,
+                        posted: posted,
+                        friend: that.state.friendId,
+                        name: that.state.friendName,
+                    }
+
+                    var chatUser = {
+                        lastMessage: that.state.newMessage,
+                        posted: posted,
+                        friend: userId,
+                        name: f.auth().currentUser.displayName
+                    }
+                    var newMessage = {
+                        sendby: userId,
+                        message: that.state.newMessage,
+                        status: 0,
+                        posted: posted
+
+                    }
+                    database.ref('/users/' + userId + '/userChats/' + that.state.friendId + '/' + that.state.newChatId).set(chatUserf);
+                    database.ref('/users/' + that.state.friendId + '/userChats/' + userId + '/' + that.state.newChatId).set(chatUser);
+                    database.ref('/chatMessages/' + that.state.newChatId + '/' + that.state.newMessageId).set(newMessage);
 
                 }
-                that.setState({
-                    newMessageId: that.uniqueId(),
-                })
-                database.ref('/chatMessages/' + cId + '/' + that.state.newMessageId).set(newMessage);
-                database.ref('/users/' + userId + '/userChats/' + that.state.friendId + '/' + cId).update({ posted: posted, lastMessage: that.state.newMessage });
-                database.ref('/users/' + that.state.friendId + '/userChats/' + userId + '/' + cId).update({ posted: posted, lastMessage: that.state.newMessage });
-                that.setState({
-                    newMessage: '',
-                })
-            } else {
-                // alert("no HIll")
-                var chatUserf = {
-                    lastMessage: that.state.newMessage,
-                    posted: posted,
-                    friend: that.state.friendId,
-                    name: that.state.friendName,                    
-                }
+            }).catch()
+            that.textInput.clear()
+        }
 
-                var chatUser = {
-                    lastMessage: that.state.newMessage,
-                    posted: posted,
-                    friend: userId,
-                    name: f.auth().currentUser.displayName                    
-                }
-                var newMessage = {
-                    sendby: userId,
-                    message: that.state.newMessage,
-                    status: 0,
-                    posted: posted
-
-                }
-                database.ref('/users/' + userId + '/userChats/' + that.state.friendId + '/' + that.state.newChatId).set(chatUserf);
-                database.ref('/users/' + that.state.friendId + '/userChats/' + userId + '/' + that.state.newChatId).set(chatUser);
-                database.ref('/chatMessages/' + that.state.newChatId + '/' + that.state.newMessageId).set(newMessage);
-
-            }
-        }).catch()
-        that.textInput.clear()
-        
     }
 
     componentDidMount = () => {
@@ -205,8 +208,7 @@ export default class messaginScreen extends Component {
             if (user) {
                 that.setState({
                     loggedin: true,
-                });
-                console.log("Hello")
+                });                
                 that.check()
                 var userId = f.auth().currentUser.uid;
                 database.ref('users').child(userId).child('name').once('value').then(function (snapshot) {
@@ -216,7 +218,7 @@ export default class messaginScreen extends Component {
                     that.setState({
                         name: data
                     });
-                });                
+                });
             } else {
                 that.setState({
                     loggedin: false
@@ -225,16 +227,16 @@ export default class messaginScreen extends Component {
         })
 
     }
-    renderMessages = () => {        
+    renderMessages = () => {
         this.state.messageList.sort((a, b) => (a.posted > b.posted) ? 1 : ((b.posted > a.posted) ? -1 : 0));
-        
+
         return this.state.messageList.map((item, index) => {
             return (
                 <View>
                     {item.sendby != f.auth().currentUser.uid ? (
-                        <FriendMessage message={item.message} posted={this.timeConvertor(item.posted)} />                        
+                        <FriendMessage message={item.message} posted={this.timeConvertor(item.posted)} />
                     ) : (
-                        <MyMessage message={item.message} posted={this.timeConvertor(item.posted)}  /> 
+                            <MyMessage message={item.message} posted={this.timeConvertor(item.posted)} />
                         )}
                 </View>
             )
@@ -277,7 +279,7 @@ export default class messaginScreen extends Component {
                             style={styles.messageInput}
                             placeholder={'Enter Message Here'}
                             editable={true}
-                            multiline={false}
+                            multiline={true}
                             maxlength={100}
                             onChangeText={(text) => this.setState({ newMessage: text })}
                             ref={input => { this.textInput = input }}

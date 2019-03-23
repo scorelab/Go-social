@@ -19,7 +19,8 @@ export default class ChatListScreen extends Component {
         this.state = {
             chatList: [],
             loaded: false,
-            userList: []
+            userList: [],
+            loggedin: false
         }
     }
 
@@ -49,50 +50,68 @@ export default class ChatListScreen extends Component {
             console.log("The read failed: " + errorObject.code);
         });
     }
+    renderUserList = () => {
+        if (this.state.loggedin == true) {
+            this.state.userList.sort((a, b) => (a.posted > b.posted) ? 1 : ((b.posted > a.posted) ? -1 : 0));
+            this.state.userList.reverse();
 
+            return this.state.chatList.map((items, index) => {
+                return (
+                    <SuggestCardView
+                        key={items.id}
+                        onPress={() => this.props.navigation.navigate('MessageView', { userId: items.id })}
+                        name={items.name}
+                        userImage={require('../../images/user_image_1.jpg')}
+                    />
+                )
+            });
+        }
+
+    }
     fetchchats = () => {
+        if (this.state.loggedin == true) {
+            var that = this;
+            var userId = f.auth().currentUser.uid;
+            database.ref('users').child(userId).child('userChats').on('value', (function (snapshot) {
+                const exist = (snapshot.exists());
+                that.setState({
+                    chatList: [],
+                })
+                if (exist) {
+                    var data = snapshot.val();
+                    const exsist = (snapshot.exists());
+                    if (exsist) {
 
-        var that = this;
-        var userId = f.auth().currentUser.uid;
-        database.ref('users').child(userId).child('userChats').on('value', (function (snapshot) {
-            const exist = (snapshot.exists());
-            that.setState({
-                chatList: [],
-            })
-            if (exist) {
-                var data = snapshot.val();
-                const exsist = (snapshot.exists());
-                if (exsist) {
-
-                    var data = snapshot.val()
-                    var chatList = that.state.chatList;
-                    Object.keys(data).forEach(key => {
-                        var tempdata = data[key];
-                        Object.keys(tempdata).forEach(key => {
-                            chatList.push({
-                                posted: tempdata[key].posted,
-                                lastMessage: tempdata[key].lastMessage,
-                                name: tempdata[key].name,
-                                avatar: tempdata[key].avatar,
-                                id: tempdata[key].friend
-                            })
+                        var data = snapshot.val()
+                        var chatList = that.state.chatList;
+                        Object.keys(data).forEach(key => {
+                            var tempdata = data[key];
+                            Object.keys(tempdata).forEach(key => {
+                                chatList.push({
+                                    posted: tempdata[key].posted,
+                                    lastMessage: tempdata[key].lastMessage,
+                                    name: tempdata[key].name,
+                                    avatar: tempdata[key].avatar,
+                                    id: tempdata[key].friend
+                                })
+                            });
                         });
-                    });
 
-                    console.log(chatList);
-                    that.setState({
-                        loaded: true
-                    })
-                } else {
-                    that.setState({
-                        chatList: [],
-                        loaded: true
-                    })
+                        console.log(chatList);
+                        that.setState({
+                            loaded: true
+                        })
+                    } else {
+                        that.setState({
+                            chatList: [],
+                            loaded: true
+                        })
+                    }
                 }
-            }
-        }), function (errorObject) {
-            console.log("The read failed: " + errorObject.code);
-        });
+            }), function (errorObject) {
+                console.log("The read failed: " + errorObject.code);
+            });
+        }
 
     }
     timePlural = (s) => {
@@ -137,27 +156,38 @@ export default class ChatListScreen extends Component {
 
 
     renderMessageList = () => {
-        this.state.chatList.sort((a, b) => (a.posted > b.posted) ? 1 : ((b.posted > a.posted) ? -1 : 0));
-        this.state.chatList.reverse();
+        if (this.state.loggedin == true) {
+            this.state.chatList.sort((a, b) => (a.posted > b.posted) ? 1 : ((b.posted > a.posted) ? -1 : 0));
+            this.state.chatList.reverse();
 
-        return this.state.chatList.map((items, index) => {
-            return (
-                <ConversationBanner
-                    key={items.id}
-                    name={items.name}
-                    posted={this.timeConvertor(items.posted)}
-                    onPress={() => this.props.navigation.navigate('MessageView', { userId: items.id })}
-                    userImage={require('../../images/user_image_1.jpg')}
-                    message={items.lastMessage}
-                    count="2"
-                />
-            )
-        });
-
+            return this.state.chatList.map((items, index) => {
+                return (
+                    <ConversationBanner
+                        key={items.id}
+                        name={items.name}
+                        posted={this.timeConvertor(items.posted)}
+                        onPress={() => this.props.navigation.navigate('MessageView', { userId: items.id })}
+                        userImage={require('../../images/user_image_1.jpg')}
+                        message={items.lastMessage}
+                        count="2"
+                    />
+                )
+            });
+        }
     }
     componentDidMount = () => {
-        this.fetchchats()
-        this.fetchUsers()
+        var that = this;
+        f.auth().onAuthStateChanged(function (user) {
+            if (user) {
+                that.setState({
+                    loggedin: true,
+                });
+                that.fetchchats()
+                that.fetchUsers()
+            }
+        })
+
+
     }
     viewChat = (userId) => {
         this.props.navigation.navigate('MessageView', { userId: userId })
@@ -174,6 +204,7 @@ export default class ChatListScreen extends Component {
                             </View>
                         </View>
                         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={styles.horizontalScrollView}>
+                            {this.renderUserList()}
                             <SuggestCardView onPress={this.viewChat} name={"Cherryl"} userImage={require('../../images/user_image_1.jpg')} />
                             <SuggestCardView onPress={this.viewChat} name={"Cherryl"} userImage={require('../../images/user_image_1.jpg')} />
                             <SuggestCardView onPress={this.viewChat} name={"Cherryl"} userImage={require('../../images/user_image_1.jpg')} />
