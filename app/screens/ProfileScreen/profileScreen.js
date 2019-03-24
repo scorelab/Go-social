@@ -1,9 +1,11 @@
 import React, { Component } from "react";
-import { Text, View, TextInput, ScrollView, Image, Button, AsyncStorage } from "react-native";
+import { Text, View, TextInput, ScrollView, Image,PermissionsAndroid , Button, AsyncStorage } from "react-native";
 import { Info, DeatilView } from "..";
 import HeaderNavigationBar from "../../components/HeaderNavigationBar/HeaderNavigationBar";
 import styles from './style'
-import { f, auth } from "../../../config/config.js";
+import { f, auth, storage, database } from "../../../config/config.js";
+import { Avatar } from 'react-native-elements';
+import ImagePicker from "react-native-image-picker";
 
 export default class ProfileScreen extends Component {
     constructor(props) {
@@ -30,6 +32,114 @@ export default class ProfileScreen extends Component {
                 })
             }
         });
+        this.requestCameraPermission();
+    }
+
+    requestCameraPermission = async () => {
+        try {
+            const granted = await PermissionsAndroid.request(
+                PermissionsAndroid.PERMISSIONS.CAMERA,
+                {
+                    title: 'Go Social Camera Permission',
+                    message:
+                        'Go Social App needs access to your camera ' +
+                        'so you can take awesome pictures.',
+                    buttonNeutral: 'Ask Me Later',
+                    buttonNegative: 'Cancel',
+                    buttonPositive: 'OK',
+                },
+            );
+            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                console.log('You can use the camera');
+            } else {
+                console.log('Camera permission denied');
+            }
+        } catch (err) {
+            console.warn(err);
+        }
+    }
+
+    _handleButtonPress = () => {
+        console.log("User hihi!");
+        ImagePicker.showImagePicker({ title: "Pick an Image", maxWidth: 800, maxHeight: 600 }, res => {
+            if (res.didCancel) {
+                console.log("User cancelled!");
+            } else if (res.error) {
+                console.log("Error", res.error);
+            } else {
+                this.setState({
+                    pickedImage: res.uri,
+                    imageSelected: true
+                });
+                this.uploadImage();
+            }
+        });
+
+    };
+
+    uploadImage = async () => {
+        console.log("Uploading Image!!!!");
+        var uri = this.state.pickedImage
+        var that = this;
+        var userId = f.auth().currentUser.uid;
+        var re = /(?:\.([^.]+))?$/;
+        var ext = re.exec(uri)[1];
+
+        this.setState({
+            currentFileType: ext,
+            uploading: true
+        });
+        const blob = await new Promise((resolve, reject) => {
+            const xhr = new XMLHttpRequest();
+            xhr.onload = function () {
+                resolve(xhr.response);
+            };
+            xhr.onerror = function (e) {
+                console.log(e);
+                reject(new TypeError('Network request failed'));
+            };
+            xhr.responseType = 'blob';
+            xhr.open('GET', uri, true);
+            xhr.send(null);
+        });
+        var filePath = userId + '.' + that.state.currentFileType;
+
+        var uploadTask = storage.ref('user/img').child(filePath).put(blob);
+
+        uploadTask.on('state_changed', function (snapshot) {
+            let progress = ((snapshot.bytesTransferred / snapshot.totalBytes) * 100).toFixed(0);
+            that.setState({
+                progress: progress
+            });
+        }, function (error) {
+            console.log(error);
+        }, function () {
+            that.setState({
+                progress: 100
+            });
+            uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+                
+                that.setDatabse(downloadURL);
+            })
+        })
+
+    }
+
+    setDatabse = (imageURL) => {
+        var user = f.auth().currentUser;
+        //var userID = f.auth().currentUser.uid;
+        //database.ref('/users/' + userID).set({"avatar":imageURL});
+        console.log("User: "+user);
+        user.updateProfile({
+            photoURL: imageURL
+        });
+        alert('SuccessFully Published!!');
+        this.setState({
+            imageSelected: false,
+            uploading: false,
+            progress: 0,
+            caption: ''
+        });
     }
 
     render() {
@@ -41,7 +151,16 @@ export default class ProfileScreen extends Component {
                         <View style={styles.coverImageArea}>
                             <Image style={styles.coverImage} source={require('../../images/cover_photo.jpeg')} />
                         </View>
-                        <Image style={styles.profileImage} source={require('../../images/user_image_1.jpg')} />
+                        <Avatar
+                            onPress={this._handleButtonPress}
+                            rounded
+                            style={styles.profileImage}
+                            source={{
+                                uri: f.auth().currentUser.photoURL
+                            }}
+                            showEditButton
+                        />
+                        {/* <Image style={styles.profileImage} source={require('../../images/user_image_1.jpg')} /> */}
                         <View style={styles.contentArea}>
                             <Text style={styles.nameFont}>John Doe</Text>
                             <Text style={styles.cityFont}>Los Angeles</Text>
