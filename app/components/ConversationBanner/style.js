@@ -14,7 +14,8 @@ export default StyleSheet.create({
         alignItems:"center",
         justifyContent:"flex-start",
         // marginBottom:20,
-        marginTop:10
+        marginTop:10,
+        flexWrap:'wrap'
     },
     cardHedear:{
         marginLeft:10,
@@ -37,7 +38,8 @@ export default StyleSheet.create({
         paddingLeft:8,
         // width:deviceWidth * 0.8,
         flexDirection:"column",
-        // backgroundColor:'green'
+        // backgroundColor:'green',
+        flexWrap:'nowrap'
     },
     userNameRow:{
         flex:0.4,

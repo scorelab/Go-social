@@ -18,7 +18,9 @@ export default StyleSheet.create({
     },
     messageArea: {
         flexDirection: "row",
-        justifyContent: "space-between",        
+        justifyContent: "space-between", 
+        maxHeight: 120,
+        height:'auto'       
     },
     messageInput: {
         borderRadius: 5,
@@ -26,7 +28,9 @@ export default StyleSheet.create({
         marginHorizontal: 5,
         marginVertical: 5,
         padding: 5,
-        width: "80%"
+        width: "80%",
+        maxHeight: 120,
+        height:'auto'
     },
     sendArea: {
         alignSelf: "center",
