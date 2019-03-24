@@ -14,12 +14,14 @@ export default StyleSheet.create({
         marginRight:10,
         alignItems:"center",
         justifyContent:"center",
+        flexWrap:'wrap'
     },
     userImage:{
         height:60,
         width:60,
         borderRadius:30,
-        marginBottom:5
+        marginBottom:5,
+        alignSelf:'center'
     },
     detailRow:{
         width:"100%",
