@@ -60,7 +60,7 @@ export default class ProfileScreen extends Component {
     }
 
     _handleButtonPress = () => {
-        console.log("User hihi!");
+        //console.log("User hihi!");
         ImagePicker.showImagePicker({ title: "Pick an Image", maxWidth: 800, maxHeight: 600 }, res => {
             if (res.didCancel) {
                 console.log("User cancelled!");
@@ -127,8 +127,8 @@ export default class ProfileScreen extends Component {
 
     setDatabse = (imageURL) => {
         var user = f.auth().currentUser;
-        //var userID = f.auth().currentUser.uid;
-        //database.ref('/users/' + userID).set({"avatar":imageURL});
+        var userID = f.auth().currentUser.uid;
+        database.ref('/users/' + userID).update({"avatar":imageURL});
         console.log("User: "+user);
         user.updateProfile({
             photoURL: imageURL
