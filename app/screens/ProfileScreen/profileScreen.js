@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Text, View, TextInput, ScrollView, Image,PermissionsAndroid , Button, AsyncStorage } from "react-native";
+import { Text, View, TextInput, ScrollView, Image,
+    PermissionsAndroid , Button, AsyncStorage, ActivityIndicator  } from "react-native";
 import { Info, DeatilView } from "..";
 import HeaderNavigationBar from "../../components/HeaderNavigationBar/HeaderNavigationBar";
 import styles from './style'
@@ -16,6 +17,8 @@ export default class ProfileScreen extends Component {
             email: "",
             contact: "",
             address: "",
+            avatar: "",
+            isLoading: true
         };
     }
 
@@ -45,7 +48,25 @@ export default class ProfileScreen extends Component {
                             address: snapshot.child('address').val()
                         })                        
                     }
+                    if (snapshot.child('avatar').val != null){
+                        that.setState({
+                            avatar: snapshot.child('avatar').val()
+                        })
+                    }
+                    that.setState({
+                        isLoading: false
+                    })
 
+                })
+            }else{
+                that.setState({
+                    firstName: 'John',
+                    lastName: 'Doe',
+                    address: 'Los Angeles',
+                    avatar: '../../images/user_image_1.jpg'
+                })
+                this.setState({
+                    isLoading: false
                 })
             }
         });
@@ -155,7 +176,8 @@ export default class ProfileScreen extends Component {
             imageSelected: false,
             uploading: false,
             progress: 0,
-            caption: ''
+            caption: '',
+            avatar: imageURL
         });
     }
 
@@ -173,18 +195,25 @@ export default class ProfileScreen extends Component {
                             rounded
                             style={styles.profileImage}
                             source={{
-                                uri: f.auth().currentUser.photoURL
+                                uri: this.state.avatar
                             }}
                             showEditButton
                         />
                         {/* <Image style={styles.profileImage} source={require('../../images/user_image_1.jpg')} /> */}
                         <View style={styles.contentArea}>
-                            <Text style={styles.nameFont}>John Doe</Text>
-                            <Text style={styles.cityFont}>Los Angeles</Text>
+                            <Text style={styles.nameFont}>{this.state.firstName +" "+ this.state.lastName}</Text>
+                            <Text style={styles.cityFont}>{this.state.add}</Text>
                         </View>
                         <Button title="Sign Out" onPress={this.logout} />
                     </View>
                     <View>
+                        {this.state.isLoading && (
+                            <ActivityIndicator
+                                style={{ height: 80 }}
+                                color="#C00"
+                                size="large"
+                            />
+                        )}
                         <TextInput
                             placeholder="First Name"
                             placeholderTextColor="rgba(255,255,255,0.8)"
