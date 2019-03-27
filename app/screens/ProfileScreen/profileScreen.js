@@ -50,12 +50,15 @@ export default class ProfileScreen extends Component {
                         that.setState({
                             avatar: snapshot.child('avatar').val()
                         })
-                    }else{
-                        that.setState({
-                            avatar: '../../images/user_image_1.jpg'
-                        })
                     }
 
+                })
+            }else{
+                that.setState({
+                    firstName: 'John',
+                    lastName: 'Doe',
+                    address: 'Los Angeles',
+                    avatar: '../../images/user_image_1.jpg'
                 })
             }
         });
@@ -191,7 +194,7 @@ export default class ProfileScreen extends Component {
                         {/* <Image style={styles.profileImage} source={require('../../images/user_image_1.jpg')} /> */}
                         <View style={styles.contentArea}>
                             <Text style={styles.nameFont}>{this.state.firstName +" "+ this.state.lastName}</Text>
-                            <Text style={styles.cityFont}>{this.state.address}</Text>
+                            <Text style={styles.cityFont}>{this.state.add}</Text>
                         </View>
                         <Button title="Sign Out" onPress={this.logout} />
                     </View>
