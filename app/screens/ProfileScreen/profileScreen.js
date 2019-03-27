@@ -16,6 +16,7 @@ export default class ProfileScreen extends Component {
             email: "",
             contact: "",
             address: "",
+            avatar: "",
         };
     }
 
@@ -44,6 +45,15 @@ export default class ProfileScreen extends Component {
                         that.setState({
                             address: snapshot.child('address').val()
                         })                        
+                    }
+                    if (snapshot.child('avatar').val != null){
+                        that.setState({
+                            avatar: snapshot.child('avatar').val()
+                        })
+                    }else{
+                        that.setState({
+                            avatar: '../../images/user_image_1.jpg'
+                        })
                     }
 
                 })
@@ -155,7 +165,8 @@ export default class ProfileScreen extends Component {
             imageSelected: false,
             uploading: false,
             progress: 0,
-            caption: ''
+            caption: '',
+            avatar: imageURL
         });
     }
 
@@ -173,14 +184,14 @@ export default class ProfileScreen extends Component {
                             rounded
                             style={styles.profileImage}
                             source={{
-                                uri: f.auth().currentUser.photoURL
+                                uri: this.state.avatar
                             }}
                             showEditButton
                         />
                         {/* <Image style={styles.profileImage} source={require('../../images/user_image_1.jpg')} /> */}
                         <View style={styles.contentArea}>
-                            <Text style={styles.nameFont}>John Doe</Text>
-                            <Text style={styles.cityFont}>Los Angeles</Text>
+                            <Text style={styles.nameFont}>{this.state.firstName +" "+ this.state.lastName}</Text>
+                            <Text style={styles.cityFont}>{this.state.address}</Text>
                         </View>
                         <Button title="Sign Out" onPress={this.logout} />
                     </View>
