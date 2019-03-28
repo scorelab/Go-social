@@ -41,6 +41,7 @@ config/config.js
 
 ios/Go_social.xcodeproj/project.pbxproj
 .vscode/
+yarn.lock
 
 # BUCK
 buck-out/

@@ -1,0 +1,18 @@
+### System Requirements ###
+
+React-Netive Version = 0.58.6
+Node Version >= 10.15.3
+npm Version >= 6.4.1
+
+Python Version >= 2
+java Version >= jdk verion 8 or up
+
+### Android Based Development Requirements ###
+
+Android SDK
+Android SDK Platform (28)
+
+
+### iOS Based Development Requirements ###
+
+Xcode
