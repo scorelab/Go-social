@@ -156,6 +156,7 @@ export default class LoginScreen extends Component {
                   placeholderTextColor="rgba(255,255,255,0.7)"
                   style={styles.input}
                   onChangeText={text => this.setState({ email: text })}
+                  ref={input => { this.textInput = input }}
                 />
                 <TextInput
                   placeholder="Pasword"
@@ -163,6 +164,7 @@ export default class LoginScreen extends Component {
                   placeholderTextColor="rgba(255,255,255,0.7)"
                   style={styles.input}
                   onChangeText={text => this.setState({ Password: text })}
+                  ref={input => { this.textInput = input }}
                 />
               </View>
             </KeyboardAvoidingView>
