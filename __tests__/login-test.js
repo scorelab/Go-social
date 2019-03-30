@@ -1,5 +1,5 @@
 import React from 'react';
-import loginScreen from '../app/screens/LoginScreen/loginScreen';
+import LoginScreen from '../app/screens/LoginScreen/loginScreen';
 
 import renderer from 'react-test-renderer';
 
