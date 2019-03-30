@@ -27,41 +27,40 @@ export default class ChatListScreen extends Component {
     fetchUsers = () => {
         var that = this;
         var userId = f.auth().currentUser.uid;
-        database.ref('users').orderByChild('posted').once('value', (function (snapshot) {
+        database.ref('users').once('value', (function (snapshot) {
             const exsist = (snapshot.val() != null);
             if (exsist) {
-                data = snapshot.val();
-                // console.log(data);
+                data = snapshot.val();                
                 var userList = that.state.userList;
                 for (var user in data) {
                     let userObj = data[user];
                     let uId = user;
                     if (uId != userId) {
                         userList.push({
-                            id: uId,
-                            url: userObj.avatar,
-                            name: userObj.firstName
+                            id: uId,                            
+                            name: userObj.firstName,
+                            avatar: userObj.avatar
                         });
                     }
                 }
-                console.log(that.state.userList)
+                that.setState({
+                    userList:userList
+                })
             }
         }), function (errorObject) {
             console.log("The read failed: " + errorObject.code);
         });
     }
-    renderUserList = () => {
-        if (this.state.loggedin == true) {
-            this.state.userList.sort((a, b) => (a.posted > b.posted) ? 1 : ((b.posted > a.posted) ? -1 : 0));
-            this.state.userList.reverse();
-
-            return this.state.chatList.map((items, index) => {
+    renderUserList = () => {            
+        if (this.state.loggedin == true) {   
+            console.log(this.state.userList)                 
+            return this.state.userList.map((items, index) => {                                  
                 return (
                     <SuggestCardView
                         key={items.id}
                         onPress={() => this.props.navigation.navigate('MessageView', { userId: items.id })}
                         name={items.name}
-                        userImage={require('../../images/user_image_1.jpg')}
+                        userImage={{uri: items.avatar}}
                     />
                 )
             });
@@ -81,7 +80,6 @@ export default class ChatListScreen extends Component {
                     var data = snapshot.val();
                     const exsist = (snapshot.exists());
                     if (exsist) {
-
                         var data = snapshot.val()
                         var chatList = that.state.chatList;
                         Object.keys(data).forEach(key => {
@@ -96,7 +94,6 @@ export default class ChatListScreen extends Component {
                                 })
                             });
                         });
-
                         console.log(chatList);
                         that.setState({
                             loaded: true
@@ -167,7 +164,7 @@ export default class ChatListScreen extends Component {
                         name={items.name}
                         posted={this.timeConvertor(items.posted)}
                         onPress={() => this.props.navigation.navigate('MessageView', { userId: items.id })}
-                        userImage={require('../../images/user_image_1.jpg')}
+                        userImage={{uri : items.avatar}}
                         message={items.lastMessage}
                         count="2"
                     />
@@ -182,8 +179,8 @@ export default class ChatListScreen extends Component {
                 that.setState({
                     loggedin: true,
                 });
-                that.fetchchats()
                 that.fetchUsers()
+                that.fetchchats()                
             }
         })
 
@@ -203,6 +200,7 @@ export default class ChatListScreen extends Component {
                                 <Text style={styles.subHeaderText}>Suggestions</Text>
                             </View>
                         </View>
+                        
                         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={styles.horizontalScrollView}>
                             {this.renderUserList()}
                             <SuggestCardView onPress={this.viewChat} name={"Cherryl"} userImage={require('../../images/user_image_1.jpg')} />

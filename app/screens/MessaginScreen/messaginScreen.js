@@ -15,7 +15,8 @@ export default class messaginScreen extends Component {
             newMessageId: this.uniqueId(),
             newChatId: this.uniqueId(),
             loaded: false,
-            loggedin: false
+            loggedin: false,
+            friendId:""
         }
     }
 
@@ -31,7 +32,6 @@ export default class messaginScreen extends Component {
         var params = this.props.navigation.state.params;
         console.log("Friend ID IS" + params.userId)
         if (params) {
-
             if (params.userId) {
                 this.setState({
                     friendId: params.userId
@@ -43,6 +43,14 @@ export default class messaginScreen extends Component {
                     console.log(data)
                     that.setState({
                         friendName: data
+                    });
+                });
+                database.ref('users').child(params.userId).child('avatar').once('value').then(function (snapshot) {
+                    const exist = (snapshot.val() != null);
+                    if (exist) data = snapshot.val();
+                    console.log(data)
+                    that.setState({
+                        friendAvatar: data
                     });
                 });
 
@@ -66,27 +74,27 @@ export default class messaginScreen extends Component {
         var seconds = Math.floor((new Date() - a) / 1000);
 
         var interval = Math.floor(seconds / 31536000);
-        if (interval > 1) {
+        if (interval >= 1) {
             return interval + ' Year' + this.timePlural(interval);
         }
 
         var interval = Math.floor(seconds / 2592000);
-        if (interval > 1) {
+        if (interval >= 1) {
             return interval + ' Month' + this.timePlural(interval);
         }
 
         var interval = Math.floor(seconds / 86400);
-        if (interval > 1) {
+        if (interval >= 1) {
             return interval + ' Day' + this.timePlural(interval);
         }
 
         var interval = Math.floor(seconds / 3600);
-        if (interval > 1) {
+        if (interval >= 1) {
             return interval + ' Hour' + this.timePlural(interval);
         }
 
         var interval = Math.floor(seconds / 60);
-        if (interval > 1) {
+        if (interval >= 1) {
             return interval + ' Minute' + this.timePlural(interval);
         }
 
@@ -142,8 +150,7 @@ export default class messaginScreen extends Component {
     }
 
     sendMessage = () => {
-        if (this.state.loggedin == true) {
-
+        if (this.state.loggedin == true && this.state.newMessage != "" && this.state.friendId != "[object Object]" ) {
             var that = this;
             var date = Date.now();
             var posted = Math.floor(date / 1000)
@@ -169,20 +176,20 @@ export default class messaginScreen extends Component {
                     that.setState({
                         newMessage: '',
                     })
-                } else {
-                    // alert("no HIll")
+                } else {                    
                     var chatUserf = {
                         lastMessage: that.state.newMessage,
                         posted: posted,
                         friend: that.state.friendId,
                         name: that.state.friendName,
+                        avatar: that.state.friendAvatar
                     }
-
                     var chatUser = {
                         lastMessage: that.state.newMessage,
                         posted: posted,
                         friend: userId,
-                        name: f.auth().currentUser.displayName
+                        name: f.auth().currentUser.displayName,
+                        avatar: that.state.avatar
                     }
                     var newMessage = {
                         sendby: userId,
@@ -217,6 +224,14 @@ export default class messaginScreen extends Component {
                     console.log(data)
                     that.setState({
                         name: data
+                    });
+                });
+                database.ref('users').child(userId).child('avatar').once('value').then(function (snapshot) {
+                    const exist = (snapshot.val() != null);
+                    if (exist) data = snapshot.val();
+                    console.log(data)
+                    that.setState({
+                        avatar: data
                     });
                 });
             } else {
