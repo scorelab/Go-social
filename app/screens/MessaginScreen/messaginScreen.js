@@ -45,6 +45,14 @@ export default class messaginScreen extends Component {
                         friendName: data
                     });
                 });
+                database.ref('users').child(params.userId).child('avatar').once('value').then(function (snapshot) {
+                    const exist = (snapshot.val() != null);
+                    if (exist) data = snapshot.val();
+                    console.log(data)
+                    that.setState({
+                        friendAvatar: data
+                    });
+                });
 
                 this.fetchMessages(params.userId);
 
@@ -169,20 +177,21 @@ export default class messaginScreen extends Component {
                     that.setState({
                         newMessage: '',
                     })
-                } else {
-                    // alert("no HIll")
+                } else {                    
                     var chatUserf = {
                         lastMessage: that.state.newMessage,
                         posted: posted,
                         friend: that.state.friendId,
                         name: that.state.friendName,
+                        avatar: that.state.friendAvatar
                     }
 
                     var chatUser = {
                         lastMessage: that.state.newMessage,
                         posted: posted,
                         friend: userId,
-                        name: f.auth().currentUser.displayName
+                        name: f.auth().currentUser.displayName,
+                        avatar: that.state.avatar
                     }
                     var newMessage = {
                         sendby: userId,
@@ -217,6 +226,14 @@ export default class messaginScreen extends Component {
                     console.log(data)
                     that.setState({
                         name: data
+                    });
+                });
+                database.ref('users').child(userId).child('avatar').once('value').then(function (snapshot) {
+                    const exist = (snapshot.val() != null);
+                    if (exist) data = snapshot.val();
+                    console.log(data)
+                    that.setState({
+                        avatar: data
                     });
                 });
             } else {
