@@ -63,9 +63,7 @@ export default class ProfileScreen extends Component {
                     firstName: 'John',
                     lastName: 'Doe',
                     address: 'Los Angeles',
-                    avatar: '../../images/user_image_1.jpg'
-                })
-                this.setState({
+                    avatar: '../../images/user_image_1.jpg',
                     isLoading: false
                 })
             }
@@ -255,10 +253,12 @@ export default class ProfileScreen extends Component {
             </View>
         );
     }
+
     logout = () => {
+        
+        this.props.navigation.navigate('Login');
         f.auth().signOut();
-        const { navigate } = this.props.navigation;
-        navigate('Login');
+        
     }
 
     save = () => {
