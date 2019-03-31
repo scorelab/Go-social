@@ -1,6 +1,6 @@
 # Go-social
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/fbf9f8e1bb7b4d2cbb1ca569014ed45b)](https://app.codacy.com/app/shehand/Go-social?utm_source=github.com&utm_medium=referral&utm_content=shehand/Go-social&utm_campaign=Badge_Grade_Dashboard)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/fbf9f8e1bb7b4d2cbb1ca569014ed45b)](https://app.codacy.com/app/shehand/Go-social?utm_source=github.com&utm_medium=referral&utm_content=shehand/Go-social&utm_campaign=Badge_Grade_Dashboard)      [![Build Status](https://travis-ci.org/shehand/Go-social.svg?branch=master)](https://travis-ci.org/shehand/Go-social)  [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 The community of today used to use mobile phones to make their life easier and community-based mobile applications are famous among them. There are several kinds of community-based applications in use and most of them are relating to a specific domain. But core components have similar features. Address this issue and saving development time by introducing a common app template with customizable components for community-based mobile applications, is the main purpose of this project.
 
