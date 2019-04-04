@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "test": "jest",
+    "storybook": "storybook start -p 7007"
   },
   "dependencies": {
+    "@storybook/addon-knobs": "^5.0.6",
     "email-validator": "^2.0.4",
     "firebase": "^5.8.6",
     "react": "16.3.1",
@@ -24,9 +26,15 @@
     "react-navigation": "^3.0.9"
   },
   "devDependencies": {
+    "@babel/core": "^7.0.0-beta",
+    "@storybook/react-native": "^3.4.12",
+    "babel-core": "^7.0.0-beta",
     "babel-jest": "23.6.0",
+    "babel-runtime": "^7.0.0-beta",
     "jest": "^23.6.0",
     "metro-react-native-babel-preset": "^0.53.0",
+    "prop-types": "^15.7.2",
+    "react-dom": "16.3.1",
     "react-test-renderer": "16.7.0"
   },
   "jest": {
