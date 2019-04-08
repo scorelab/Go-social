@@ -11,7 +11,6 @@ import Welcome from './Welcome';
 
 import  ConversBanner from '../../App/components/ConversationBanner';
 import  DraggableMarker from '../../App/components/DraggableMarker';
-import  ConversBanner from '../../App/components/ConversationBanner';
 import  HeaderNavigation from '../../App/components/HeaderNavigationBar';
 import  HomePost from '../../App/components/HomePostComponent';
 import  MessageComponent from '../../App/components/MessageComponents';
@@ -22,6 +21,7 @@ import  SearchandFix from '../../App/components/SearchAndFixLocation';
 import  SuggestionCard from '../../App/components/SuggestionsCardView';
 
 
+storiesOf('ConversBanner', module).add('to Storybook', () => <ConversBanner/>);
 
 
 
