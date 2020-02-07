@@ -26,7 +26,7 @@ The community of today used to use mobile phones to make their life easier and c
 
 > Open the project in any text editor you use. Open the `config.example.js` file in the `config` folder and follow the following steps
 
-*  Use [this link](https://console.firebase.google.com/) to **create a firebase** project for the Go-social application. It is free for everyone.
+*  Use [this link](https://console.firebase.google.com/) to **create a firebase** project for the Go-social application. It is free for everyone. Please use the web app instead of Android or iOS app.
 
 *  Update the **Sign in method** of Firebase [project](https://firebase.google.com/docs/auth/android/password-auth#before_you_begin) that you want to use as **Enabled**
 
@@ -57,7 +57,7 @@ So now you are ready to run Go-social.
 
 *  Run the app 
 
-    `react-native run-android`
+    `npx react-native run-android`
     
     Then Enable the Remote Js Debugging.
 
