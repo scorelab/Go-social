@@ -37,7 +37,7 @@ export default StyleSheet.create({
     contentArea: {
         marginTop:1,
         alignItems:'center',
-        marginBottom:50     
+        marginBottom:5     
     },
     nameFont: {
         fontSize:18,
@@ -49,11 +49,19 @@ export default StyleSheet.create({
         lineHeight:16,
         // fontWeight:'bold'
     },
+
+    label: {
+        marginBottom: 5
+    },
+    labelText: {
+        fontSize: 18
+    },
+
     input: {
-        marginTop: deviceHeight*0.01,
-        marginLeft: deviceWidth*0.01,
+        // marginTop: deviceHeight*0.01,
+        // marginLeft: deviceWidth*0.01,
         height: 45,
-        width: deviceWidth * 0.98,
+        // width: deviceWidth * 0.98,
         borderRadius: 5,
         backgroundColor: 'rgba(149, 176, 183, 1)',
         marginBottom: 15,
@@ -66,5 +74,20 @@ export default StyleSheet.create({
         height:45,
     },
 
-   
+    signOut: {
+        marginTop: 10,
+        marginBottom: 20,
+        marginHorizontal: deviceWidth*0.25,
+        borderWidth: 1,
+        borderColor: '#C00',
+        borderRadius: 5,
+        backgroundColor: '#C00000' + 50 ,
+        padding:10,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    signOutText: {
+        color: '#FFF',
+        fontSize: 16,
+    }
 });

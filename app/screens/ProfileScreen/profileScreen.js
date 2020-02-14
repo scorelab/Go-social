@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import { Text, View, TextInput, ScrollView, Image,
-    PermissionsAndroid , Button, AsyncStorage, ActivityIndicator  } from "react-native";
+    PermissionsAndroid , Button, AsyncStorage, ActivityIndicator, TouchableOpacity  } from "react-native";
 import { Info, DeatilView } from "..";
 import HeaderNavigationBar from "../../components/HeaderNavigationBar/HeaderNavigationBar";
 import styles from './style'
 import { f, auth, storage, database } from "../../../config/config.js";
 import { Avatar } from 'react-native-elements';
 import ImagePicker from "react-native-image-picker";
+// import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default class ProfileScreen extends Component {
     constructor(props) {
@@ -202,9 +203,8 @@ export default class ProfileScreen extends Component {
                             <Text style={styles.nameFont}>{this.state.firstName +" "+ this.state.lastName}</Text>
                             <Text style={styles.cityFont}>{this.state.add}</Text>
                         </View>
-                        <Button title="Sign Out" onPress={this.logout} />
                     </View>
-                    <View>
+                    <View style={{ marginHorizontal: 15}}>
                         {this.state.isLoading && (
                             <ActivityIndicator
                                 style={{ height: 80 }}
@@ -212,13 +212,22 @@ export default class ProfileScreen extends Component {
                                 size="large"
                             />
                         )}
+                        <View>
+                            <View style={styles.label}>
+                                <Text style={styles.labelText}>First Name</Text>
+                            </View>
                         <TextInput
                             placeholder="First Name"
                             placeholderTextColor="rgba(255,255,255,0.8)"
                             style={styles.input}
                             onChangeText={text => this.setState({ firstName: text })}
                             value={this.state.firstName}
-                        />
+                            />
+                        </View>
+                        <View>
+                            <View style={styles.label}>
+                                <Text style={styles.labelText}>Last Name</Text>
+                            </View>
                         <TextInput
                             placeholder="Last Name"
                             placeholderTextColor="rgba(255,255,255,0.8)"
@@ -226,6 +235,11 @@ export default class ProfileScreen extends Component {
                             onChangeText={text => this.setState({ lastName: text })}
                             value={this.state.lastName}
                         />
+                        </View>
+                        <View>
+                            <View style={styles.label}>
+                                <Text style={styles.labelText}>Email</Text>
+                            </View>
                         <TextInput
                             placeholder="Email"
                             placeholderTextColor="rgba(255,255,255,0.8)"
@@ -233,6 +247,11 @@ export default class ProfileScreen extends Component {
                             onChangeText={text => this.setState({ email: text })}
                             value={this.state.email}
                         />
+                        </View>
+                        <View>
+                            <View style={styles.label}>
+                                <Text style={styles.labelText}>Contact Number</Text>
+                            </View>
                         <TextInput
                             placeholder="Contact Number"
                             placeholderTextColor="rgba(255,255,255,0.8)"
@@ -240,6 +259,11 @@ export default class ProfileScreen extends Component {
                             onChangeText={text => this.setState({ contact: text })}
                             value={this.state.contact}
                         />
+                        </View>
+                         <View>
+                            <View style={styles.label}>
+                                <Text style={styles.labelText}>Address</Text>
+                            </View>
                         <TextInput
                             placeholder="Address"
                             placeholderTextColor="rgba(255,255,255,0.8)"
@@ -247,7 +271,12 @@ export default class ProfileScreen extends Component {
                             onChangeText={text => this.setState({ address: text })}
                             value={this.state.address}
                         />
+                        </View>
                     </View>
+                    <TouchableOpacity style={styles.signOut} onPress={this.logout}>
+                            <Text style={styles.signOutText}>sign Out</Text>
+                    </TouchableOpacity>
+                    {/* <Button title="Sign Out" onPress={this.logout} /> */}
                     <Button style={styles.saveButton} title="Save" onPress={this.save} />
                 </ScrollView>
             </View>
