@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/EvilIcons";
 
 import style from "./styles";
@@ -44,23 +44,23 @@ export default class HomePostComponent extends Component {
           />
 
           <View style={{ flexDirection: "row" }}>
-            <View
+            <TouchableOpacity
               style={{ width: 100, height: 30, paddingLeft: 50, marginTop: 10 }}
             >
               <Icon name="like" size={30} color="blue" />
-            </View>
+            </TouchableOpacity>
 
-            <View
+            <TouchableOpacity
               style={{ width: 100, height: 30, paddingLeft: 50, marginTop: 10 }}
             >
               <Icon name="comment" size={30} color="blue" />
-            </View>
+            </TouchableOpacity>
             
-            <View
+            <TouchableOpacity
               style={{ width: 100, height: 30, paddingLeft: 50, marginTop: 10 }}
             >
               <Icon name="share-google" size={30} color="blue" />
-            </View>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
