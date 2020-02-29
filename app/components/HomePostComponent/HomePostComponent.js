@@ -1,10 +1,24 @@
 import React, { Component } from "react";
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TouchableOpacity, Share } from "react-native";
 import Icon from "react-native-vector-icons/EvilIcons";
 
 import style from "./styles";
 
 export default class HomePostComponent extends Component {
+
+  sharePost = () => {
+    Share.share({
+        message: 'Hello, i found an interesting post on Go-Social via the link',
+        url: 'https://github.com/scorelab/Go-social',
+        title: 'Go-social '
+    }, {
+        dialogTitle: 'Go-social template sharing feature',
+        excludedActivityTypes: [
+            'com.apple.UIKit.activity.PostToTwitter'
+        ]
+    })
+}
+
   render() {
     return (
       <View style={style.cardView}>
@@ -44,23 +58,24 @@ export default class HomePostComponent extends Component {
           />
 
           <View style={{ flexDirection: "row" }}>
-            <View
+            <TouchableOpacity
               style={{ width: 100, height: 30, paddingLeft: 50, marginTop: 10 }}
             >
               <Icon name="like" size={30} color="blue" />
-            </View>
+            </TouchableOpacity>
 
-            <View
+            <TouchableOpacity
               style={{ width: 100, height: 30, paddingLeft: 50, marginTop: 10 }}
             >
               <Icon name="comment" size={30} color="blue" />
-            </View>
+            </TouchableOpacity>
             
-            <View
+            <TouchableOpacity
+              onPress={() => this.sharePost()}
               style={{ width: 100, height: 30, paddingLeft: 50, marginTop: 10 }}
             >
               <Icon name="share-google" size={30} color="blue" />
-            </View>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
