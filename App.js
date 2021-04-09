@@ -1,7 +1,13 @@
 import React, { Component } from "react";
 import { AppRegistry, Dimensions, ActivityIndicator, AsyncStorage, View, StyleSheet, StatusBar } from "react-native";
-import { createStackNavigator, createSwitchNavigator, createBottomTabNavigator, createAppContainer } from "react-navigation";
+
+
+import { createSwitchNavigator, createAppContainer } from "react-navigation";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
+import { createStackNavigator } from 'react-navigation-stack';
 import Ionicons from "react-native-vector-icons/FontAwesome";
+
+
 
 //Components
 import HomeScreen from "./app/screens/HomeScreen/homeScreen";
@@ -115,4 +121,4 @@ const AuthStack = createStackNavigator(
 
 const AppContainer = createAppContainer(AuthStack);
 export default AppContainer;
-  
+
