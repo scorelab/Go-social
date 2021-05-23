@@ -100,8 +100,8 @@ android {
 
     defaultConfig {
         applicationId "com.go_social"
-        minSdkVersion 16
-        targetSdkVersion 22
+        minSdkVersion 21
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         ndk {
