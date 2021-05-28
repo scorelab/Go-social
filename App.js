@@ -14,6 +14,7 @@ import NotificationScreen from "./app/screens/NotificationScreen/notificationScr
 import ForgotPasswordScreen from "./app/screens/ForgotPasswordScreen/forgotPasswordScreen";
 import NewPostScreen from "./app/screens/NewPostScreen/NewPostScreen";
 import MessageScreen from "./app/screens/MessaginScreen/messaginScreen";
+import ForumScreen from './app/screens/ForumScreen/forumScreen';
 //Screen names
 import { Home, Info, DetailView, Login } from "./app/screens/index";
 //Screen size
@@ -52,6 +53,7 @@ const styles = StyleSheet.create({
 const AppStack = createBottomTabNavigator(
   {
     Home: { screen: HomeScreen },
+    Forum : { screen: ForumScreen},
     Messages : { screen: ChatListScreen },
     Map : { screen: MapScreen },
     Notifications : { screen: NotificationScreen },
@@ -63,7 +65,11 @@ const AppStack = createBottomTabNavigator(
         const { routeName } = navigation.state;
         let iconName;
         if (routeName === "Home") {
-          iconName = "home";
+          iconName = "chatbox-outline";
+          
+        } else if (routeName === "Forum") {
+          iconName = "user";
+
         } else if (routeName === "Messages") {
           iconName = "comment";
 
@@ -76,6 +82,7 @@ const AppStack = createBottomTabNavigator(
         } else if (routeName === "Profile") {
           iconName = "user";
         }
+        
         return <Ionicons name={iconName} size={25} color={tintColor} />;
       },
     }),
