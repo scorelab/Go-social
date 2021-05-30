@@ -65,10 +65,10 @@ const AppStack = createBottomTabNavigator(
         const { routeName } = navigation.state;
         let iconName;
         if (routeName === "Home") {
-          iconName = "chatbox-outline";
+          iconName = "home";
           
         } else if (routeName === "Forum") {
-          iconName = "user";
+          iconName = "chatbox-outline";
 
         } else if (routeName === "Messages") {
           iconName = "comment";
