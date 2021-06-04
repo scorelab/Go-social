@@ -96,7 +96,7 @@ def enableProguardInReleaseBuilds = false
 
 android {
     compileSdkVersion 28
-    buildToolsVersion "29.0.2"
+    buildToolsVersion "27.0.3"
 
     defaultConfig {
         applicationId "com.go_social"
