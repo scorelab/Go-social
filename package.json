@@ -7,10 +7,11 @@
     "test": "jest --detectOpenHandles -u"
   },
   "dependencies": {
+    "@hapi/joi": "^17.1.1",
     "email-validator": "^2.0.4",
     "firebase": "^7.2.2",
-    "react": "16.12.0",
-    "react-native": "^0.58.6",
+    "react": "16.8.6",
+    "react-native": "^0.60.0",
     "react-native-elements": "^1.1.0",
     "react-native-fbsdk": "1.0.0-rc.3",
     "react-native-gesture-handler": "^1.0.12",
