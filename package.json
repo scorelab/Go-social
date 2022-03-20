@@ -8,9 +8,9 @@
   },
   "dependencies": {
     "email-validator": "^2.0.4",
-    "firebase": "^7.2.2",
-    "react": "16.12.0",
-    "react-native": "^0.58.6",
+    "firebase": "^7.24.0",
+    "react": "16.18.6",
+    "react-native": "^0.67.3",
     "react-native-elements": "^1.1.0",
     "react-native-fbsdk": "1.0.0-rc.3",
     "react-native-gesture-handler": "^1.0.12",
