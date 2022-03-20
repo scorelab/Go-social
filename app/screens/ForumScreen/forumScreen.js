@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { ScrollView, Text, View, TouchableOpacity, Image } from "react-native";
 import HeaderBar from '../../components/HeaderBar/HeaderBar';
 import ForumBox from '../../components/ForumBox/ForumBox';
-import styles from './style';
+import styles from './styles';
 
 
 export default class ForumScreen extends Component {    
