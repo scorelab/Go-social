@@ -1,3 +1,11 @@
 {
-  "presets": ["module:metro-react-native-babel-preset"]
+  "presets": [
+    "@babel/preset-react",
+    "@babel/preset-env",
+    "@babel/preset-typescript",
+    "@babel/preset-flow"
+  ],
+  "plugins": [
+    "@babel/plugin-syntax-class-properties"
+  ]
 }
