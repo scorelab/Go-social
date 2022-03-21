@@ -7,6 +7,7 @@
     "test": "jest --detectOpenHandles -u"
   },
   "dependencies": {
+    "@react-native-community/toolbar-android": "^0.2.1",
     "email-validator": "^2.0.4",
     "firebase": "^7.2.2",
     "react": "16.12.0",
