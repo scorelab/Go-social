@@ -11,9 +11,7 @@ var config = {
   measurementId: ""
 };
  !firebase.apps.length ? firebase.initializeApp(config) : firebase.app();
-
   var MAP_API_KEY = "";
-
   export const f = firebase;
   export const database = firebase.database();
   export const auth = firebase.auth();
