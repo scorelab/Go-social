@@ -23,7 +23,7 @@ Today's community use mobile phones to make their life easier, and community-bas
 
     `npm install`
     OR
-      `yarn install`
+     `yarn install`
 ### Configure the config.example.js file (IMPORTANT)
 
 > Open the project in any text editor you use. Open the `config.example.js` file in the `config` folder and follow the following steps.
