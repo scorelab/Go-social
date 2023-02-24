@@ -8,6 +8,10 @@ Today's community use mobile phones to make their life easier, and community-bas
 
 > NOTE: If you have not yet installed react-native, use [this link](https://facebook.github.io/react-native/docs/getting-started) to install and configure react-native. **Make sure to use react-native cli rather than using expo cli**.
 
+## Contributing
+Whether you are a community member or not, we would love your point of view! Feel free to first check out our
+- [contribution guidelines](https://github.com/scorelab/Go-social/blob/14e5dfcdfb59888efc318bb4835e3577d5d09532/.github/CONTRIBUTING.md) 
+- The guide outlines the process for **creating an issue** and **submitting a pull request.**
 
 ## Configure Go-social
 
