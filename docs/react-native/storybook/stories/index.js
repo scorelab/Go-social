@@ -9,26 +9,18 @@ import Button from './Button';
 import CenterView from './CenterView';
 import Welcome from './Welcome';
 
-import  ConversBanner from '../../App/components/ConversationBanner';
-import  DraggableMarker from '../../App/components/DraggableMarker';
-import  HeaderNavigation from '../../App/components/HeaderNavigationBar';
-import  HomePost from '../../App/components/HomePostComponent';
-import  MessageComponent from '../../App/components/MessageComponents';
-import  ModalHeader from '../../App/components/ModalHeaderNavigationBar';
-import  NotificationBanner from '../../App/components/NotificationBanner';
-import  Rating from '../../App/components/Rating';
-import  SearchandFix from '../../App/components/SearchAndFixLocation';
-import  SuggestionCard from '../../App/components/SuggestionsCardView';
+import ConversBanner from '../../App/components/ConversationBanner';
+import DraggableMarker from '../../App/components/DraggableMarker';
+import HeaderNavigation from '../../App/components/HeaderNavigationBar';
+import HomePost from '../../App/components/HomePostComponent';
+import MessageComponent from '../../App/components/MessageComponents';
+import ModalHeader from '../../App/components/ModalHeaderNavigationBar';
+import NotificationBanner from '../../App/components/NotificationBanner';
+import Rating from '../../App/components/Rating';
+import SearchandFix from '../../App/components/SearchAndFixLocation';
+import SuggestionCard from '../../App/components/SuggestionsCardView';
 
-
-storiesOf('ConversBanner', module).add('to Storybook', () => <ConversBanner/>);
-
-
-
-
-
-
-
+storiesOf('ConversBanner', module).add('to Storybook', () => <ConversBanner />);
 
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
 

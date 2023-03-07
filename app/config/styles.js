@@ -1,4 +1,4 @@
-// Theme Colors 
+// Theme Colors
 export const COLOR_PRIMARY = '#4885ed';
 export const COLOR_SECONDARY = '#1dd1a1';
 export const COLOR_DARK = '#000000';

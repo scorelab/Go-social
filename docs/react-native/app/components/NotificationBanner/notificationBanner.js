@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
-import styles from "./style";
+import React, { Component } from 'react';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
+import styles from './style';
 
 export default class CardView extends Component {
   render() {

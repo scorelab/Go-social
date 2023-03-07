@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -7,22 +7,22 @@ import {
   Button,
   TouchableOpacity,
   KeyboardAvoidingView,
-  ScrollView
-} from "react-native";
-import styles from "./style";
-import * as EmailValidator from "email-validator";
-import { AccessToken, LoginManager } from "react-native-fbsdk";
-import { f, auth } from "../../../config/config.js";
-import { SocialIcon  } from 'react-native-elements';
+  ScrollView,
+} from 'react-native';
+import styles from './style';
+import * as EmailValidator from 'email-validator';
+import { AccessToken, LoginManager } from 'react-native-fbsdk';
+import { f, auth } from '../../../config/config.js';
+import { SocialIcon } from 'react-native-elements';
 
 export default class SignUpScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "",
-      name: "",
-      Password: "",
-      ConfirmPassword: ""
+      email: '',
+      name: '',
+      Password: '',
+      ConfirmPassword: '',
     };
   }
 
@@ -37,14 +37,14 @@ export default class SignUpScreen extends Component {
 
   redirectUser() {
     const { navigate } = this.props.navigation;
-    navigate("App");
+    navigate('App');
   }
 
   onPressLogin() {
-    LoginManager.logInWithReadPermissions(["public_profile", "email"]).then(
+    LoginManager.logInWithReadPermissions(['public_profile', 'email']).then(
       result => this._handleCallBack(result),
       function (error) {
-        alert("Login fail with error: " + error);
+        alert('Login fail with error: ' + error);
       }
     );
   }
@@ -52,13 +52,13 @@ export default class SignUpScreen extends Component {
   _handleCallBack(result) {
     let _this = this;
     if (result.isCancelled) {
-      alert("Login cancelled");
+      alert('Login cancelled');
     } else {
       AccessToken.getCurrentAccessToken().then(data => {
         const token = data.accessToken;
         fetch(
-          "https://graph.facebook.com/v2.8/me?fields=id,first_name,last_name,gender,birthday&access_token=" +
-          token
+          'https://graph.facebook.com/v2.8/me?fields=id,first_name,last_name,gender,birthday&access_token=' +
+            token
         )
           .then(response => response.json())
           .then(json => {
@@ -89,14 +89,13 @@ export default class SignUpScreen extends Component {
       uid,
       token,
       dp,
-      ageRange: [20, 30]
+      ageRange: [20, 30],
     };
     f.database()
-      .ref("users")
+      .ref('users')
       .child(uid)
       .update({ ...userData, ...defaults });
   };
-
 
   render() {
     return (
@@ -105,10 +104,7 @@ export default class SignUpScreen extends Component {
           <View style={styles.container}>
             <KeyboardAvoidingView behavior="position">
               <View style={styles.logoContainer}>
-                <Image
-                  source={require("../../images/logo.png")}
-                  style={styles.logo}
-                />
+                <Image source={require('../../images/logo.png')} style={styles.logo} />
               </View>
               <View style={styles.formContainer}>
                 <TextInput
@@ -149,21 +145,25 @@ export default class SignUpScreen extends Component {
             </TouchableOpacity>
 
             <TouchableOpacity onPress={this.onPressLogin.bind(this)}>
-                <SocialIcon style={{width:200}} title='Sign Up With Facebook'  button  type='facebook' />
+              <SocialIcon
+                style={{ width: 200 }}
+                title="Sign Up With Facebook"
+                button
+                type="facebook"
+              />
             </TouchableOpacity>
-            
+
             <View style={styles.signInTextArea}>
               <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
                 <Text style={styles.text}>
                   Already have an account?
-              <Text style={{ color: "#0066cc" }}> Sign In</Text>
+                  <Text style={{ color: '#0066cc' }}> Sign In</Text>
                 </Text>
               </TouchableOpacity>
             </View>
           </View>
         </ScrollView>
       </View>
-
     );
   }
   register() {
@@ -178,22 +178,22 @@ export default class SignUpScreen extends Component {
       .then(function (data) {
         data.user
           .updateProfile({
-            displayName: name
+            displayName: name,
           })
           .then(
-            function () {              
-              console.log("Updated User Data..");
+            function () {
+              console.log('Updated User Data..');
             },
             function (error) {
-              console.log("Error Updating User Data.." + error);
+              console.log('Error Updating User Data..' + error);
             }
           );
-        alert("Welcome to Go Social!");
-        navigate("App");
+        alert('Welcome to Go Social!');
+        navigate('App');
       })
       .catch(function (error) {
         var errorMessage = error.message;
-        console.log("Error = " + errorMessage);
+        console.log('Error = ' + errorMessage);
         alert(errorMessage);
       });
   }
@@ -203,10 +203,10 @@ export default class SignUpScreen extends Component {
       if (this.state.Password === this.state.ConfirmPassword) {
         this.register();
       } else {
-        alert("password Missmatch");
+        alert('password Missmatch');
       }
     } else {
-      alert("Please enter A Valid Email");
+      alert('Please enter A Valid Email');
     }
   };
 }

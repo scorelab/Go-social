@@ -2,8 +2,8 @@
 
 Please answer the following questions for yourself before submitting an issue. **YOU MAY DELETE THE PREREQUISITES SECTION.**
 
--  [ ] I am running the latest version
--  [ ] I checked to make sure that this issue has not already been filed
+- [ ] I am running the latest version
+- [ ] I checked to make sure that this issue has not already been filed
 
 ## Expected Behavior
 
@@ -28,7 +28,6 @@ Please provide detailed steps for reproducing the issue.
 ## Context
 
 Please provide any relevant information about your setup. This is important in case the issue is not reproducible except for under certain conditions.
-
 
 ## Failure Logs
 

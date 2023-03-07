@@ -1,13 +1,13 @@
-import React, { Component } from "react";
-import { View } from "react-native";
-import HeaderNavigationBar from "../../components/HeaderNavigationBar/HeaderNavigationBar";
-import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
-import styles from "./style";
+import React, { Component } from 'react';
+import { View } from 'react-native';
+import HeaderNavigationBar from '../../components/HeaderNavigationBar/HeaderNavigationBar';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
+import styles from './style';
 
 export default class MapScreen extends Component {
   state = {
     region: null,
-    draggableRegion: null
+    draggableRegion: null,
   };
 
   async componentDidMount() {
@@ -18,14 +18,14 @@ export default class MapScreen extends Component {
             latitude,
             longitude,
             latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421
+            longitudeDelta: 0.0421,
           },
           draggableRegion: {
             latitude,
             longitude,
             latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421
-          }
+            longitudeDelta: 0.0421,
+          },
         });
       }, //success
       error => {
@@ -34,7 +34,7 @@ export default class MapScreen extends Component {
       {
         timeout: 2000,
         enableHighAccuracy: true,
-        maximumAge: 10000
+        maximumAge: 10000,
       }
     );
   }
@@ -49,8 +49,7 @@ export default class MapScreen extends Component {
           style={styles.map}
           initialRegion={region}
           showsUserLocation
-          loadingEnabled
-        >
+          loadingEnabled>
           <Marker
             coordinate={this.state.draggableRegion}
             title="key"
@@ -58,9 +57,8 @@ export default class MapScreen extends Component {
             onDragEnd={e => console.log(e.nativeEvent.coordinate)}
             draggable
           />
-          
         </MapView>
-        <HeaderNavigationBar title={"Locations"} {...this.props} />
+        <HeaderNavigationBar title={'Locations'} {...this.props} />
       </View>
     );
   }

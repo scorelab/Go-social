@@ -4,11 +4,10 @@ let deviceWidth = Dimensions.get('window').width;
 let deviceHeight = Dimensions.get('window').height;
 
 export default StyleSheet.create({
-
   container: {
     flex: 1,
     flexDirection: 'column',
-    width:'100%'
+    width: '100%',
   },
   suggestUserArea: {
     width: '100%',
@@ -46,7 +45,6 @@ export default StyleSheet.create({
   scrollView: {
     width: '100%',
     backgroundColor: COLOR_GRAY,
-
   },
   scrollViewContent: {
     alignItems: 'center',
@@ -62,5 +60,5 @@ export default StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: '#fff',
-  }
+  },
 });

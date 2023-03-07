@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
-import { MAP_API } from "../../../config/config.js";
-import styles from "./styles.js";
+import React, { Component } from 'react';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import { MAP_API } from '../../../config/config.js';
+import styles from './styles.js';
 
 export default class Search extends Component {
   state = {
-    searchFocused: false
+    searchFocused: false,
   };
 
   render() {
@@ -19,7 +19,7 @@ export default class Search extends Component {
         onPress={onLocationSelected}
         query={{
           key: MAP_API,
-          language: "en"
+          language: 'en',
         }}
         textInputProps={{
           onFocus: () => {
@@ -28,8 +28,8 @@ export default class Search extends Component {
           onBlur: () => {
             this.setState({ searchFocused: false });
           },
-          autoCapitalize: "none",
-          autoCorrect: false
+          autoCapitalize: 'none',
+          autoCorrect: false,
         }}
         listViewDisplayed={searchFocused}
         fetchDetails
