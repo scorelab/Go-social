@@ -1,12 +1,12 @@
-import React from 'react';
-import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
+import React from "react";
+import { createStackNavigator, TransitionPresets } from "@react-navigation/stack";
 
-import LoginScreen from '../screens/LoginScreen/loginScreen';
-import SignupScreen from '../screens/SignupScreen/signupScreen';
-import ForgotPasswordScreen from '../screens/ForgotPasswordScreen/forgotPasswordScreen';
-import NewPostScreen from '../screens/NewPostScreen/NewPostScreen';
-import MessageScreen from '../screens/MessaginScreen/messaginScreen';
-import AppNavigator from './AppNavigation';
+import LoginScreen from "../screens/LoginScreen/loginScreen";
+import SignupScreen from "../screens/SignupScreen/signupScreen";
+import ForgotPasswordScreen from "../screens/ForgotPasswordScreen/forgotPasswordScreen";
+import NewPostScreen from "../screens/NewPostScreen/NewPostScreen";
+import MessageScreen from "../screens/MessaginScreen/messaginScreen";
+import AppNavigator from "./AppNavigation";
 
 const Stack = createStackNavigator();
 
@@ -17,7 +17,7 @@ function AuthNavigator() {
         ...TransitionPresets.SlideFromRightIOS,
         gestureEnabled: false,
         headerShown: false,
-        initialRouteName: 'Login',
+        initialRouteName: "Login",
       }}>
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Signup" component={SignupScreen} />

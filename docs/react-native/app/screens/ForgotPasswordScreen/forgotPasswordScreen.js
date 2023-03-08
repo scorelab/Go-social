@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   Platform,
   ScrollView,
@@ -12,17 +12,17 @@ import {
   TouchableOpacity,
   Alert,
   KeyboardAvoidingView,
-} from 'react-native';
+} from "react-native";
 // import Btn from 'react-native-micro-animated-button';
-import * as EmailValidator from 'email-validator';
-import styles from './style';
-import { f, auth } from '../../../config/config.js';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as EmailValidator from "email-validator";
+import styles from "./style";
+import { f, auth } from "../../../config/config.js";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 export default class ForgotPasswordScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
+      email: "",
     };
   }
   render() {
@@ -32,7 +32,7 @@ export default class ForgotPasswordScreen extends Component {
           <View style={styles.container}>
             <KeyboardAvoidingView behavior="position">
               <View style={styles.logoContainer}>
-                <Image source={require('../../images/logo.png')} style={styles.logo} />
+                <Image source={require("../../images/logo.png")} style={styles.logo} />
               </View>
               <View style={styles.formContainer}>
                 <TextInput
@@ -63,15 +63,15 @@ export default class ForgotPasswordScreen extends Component {
       auth
         .sendPasswordResetEmail(this.state.email)
         .then(function () {
-          alert('Please Check Your Email To Reset Your Password');
+          alert("Please Check Your Email To Reset Your Password");
           let { navigate } = that.props.navigation;
-          navigate('Login');
+          navigate("Login");
         })
         .catch(function (error) {
           alert(error);
         });
     } else {
-      alert('Please enter A Valid Email');
+      alert("Please enter A Valid Email");
     }
   };
 }

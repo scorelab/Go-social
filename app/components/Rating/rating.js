@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { View } from 'react-native';
-import { Rating } from 'react-native-elements';
+import React, { Component } from "react";
+import { View } from "react-native";
+import { Rating } from "react-native-elements";
 export default class rating extends Component {
   render() {
     return (

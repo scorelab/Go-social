@@ -1,20 +1,20 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet, Dimensions } from "react-native";
 
-let deviceWidth = Dimensions.get('window').width;
-let deviceHeight = Dimensions.get('window').height;
+let deviceWidth = Dimensions.get("window").width;
+let deviceHeight = Dimensions.get("window").height;
 
 export default StyleSheet.create({
   cardContainer: {
     flex: 1,
-    width: '90%',
-    backgroundColor: '#fff',
+    width: "90%",
+    backgroundColor: "#fff",
     borderRadius: 5,
     // height:200,
-    alignItems: 'center',
-    justifyContent: 'flex-start',
+    alignItems: "center",
+    justifyContent: "flex-start",
     // marginBottom:20,
     marginTop: 10,
-    flexWrap: 'wrap',
+    flexWrap: "wrap",
   },
   cardHedear: {
     marginLeft: 10,
@@ -23,32 +23,32 @@ export default StyleSheet.create({
     marginBottom: 10,
     // width:deviceWidth,
     height: 80,
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   profilePicArea: {
     flex: 0.25,
     // width:deviceWidth * 0.2,
     // backgroundColor:'red',
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   userDetailArea: {
     flex: 0.75,
     paddingLeft: 8,
     // width:deviceWidth * 0.8,
-    flexDirection: 'column',
+    flexDirection: "column",
     // backgroundColor:'green',
-    flexWrap: 'nowrap',
+    flexWrap: "nowrap",
   },
   userNameRow: {
     flex: 0.4,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    flexDirection: "row",
+    flexWrap: "wrap",
     // width:deviceWidth * 0.8,
     // backgroundColor:'yellow',
     paddingTop: 10,
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
+    justifyContent: "space-between",
+    alignItems: "flex-start",
   },
   meaasageRow: {
     flex: 0.6,
@@ -61,13 +61,13 @@ export default StyleSheet.create({
     borderRadius: 30,
   },
   badgeCount: {
-    backgroundColor: '#3d9bf9',
+    backgroundColor: "#3d9bf9",
     height: 20,
     width: 20,
     borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'absolute',
+    alignItems: "center",
+    justifyContent: "center",
+    position: "absolute",
     bottom: 10,
     right: 10,
   },
@@ -77,7 +77,7 @@ export default StyleSheet.create({
     borderRadius: 35,
   },
   detailRow: {
-    width: '100%',
+    width: "100%",
     paddingLeft: 10,
     paddingRight: 10,
     paddingBottom: 5,
@@ -85,10 +85,10 @@ export default StyleSheet.create({
   },
   thumbnailRow: {
     flex: 1,
-    width: '100%',
+    width: "100%",
     // backgroundColor:'red',
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    flexDirection: "row",
+    justifyContent: "space-evenly",
     paddingTop: 30,
     paddingLeft: 10,
     paddingRight: 10,
@@ -99,20 +99,20 @@ export default StyleSheet.create({
 
   nameText: {
     fontSize: 14,
-    color: '#4e5861',
-    fontWeight: 'bold',
+    color: "#4e5861",
+    fontWeight: "bold",
   },
   meaasageText: {
     fontSize: 16,
-    color: '#95a3ad',
+    color: "#95a3ad",
   },
   paraText: {
     fontSize: 16,
-    color: '#555f68',
+    color: "#555f68",
   },
   countText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 12,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 });

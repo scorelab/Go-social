@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   View,
   Text,
@@ -8,18 +8,18 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   ScrollView,
-} from 'react-native';
-import { AccessToken, LoginManager } from 'react-native-fbsdk';
-import { f, auth } from '../../../config/config.js';
-import * as EmailValidator from 'email-validator';
-import styles from './style';
-import { SocialIcon } from 'react-native-elements';
+} from "react-native";
+import { AccessToken, LoginManager } from "react-native-fbsdk";
+import { f, auth } from "../../../config/config.js";
+import * as EmailValidator from "email-validator";
+import styles from "./style";
+import { SocialIcon } from "react-native-elements";
 export default class LoginScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      Password: '',
+      email: "",
+      Password: "",
     };
   }
 
@@ -42,7 +42,7 @@ export default class LoginScreen extends Component {
     auth
       .signInWithEmailAndPassword(email, password)
       .then(function (data) {
-        navigate('App');
+        navigate("App");
       })
       .catch(function (error) {
         var errorMessage = error.message;
@@ -52,26 +52,26 @@ export default class LoginScreen extends Component {
 
   redirectUser() {
     const { navigate } = this.props.navigation;
-    navigate('App');
+    navigate("App");
   }
 
   _signInAsync = async () => {
     if (EmailValidator.validate(this.state.email) === true) {
-      if (this.state.Pasword != '') {
+      if (this.state.Pasword != "") {
         this.login();
       } else {
-        alert('Enter the password');
+        alert("Enter the password");
       }
     } else {
-      alert('Please enter A Valid Email');
+      alert("Please enter A Valid Email");
     }
   };
 
   onPressLogin() {
-    LoginManager.logInWithReadPermissions(['public_profile', 'email']).then(
+    LoginManager.logInWithReadPermissions(["public_profile", "email"]).then(
       result => this._handleCallBack(result),
       function (error) {
-        alert('Login fail with error: ' + error);
+        alert("Login fail with error: " + error);
       }
     );
   }
@@ -79,12 +79,12 @@ export default class LoginScreen extends Component {
   _handleCallBack(result) {
     let _this = this;
     if (result.isCancelled) {
-      alert('Login cancelled');
+      alert("Login cancelled");
     } else {
       AccessToken.getCurrentAccessToken().then(data => {
         const token = data.accessToken;
         fetch(
-          'https://graph.facebook.com/v2.8/me?fields=id,first_name,last_name,gender,birthday&access_token=' +
+          "https://graph.facebook.com/v2.8/me?fields=id,first_name,last_name,gender,birthday&access_token=" +
             token
         )
           .then(response => response.json())
@@ -119,20 +119,20 @@ export default class LoginScreen extends Component {
       ageRange: [20, 30],
     };
     f.database()
-      .ref('users')
+      .ref("users")
       .child(uid)
       .update({ ...userData, ...defaults });
   };
 
   _signInAsync = async () => {
     if (EmailValidator.validate(this.state.email) === true) {
-      if (this.state.Pasword != '') {
+      if (this.state.Pasword != "") {
         this.login();
       } else {
-        alert('Enter the password');
+        alert("Enter the password");
       }
     } else {
-      alert('Please enter A Valid Email');
+      alert("Please enter A Valid Email");
     }
   };
 
@@ -143,7 +143,7 @@ export default class LoginScreen extends Component {
           <View style={styles.container}>
             <KeyboardAvoidingView behavior="position">
               <View style={styles.logoContainer}>
-                <Image source={require('../../images/logo.png')} style={styles.logo} />
+                <Image source={require("../../images/logo.png")} style={styles.logo} />
               </View>
               <View style={styles.formContainer}>
                 <TextInput
@@ -172,7 +172,7 @@ export default class LoginScreen extends Component {
               <Text style={styles.buttonText}>Sign In</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('ForgotPassword')}>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate("ForgotPassword")}>
               <Text style={styles.text}>Forgot Password?</Text>
             </TouchableOpacity>
 
@@ -186,16 +186,16 @@ export default class LoginScreen extends Component {
             </TouchableOpacity>
 
             <View style={styles.signUpTextArea}>
-              <TouchableOpacity onPress={() => this.props.navigation.navigate('Signup')}>
+              <TouchableOpacity onPress={() => this.props.navigation.navigate("Signup")}>
                 <Text style={styles.text}>
                   Don't have an account?
-                  <Text style={{ color: '#0066cc' }}> Sign Up</Text>
+                  <Text style={{ color: "#0066cc" }}> Sign Up</Text>
                 </Text>
               </TouchableOpacity>
             </View>
 
             <Button
-              onPress={() => this.props.navigation.navigate('App')}
+              onPress={() => this.props.navigation.navigate("App")}
               title="Skip Login "
               color="#000"
             />

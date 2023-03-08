@@ -1,16 +1,16 @@
-import firebase from 'firebase';
+import firebase from "firebase";
 
 var config = {
-  apiKey: '',
-  authDomain: '',
-  databaseURL: '',
-  projectId: '',
-  storageBucket: '',
-  messagingSenderId: '',
+  apiKey: "",
+  authDomain: "",
+  databaseURL: "",
+  projectId: "",
+  storageBucket: "",
+  messagingSenderId: "",
 };
 firebase.initializeApp(config);
 
-var MAP_API_KEY = '';
+var MAP_API_KEY = "";
 
 export const f = firebase;
 export const database = firebase.database();

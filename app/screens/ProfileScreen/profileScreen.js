@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   Text,
   View,
@@ -10,26 +10,26 @@ import {
   Button,
   ActivityIndicator,
   TouchableOpacity,
-} from 'react-native';
-import { Info, DeatilView } from '..';
-import HeaderNavigationBar from '../../components/HeaderNavigationBar/HeaderNavigationBar';
-import styles from './style';
-import { f, auth, storage, database } from '../../../config/config.js';
-import { Avatar } from 'react-native-elements';
-import ImagePicker from 'react-native-image-picker';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+} from "react-native";
+import { Info, DeatilView } from "..";
+import HeaderNavigationBar from "../../components/HeaderNavigationBar/HeaderNavigationBar";
+import styles from "./style";
+import { f, auth, storage, database } from "../../../config/config.js";
+import { Avatar } from "react-native-elements";
+import ImagePicker from "react-native-image-picker";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 // import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default class ProfileScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: '',
-      lastName: '',
-      email: '',
-      contact: '',
-      address: '',
-      avatar: '',
+      firstName: "",
+      lastName: "",
+      email: "",
+      contact: "",
+      address: "",
+      avatar: "",
       isLoading: true,
     };
   }
@@ -40,32 +40,32 @@ export default class ProfileScreen extends Component {
       if (user) {
         that.state.email = auth.currentUser.email;
         database
-          .ref('users')
+          .ref("users")
           .child(auth.currentUser.uid)
-          .once('value', function (snapshot) {
-            if (snapshot.child('firstName').val() != null) {
+          .once("value", function (snapshot) {
+            if (snapshot.child("firstName").val() != null) {
               that.setState({
-                firstName: snapshot.child('firstName').val(),
+                firstName: snapshot.child("firstName").val(),
               });
             }
-            if (snapshot.child('lastName').val() != null) {
+            if (snapshot.child("lastName").val() != null) {
               that.setState({
-                lastName: snapshot.child('lastName').val(),
+                lastName: snapshot.child("lastName").val(),
               });
             }
-            if (snapshot.child('contact').val() != null) {
+            if (snapshot.child("contact").val() != null) {
               that.setState({
-                contact: snapshot.child('contact').val(),
+                contact: snapshot.child("contact").val(),
               });
             }
-            if (snapshot.child('address').val() != null) {
+            if (snapshot.child("address").val() != null) {
               that.setState({
-                address: snapshot.child('address').val(),
+                address: snapshot.child("address").val(),
               });
             }
-            if (snapshot.child('avatar').val != null) {
+            if (snapshot.child("avatar").val != null) {
               that.setState({
-                avatar: snapshot.child('avatar').val(),
+                avatar: snapshot.child("avatar").val(),
               });
             }
             that.setState({
@@ -74,10 +74,10 @@ export default class ProfileScreen extends Component {
           });
       } else {
         that.setState({
-          firstName: 'John',
-          lastName: 'Doe',
-          address: 'Los Angeles',
-          avatar: '../../images/user_image_1.jpg',
+          firstName: "John",
+          lastName: "Doe",
+          address: "Los Angeles",
+          avatar: "../../images/user_image_1.jpg",
           isLoading: false,
         });
       }
@@ -88,16 +88,16 @@ export default class ProfileScreen extends Component {
   requestCameraPermission = async () => {
     try {
       const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA, {
-        title: 'Go Social Camera Permission',
-        message: 'Go Social App needs access to your camera ' + 'so you can take awesome pictures.',
-        buttonNeutral: 'Ask Me Later',
-        buttonNegative: 'Cancel',
-        buttonPositive: 'OK',
+        title: "Go Social Camera Permission",
+        message: "Go Social App needs access to your camera " + "so you can take awesome pictures.",
+        buttonNeutral: "Ask Me Later",
+        buttonNegative: "Cancel",
+        buttonPositive: "OK",
       });
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        console.log('You can use the camera');
+        console.log("You can use the camera");
       } else {
-        console.log('Camera permission denied');
+        console.log("Camera permission denied");
       }
     } catch (err) {
       console.warn(err);
@@ -106,11 +106,11 @@ export default class ProfileScreen extends Component {
 
   _handleButtonPress = () => {
     //console.log("User hihi!");
-    ImagePicker.showImagePicker({ title: 'Pick an Image', maxWidth: 800, maxHeight: 600 }, res => {
+    ImagePicker.showImagePicker({ title: "Pick an Image", maxWidth: 800, maxHeight: 600 }, res => {
       if (res.didCancel) {
-        console.log('User cancelled!');
+        console.log("User cancelled!");
       } else if (res.error) {
-        console.log('Error', res.error);
+        console.log("Error", res.error);
       } else {
         this.setState({
           pickedImage: res.uri,
@@ -122,7 +122,7 @@ export default class ProfileScreen extends Component {
   };
 
   uploadImage = async () => {
-    console.log('Uploading Image!!!!');
+    console.log("Uploading Image!!!!");
     var uri = this.state.pickedImage;
     var that = this;
     var userId = auth.currentUser.uid;
@@ -140,18 +140,18 @@ export default class ProfileScreen extends Component {
       };
       xhr.onerror = function (e) {
         console.log(e);
-        reject(new TypeError('Network request failed'));
+        reject(new TypeError("Network request failed"));
       };
-      xhr.responseType = 'blob';
-      xhr.open('GET', uri, true);
+      xhr.responseType = "blob";
+      xhr.open("GET", uri, true);
       xhr.send(null);
     });
-    var filePath = userId + '.' + that.state.currentFileType;
+    var filePath = userId + "." + that.state.currentFileType;
 
-    var uploadTask = storage.ref('user/img').child(filePath).put(blob);
+    var uploadTask = storage.ref("user/img").child(filePath).put(blob);
 
     uploadTask.on(
-      'state_changed',
+      "state_changed",
       function (snapshot) {
         let progress = ((snapshot.bytesTransferred / snapshot.totalBytes) * 100).toFixed(0);
         that.setState({
@@ -175,17 +175,17 @@ export default class ProfileScreen extends Component {
   setDatabse = imageURL => {
     var user = auth.currentUser;
     var userID = auth.currentUser.uid;
-    database.ref('/users/' + userID).update({ avatar: imageURL });
-    console.log('User: ' + user);
+    database.ref("/users/" + userID).update({ avatar: imageURL });
+    console.log("User: " + user);
     user.updateProfile({
       photoURL: imageURL,
     });
-    alert('SuccessFully Published!!');
+    alert("SuccessFully Published!!");
     this.setState({
       imageSelected: false,
       uploading: false,
       progress: 0,
-      caption: '',
+      caption: "",
       avatar: imageURL,
     });
   };
@@ -193,11 +193,11 @@ export default class ProfileScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <HeaderNavigationBar title={'Profile'} {...this.props} />
-        <ScrollView style={{ width: '100%' }}>
+        <HeaderNavigationBar title={"Profile"} {...this.props} />
+        <ScrollView style={{ width: "100%" }}>
           <View style={styles.container}>
             <View style={styles.coverImageArea}>
-              <Image style={styles.coverImage} source={require('../../images/cover_photo.jpeg')} />
+              <Image style={styles.coverImage} source={require("../../images/cover_photo.jpeg")} />
             </View>
             <Avatar
               onPress={this._handleButtonPress}
@@ -211,7 +211,7 @@ export default class ProfileScreen extends Component {
             {/* <Image style={styles.profileImage} source={require('../../images/user_image_1.jpg')} /> */}
             <View style={styles.contentArea}>
               <Text style={styles.nameFont}>
-                {this.state.firstName + ' ' + this.state.lastName}
+                {this.state.firstName + " " + this.state.lastName}
               </Text>
               <Text style={styles.cityFont}>{this.state.add}</Text>
             </View>
@@ -292,7 +292,7 @@ export default class ProfileScreen extends Component {
   }
 
   logout = () => {
-    this.props.navigation.navigate('Login');
+    this.props.navigation.navigate("Login");
     auth.signOut();
   };
 
@@ -312,6 +312,6 @@ export default class ProfileScreen extends Component {
     };
 
     console.log(user);
-    f.database().ref('users/').child(auth.currentUser.uid).set(user);
+    f.database().ref("users/").child(auth.currentUser.uid).set(user);
   };
 }

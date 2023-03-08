@@ -1,5 +1,5 @@
-import { StyleSheet, Dimensions } from 'react-native';
-let deviceHeight = Dimensions.get('window').height;
+import { StyleSheet, Dimensions } from "react-native";
+let deviceHeight = Dimensions.get("window").height;
 
 export default StyleSheet.create({
   container: {
@@ -8,7 +8,7 @@ export default StyleSheet.create({
   },
   mapArea: {
     // ...StyleSheet.absoluteFillObject,
-    width: '100%',
+    width: "100%",
     height: deviceHeight * 0.5,
   },
   map: {

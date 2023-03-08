@@ -1,8 +1,8 @@
-import { StyleSheet, Dimensions } from 'react-native';
-import { COLOR_GRAY } from '../../config/styles';
+import { StyleSheet, Dimensions } from "react-native";
+import { COLOR_GRAY } from "../../config/styles";
 
-let deviceWidth = Dimensions.get('window').width;
-let deviceHeight = Dimensions.get('window').height;
+let deviceWidth = Dimensions.get("window").width;
+let deviceHeight = Dimensions.get("window").height;
 
 export default StyleSheet.create({
   scrollView: {
@@ -11,7 +11,7 @@ export default StyleSheet.create({
     marginTop: 15,
   },
   scrollViewContent: {
-    alignItems: 'center',
+    alignItems: "center",
     paddingBottom: 10,
   },
 });

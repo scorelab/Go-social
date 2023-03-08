@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { View } from 'react-native';
-import HeaderNavigationBar from '../../components/HeaderNavigationBar/HeaderNavigationBar';
-import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
-import styles from './style';
+import React, { Component } from "react";
+import { View } from "react-native";
+import HeaderNavigationBar from "../../components/HeaderNavigationBar/HeaderNavigationBar";
+import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
+import styles from "./style";
 
 export default class MapScreen extends Component {
   state = {
@@ -58,7 +58,7 @@ export default class MapScreen extends Component {
             draggable
           />
         </MapView>
-        <HeaderNavigationBar title={'Locations'} {...this.props} />
+        <HeaderNavigationBar title={"Locations"} {...this.props} />
       </View>
     );
   }

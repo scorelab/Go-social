@@ -1,8 +1,8 @@
-import React, { Component, Fragment } from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
-import HeaderNavigationBar from './HeaderNavigationBar/HeaderNavigationBar.js';
-import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
-import styles from './style';
+import React, { Component, Fragment } from "react";
+import { Text, View, TouchableOpacity } from "react-native";
+import HeaderNavigationBar from "./HeaderNavigationBar/HeaderNavigationBar.js";
+import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
+import styles from "./style";
 
 let id = 0;
 export default class MultipleMarkerPoints extends Component {
@@ -63,7 +63,7 @@ export default class MultipleMarkerPoints extends Component {
             <Marker coordinate={marker.coordinate} title={marker.key} key={marker.key} />
           ))}
         </MapView>
-        <HeaderNavigationBar title={'Locations'} {...this.props} />
+        <HeaderNavigationBar title={"Locations"} {...this.props} />
       </View>
     );
   }

@@ -1,6 +1,6 @@
-import React from 'react';
-import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
-import BottomTabNavigator from './BottomTabNavigation';
+import React from "react";
+import { createStackNavigator, TransitionPresets } from "@react-navigation/stack";
+import BottomTabNavigator from "./BottomTabNavigation";
 
 const Stack = createStackNavigator();
 

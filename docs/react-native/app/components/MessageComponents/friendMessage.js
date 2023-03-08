@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { View, Text } from 'react-native';
-import styles from './style';
+import React, { Component } from "react";
+import { View, Text } from "react-native";
+import styles from "./style";
 
 export default class friendMessage extends Component {
   render() {

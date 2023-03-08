@@ -1,18 +1,18 @@
-import React, { Component } from 'react';
-import { ScrollView, Text, View, TouchableOpacity, Image } from 'react-native';
-import HeaderNavigationBar from '../../components/HeaderNavigationBar/HeaderNavigationBar';
-import HomePostComponent from '../../components/HomePostComponent/HomePostComponent';
-import styles from './style';
+import React, { Component } from "react";
+import { ScrollView, Text, View, TouchableOpacity, Image } from "react-native";
+import HeaderNavigationBar from "../../components/HeaderNavigationBar/HeaderNavigationBar";
+import HomePostComponent from "../../components/HomePostComponent/HomePostComponent";
+import styles from "./style";
 export default class HomeScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <HeaderNavigationBar title={'Home'} />
+        <HeaderNavigationBar title={"Home"} />
         <TouchableOpacity
           style={styles.postButton}
-          onPress={() => this.props.navigation.navigate('NewPost')}>
+          onPress={() => this.props.navigation.navigate("NewPost")}>
           <View style={styles.row}>
-            <Image style={styles.profileImage} source={require('../../images/user_image_1.jpg')} />
+            <Image style={styles.profileImage} source={require("../../images/user_image_1.jpg")} />
             <Text style={styles.text}> Whats on Your Mind?</Text>
           </View>
         </TouchableOpacity>

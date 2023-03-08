@@ -1,7 +1,7 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet, Dimensions } from "react-native";
 
-let deviceWidth = Dimensions.get('window').width;
-let deviceHeight = Dimensions.get('window').height;
+let deviceWidth = Dimensions.get("window").width;
+let deviceHeight = Dimensions.get("window").height;
 
 export default StyleSheet.create({
   HeaderStyle: {
@@ -16,10 +16,10 @@ export default StyleSheet.create({
     marginHorizontal: 5,
   },
   HeaderStyle1: {
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   DividerView: {
-    borderBottomColor: 'black',
+    borderBottomColor: "black",
     borderBottomWidth: 1,
     marginBottom: 3,
     marginHorizontal: 10,

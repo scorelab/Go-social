@@ -8,29 +8,12 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
 import com.facebook.react.defaults.DefaultReactNativeHost;
 import com.facebook.soloader.SoLoader;
-// import com.oblador.vectoricons.VectorIconsPackage;
-// import com.facebook.reactnative.androidsdk.FBSDKPackage;
-// import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
-// import com.airbnb.android.react.maps.MapsPackage;
-// import com.imagepicker.ImagePickerPackage;
-// import com.facebook.CallbackManager;
-// import com.facebook.FacebookSdk;
-// import com.facebook.appevents.AppEventsLogger;
 
 import java.util.List;
 
 public class MainApplication extends Application implements ReactApplication {
 
-  // private static CallbackManager mCallbackManager =
-  // CallbackManager.Factory.create();
-
-  // protected static CallbackManager getCallbackManager() {
-  // return mCallbackManager;
-  // }
-
   private final ReactNativeHost mReactNativeHost = new DefaultReactNativeHost(this) {
-
-    // private FirebaseAuth mAuth;
 
     @Override
     public boolean getUseDeveloperSupport() {
@@ -44,11 +27,6 @@ public class MainApplication extends Application implements ReactApplication {
       // Packages that cannot be autolinked yet can be added manually here, for
       // example:
       // packages.add(new MyReactNativePackage());
-      // packages.add(new ImagePickerPackage());
-      // packages.add(new FBSDKPackage(mCallbackManager));
-      // packages.add(new RNGestureHandlerPackage());
-      // packages.add(new VectorIconsPackage());
-      // packages.add(new MapsPackage());
       return packages;
     }
 
@@ -83,18 +61,5 @@ public class MainApplication extends Application implements ReactApplication {
       DefaultNewArchitectureEntryPoint.load();
     }
     ReactNativeFlipper.initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
-    
-    // // Initialize Firebase Auth
-    // mAuth = FirebaseAuth.getInstance();
   }
-
-  // @Override
-  // public void onStart() {
-  //     super.onStart();
-  //     // Check if user is signed in (non-null) and update UI accordingly.
-  //     FirebaseUser currentUser = mAuth.getCurrentUser();
-  //     if(currentUser != null){
-  //         reload();
-  //     }
-  // }
 }

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   ScrollView,
   Text,
@@ -8,15 +8,15 @@ import {
   PermissionsAndroid,
   ActivityIndicator,
   KeyboardAvoidingView,
-} from 'react-native';
-import { DetailView, Info } from '..';
-import ModalHeaderNavigationBar from '../../components/ModalHeaderNavigationBar/modalHeaderNavigationBar';
-import styles from './style';
-import { Card, ListItem, Button } from 'react-native-elements';
-import { TextInput } from 'react-native-gesture-handler';
-import ImagePicker from 'react-native-image-picker';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import { f, auth, storage, database } from '../../../config/config.js';
+} from "react-native";
+import { DetailView, Info } from "..";
+import ModalHeaderNavigationBar from "../../components/ModalHeaderNavigationBar/modalHeaderNavigationBar";
+import styles from "./style";
+import { Card, ListItem, Button } from "react-native-elements";
+import { TextInput } from "react-native-gesture-handler";
+import ImagePicker from "react-native-image-picker";
+import Icon from "react-native-vector-icons/FontAwesome";
+import { f, auth, storage, database } from "../../../config/config.js";
 export default class NewPostScreen extends Component {
   constructor() {
     super();
@@ -24,7 +24,7 @@ export default class NewPostScreen extends Component {
       imageSelected: false,
       pickedImage: null,
       progress: 0,
-      caption: '',
+      caption: "",
       uploading: false,
       postId: this.uniqueId(),
     };
@@ -35,27 +35,27 @@ export default class NewPostScreen extends Component {
   equestCameraPermission = async () => {
     try {
       const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA, {
-        title: 'Go Social Camera Permission',
-        message: 'Go Social App needs access to your camera ' + 'so you can take awesome pictures.',
-        buttonNeutral: 'Ask Me Later',
-        buttonNegative: 'Cancel',
-        buttonPositive: 'OK',
+        title: "Go Social Camera Permission",
+        message: "Go Social App needs access to your camera " + "so you can take awesome pictures.",
+        buttonNeutral: "Ask Me Later",
+        buttonNegative: "Cancel",
+        buttonPositive: "OK",
       });
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        console.log('You can use the camera');
+        console.log("You can use the camera");
       } else {
-        console.log('Camera permission denied');
+        console.log("Camera permission denied");
       }
     } catch (err) {
       console.warn(err);
     }
   };
   _handleButtonPress = () => {
-    ImagePicker.showImagePicker({ title: 'Pick an Image', maxWidth: 800, maxHeight: 600 }, res => {
+    ImagePicker.showImagePicker({ title: "Pick an Image", maxWidth: 800, maxHeight: 600 }, res => {
       if (res.didCancel) {
-        console.log('User cancelled!');
+        console.log("User cancelled!");
       } else if (res.error) {
-        console.log('Error', res.error);
+        console.log("Error", res.error);
       } else {
         this.setState({
           pickedImage: res.uri,
@@ -81,17 +81,17 @@ export default class NewPostScreen extends Component {
     return (
       this.s4() +
       this.s4() +
-      '-' +
+      "-" +
       this.s4() +
-      '-' +
+      "-" +
       this.s4() +
-      '-' +
+      "-" +
       this.s4() +
-      '-' +
+      "-" +
       this.s4() +
-      '-' +
+      "-" +
       this.s4() +
-      '-' +
+      "-" +
       this.s4()
     );
   };
@@ -114,18 +114,18 @@ export default class NewPostScreen extends Component {
       };
       xhr.onerror = function (e) {
         console.log(e);
-        reject(new TypeError('Network request failed'));
+        reject(new TypeError("Network request failed"));
       };
-      xhr.responseType = 'blob';
-      xhr.open('GET', uri, true);
+      xhr.responseType = "blob";
+      xhr.open("GET", uri, true);
       xhr.send(null);
     });
-    var filePath = postId + '.' + that.state.currentFileType;
+    var filePath = postId + "." + that.state.currentFileType;
 
-    var uploadTask = storage.ref('post/img').child(filePath).put(blob);
+    var uploadTask = storage.ref("post/img").child(filePath).put(blob);
 
     uploadTask.on(
-      'state_changed',
+      "state_changed",
       function (snapshot) {
         let progress = ((snapshot.bytesTransferred / snapshot.totalBytes) * 100).toFixed(0);
         that.setState({
@@ -157,13 +157,13 @@ export default class NewPostScreen extends Component {
       image: imageURL,
       posted: posted,
     };
-    database.ref('/post/' + postId).set(postObj);
-    alert('SuccessFully Published!!');
+    database.ref("/post/" + postId).set(postObj);
+    alert("SuccessFully Published!!");
     this.setState({
       imageSelected: false,
       uploading: false,
       progress: 0,
-      caption: '',
+      caption: "",
     });
   };
 
@@ -172,7 +172,7 @@ export default class NewPostScreen extends Component {
       <View style={styles.container}>
         <ModalHeaderNavigationBar
           onPress={() => this.props.navigation.goBack()}
-          title={'New Post'}
+          title={"New Post"}
         />
         {this.state.uploading == true ? (
           <View style={styles.progresView}>
@@ -185,10 +185,10 @@ export default class NewPostScreen extends Component {
             <View style={styles.row}>
               <Image
                 style={styles.profileImage}
-                source={require('../../images/user_image_1.jpg')}
+                source={require("../../images/user_image_1.jpg")}
               />
               <Text style={styles.nameText}>John Doe</Text>
-              {this.state.imageSelected == true && this.state.caption != '' ? (
+              {this.state.imageSelected == true && this.state.caption != "" ? (
                 <View style={styles.shareView}>
                   <Button
                     icon={<Icon name="arrow-right" size={15} color="white" />}
@@ -214,7 +214,7 @@ export default class NewPostScreen extends Component {
             </View>
             <TextInput
               style={styles.text}
-              placeholder={'What is on your mind?'}
+              placeholder={"What is on your mind?"}
               editable={true}
               multiline={true}
               onChangeText={text => this.setState({ caption: text })}
@@ -228,16 +228,16 @@ export default class NewPostScreen extends Component {
               showsVerticalScrollIndicator={false}>
               {this.state.imageSelected == true ? (
                 <TouchableOpacity style={styles.list} onPress={this._handleButtonPress}>
-                  <ListItem title={'Change Photo'} leftIcon={{ name: 'edit' }} />
+                  <ListItem title={"Change Photo"} leftIcon={{ name: "edit" }} />
                 </TouchableOpacity>
               ) : (
                 <TouchableOpacity style={styles.list} onPress={this._handleButtonPress}>
-                  <ListItem title={'Add Photo'} leftIcon={{ name: 'photo' }} />
+                  <ListItem title={"Add Photo"} leftIcon={{ name: "photo" }} />
                 </TouchableOpacity>
               )}
 
               <TouchableOpacity style={styles.list}>
-                <ListItem title={'Tag People'} leftIcon={{ name: 'people' }} />
+                <ListItem title={"Tag People"} leftIcon={{ name: "people" }} />
               </TouchableOpacity>
             </ScrollView>
           </View>

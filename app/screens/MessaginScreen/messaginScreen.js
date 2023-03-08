@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import FriendMessage from '../../components/MessageComponents/friendMessage';
-import MyMessage from '../../components/MessageComponents/myMessage';
-import ModalHeaderNavigationBar from '../../components/ModalHeaderNavigationBar/modalHeaderNavigationBar';
+import React, { Component } from "react";
+import FriendMessage from "../../components/MessageComponents/friendMessage";
+import MyMessage from "../../components/MessageComponents/myMessage";
+import ModalHeaderNavigationBar from "../../components/ModalHeaderNavigationBar/modalHeaderNavigationBar";
 import {
   View,
   TextInput,
@@ -9,21 +9,21 @@ import {
   TouchableOpacity,
   Text,
   ScrollView,
-} from 'react-native';
-import styles from './style';
-import Ionicons from 'react-native-vector-icons/FontAwesome';
-import { f, auth, storage, database } from '../../../config/config.js';
+} from "react-native";
+import styles from "./style";
+import Ionicons from "react-native-vector-icons/FontAwesome";
+import { f, auth, storage, database } from "../../../config/config.js";
 export default class MessageScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      newMessage: '',
+      newMessage: "",
       messageList: [],
       newMessageId: this.uniqueId(),
       newChatId: this.uniqueId(),
       loaded: false,
       loggedin: false,
-      friendId: '',
+      friendId: "",
     };
   }
 
@@ -37,24 +37,24 @@ export default class MessageScreen extends Component {
     return (
       this.s4() +
       this.s4() +
-      '-' +
+      "-" +
       this.s4() +
-      '-' +
+      "-" +
       this.s4() +
-      '-' +
+      "-" +
       this.s4() +
-      '-' +
+      "-" +
       this.s4() +
-      '-' +
+      "-" +
       this.s4() +
-      '-' +
+      "-" +
       this.s4()
     );
   };
 
   check = () => {
     var params = this.props.navigation.state.params;
-    console.log('Friend ID IS' + params.userId);
+    console.log("Friend ID IS" + params.userId);
     if (params) {
       if (params.userId) {
         this.setState({
@@ -62,10 +62,10 @@ export default class MessageScreen extends Component {
         });
         var that = this;
         database
-          .ref('users')
+          .ref("users")
           .child(params.userId)
-          .child('firstName')
-          .once('value')
+          .child("firstName")
+          .once("value")
           .then(function (snapshot) {
             const exist = snapshot.val() != null;
             if (exist) data = snapshot.val();
@@ -75,10 +75,10 @@ export default class MessageScreen extends Component {
             });
           });
         database
-          .ref('users')
+          .ref("users")
           .child(params.userId)
-          .child('avatar')
-          .once('value')
+          .child("avatar")
+          .once("value")
           .then(function (snapshot) {
             const exist = snapshot.val() != null;
             if (exist) data = snapshot.val();
@@ -95,9 +95,9 @@ export default class MessageScreen extends Component {
 
   timePlural = s => {
     if (s == 1) {
-      return ' ago';
+      return " ago";
     } else {
-      return 's ago';
+      return "s ago";
     }
   };
 
@@ -107,51 +107,51 @@ export default class MessageScreen extends Component {
 
     var interval = Math.floor(seconds / 31536000);
     if (interval >= 1) {
-      return interval + ' Year' + this.timePlural(interval);
+      return interval + " Year" + this.timePlural(interval);
     }
 
     var interval = Math.floor(seconds / 2592000);
     if (interval >= 1) {
-      return interval + ' Month' + this.timePlural(interval);
+      return interval + " Month" + this.timePlural(interval);
     }
 
     var interval = Math.floor(seconds / 86400);
     if (interval >= 1) {
-      return interval + ' Day' + this.timePlural(interval);
+      return interval + " Day" + this.timePlural(interval);
     }
 
     var interval = Math.floor(seconds / 3600);
     if (interval >= 1) {
-      return interval + ' Hour' + this.timePlural(interval);
+      return interval + " Hour" + this.timePlural(interval);
     }
 
     var interval = Math.floor(seconds / 60);
     if (interval >= 1) {
-      return interval + ' Minute' + this.timePlural(interval);
+      return interval + " Minute" + this.timePlural(interval);
     }
 
-    return Math.floor(seconds) + ' Second' + this.timePlural(seconds);
+    return Math.floor(seconds) + " Second" + this.timePlural(seconds);
   };
 
   fetchMessages = () => {
     var that = this;
     var userId = auth.currentUser.uid;
     database
-      .ref('users')
+      .ref("users")
       .child(userId)
-      .child('userChats')
+      .child("userChats")
       .child(this.state.friendId)
       .on(
-        'value',
+        "value",
         function (snapshot) {
           const exist = snapshot.exists();
           if (exist) {
             var data = snapshot.val();
             database
-              .ref('chatMessages')
+              .ref("chatMessages")
               .child(Object.keys(data)[0])
               .on(
-                'value',
+                "value",
                 function (snapshot) {
                   const exsist = snapshot.exists();
                   if (exsist) {
@@ -181,13 +181,13 @@ export default class MessageScreen extends Component {
                   }
                 },
                 function (errorObject) {
-                  console.log('The read failed: ' + errorObject.code);
+                  console.log("The read failed: " + errorObject.code);
                 }
               );
           }
         },
         function (errorObject) {
-          console.log('The read failed: ' + errorObject.code);
+          console.log("The read failed: " + errorObject.code);
         }
       );
   };
@@ -195,19 +195,19 @@ export default class MessageScreen extends Component {
   sendMessage = () => {
     if (
       this.state.loggedin == true &&
-      this.state.newMessage != '' &&
-      this.state.friendId != '[object Object]'
+      this.state.newMessage != "" &&
+      this.state.friendId != "[object Object]"
     ) {
       var that = this;
       var date = Date.now();
       var posted = Math.floor(date / 1000);
       var userId = auth.currentUser.uid;
       database
-        .ref('users')
+        .ref("users")
         .child(userId)
-        .child('userChats')
+        .child("userChats")
         .child(this.state.friendId)
-        .once('value')
+        .once("value")
         .then(function (snapshot) {
           const exist = snapshot.exists();
           if (exist) {
@@ -222,15 +222,15 @@ export default class MessageScreen extends Component {
             that.setState({
               newMessageId: that.uniqueId(),
             });
-            database.ref('/chatMessages/' + cId + '/' + that.state.newMessageId).set(newMessage);
+            database.ref("/chatMessages/" + cId + "/" + that.state.newMessageId).set(newMessage);
             database
-              .ref('/users/' + userId + '/userChats/' + that.state.friendId + '/' + cId)
+              .ref("/users/" + userId + "/userChats/" + that.state.friendId + "/" + cId)
               .update({ posted: posted, lastMessage: that.state.newMessage });
             database
-              .ref('/users/' + that.state.friendId + '/userChats/' + userId + '/' + cId)
+              .ref("/users/" + that.state.friendId + "/userChats/" + userId + "/" + cId)
               .update({ posted: posted, lastMessage: that.state.newMessage });
             that.setState({
-              newMessage: '',
+              newMessage: "",
             });
           } else {
             var chatUserf = {
@@ -255,26 +255,26 @@ export default class MessageScreen extends Component {
             };
             database
               .ref(
-                '/users/' +
+                "/users/" +
                   userId +
-                  '/userChats/' +
+                  "/userChats/" +
                   that.state.friendId +
-                  '/' +
+                  "/" +
                   that.state.newChatId
               )
               .set(chatUserf);
             database
               .ref(
-                '/users/' +
+                "/users/" +
                   that.state.friendId +
-                  '/userChats/' +
+                  "/userChats/" +
                   userId +
-                  '/' +
+                  "/" +
                   that.state.newChatId
               )
               .set(chatUser);
             database
-              .ref('/chatMessages/' + that.state.newChatId + '/' + that.state.newMessageId)
+              .ref("/chatMessages/" + that.state.newChatId + "/" + that.state.newMessageId)
               .set(newMessage);
           }
         })
@@ -293,10 +293,10 @@ export default class MessageScreen extends Component {
         that.check();
         var userId = auth.currentUser.uid;
         database
-          .ref('users')
+          .ref("users")
           .child(userId)
-          .child('name')
-          .once('value')
+          .child("name")
+          .once("value")
           .then(function (snapshot) {
             const exist = snapshot.val() != null;
             if (exist) data = snapshot.val();
@@ -306,10 +306,10 @@ export default class MessageScreen extends Component {
             });
           });
         database
-          .ref('users')
+          .ref("users")
           .child(userId)
-          .child('avatar')
-          .once('value')
+          .child("avatar")
+          .once("value")
           .then(function (snapshot) {
             const exist = snapshot.val() != null;
             if (exist) data = snapshot.val();
@@ -345,7 +345,7 @@ export default class MessageScreen extends Component {
     return (
       <View style={styles.container}>
         <ModalHeaderNavigationBar
-          title={'Toney Herford'}
+          title={"Toney Herford"}
           onPress={() => this.props.navigation.goBack()}
         />
 
@@ -357,27 +357,27 @@ export default class MessageScreen extends Component {
           onContentSizeChange={(contentWidth, contentHeight) => {
             this.scrollView.scrollToEnd({ animated: true });
           }}>
-          <FriendMessage message={'Hello How Are You'} posted={'2 min ago'} />
-          <MyMessage message={'I am fine Thank You'} posted={'2 min ago'} />
-          <FriendMessage message={'Hello How Are You'} posted={'2 min ago'} />
-          <MyMessage message={'I am fine Thank You'} posted={'2 min ago'} />
-          <FriendMessage message={'Hello How Are You'} posted={'2 min ago'} />
-          <MyMessage message={'I am fine Thank You'} posted={'2 min ago'} />
-          <FriendMessage message={'Hello How Are You'} posted={'2 min ago'} />
-          <MyMessage message={'I am fine Thank You'} posted={'2 min ago'} />
-          <FriendMessage message={'Hello How Are You'} posted={'2 min ago'} />
-          <MyMessage message={'I am fine Thank You'} posted={'2 min ago'} />
-          <FriendMessage message={'Hello How Are You'} posted={'2 min ago'} />
-          <MyMessage message={'I am fine Thank You'} posted={'2 min ago'} />
+          <FriendMessage message={"Hello How Are You"} posted={"2 min ago"} />
+          <MyMessage message={"I am fine Thank You"} posted={"2 min ago"} />
+          <FriendMessage message={"Hello How Are You"} posted={"2 min ago"} />
+          <MyMessage message={"I am fine Thank You"} posted={"2 min ago"} />
+          <FriendMessage message={"Hello How Are You"} posted={"2 min ago"} />
+          <MyMessage message={"I am fine Thank You"} posted={"2 min ago"} />
+          <FriendMessage message={"Hello How Are You"} posted={"2 min ago"} />
+          <MyMessage message={"I am fine Thank You"} posted={"2 min ago"} />
+          <FriendMessage message={"Hello How Are You"} posted={"2 min ago"} />
+          <MyMessage message={"I am fine Thank You"} posted={"2 min ago"} />
+          <FriendMessage message={"Hello How Are You"} posted={"2 min ago"} />
+          <MyMessage message={"I am fine Thank You"} posted={"2 min ago"} />
           {this.renderMessages()}
         </ScrollView>
 
-        <KeyboardAvoidingView enabled={true} behavior={'height'}>
+        <KeyboardAvoidingView enabled={true} behavior={"height"}>
           <View style={styles.messageArea}>
             <TextInput
               underlineColorAndroid="#428AF8"
               style={styles.messageInput}
-              placeholder={'Enter Message Here'}
+              placeholder={"Enter Message Here"}
               editable={true}
               multiline={true}
               maxlength={100}
@@ -387,7 +387,7 @@ export default class MessageScreen extends Component {
               }}
             />
             <TouchableOpacity onPress={this.sendMessage} style={styles.sendArea}>
-              <Ionicons name={'paper-plane'} size={35} />
+              <Ionicons name={"paper-plane"} size={35} />
             </TouchableOpacity>
           </View>
         </KeyboardAvoidingView>

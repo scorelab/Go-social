@@ -1,6 +1,6 @@
-import { StyleSheet, Dimensions, Platform } from 'react-native';
-let deviceWidth = Dimensions.get('window').width;
-let deviceHeight = Dimensions.get('window').height;
+import { StyleSheet, Dimensions, Platform } from "react-native";
+let deviceWidth = Dimensions.get("window").width;
+let deviceHeight = Dimensions.get("window").height;
 
 export default StyleSheet.create({
   container: {
@@ -9,25 +9,25 @@ export default StyleSheet.create({
   },
   mapArea: {
     // ...StyleSheet.absoluteFillObject,
-    width: '100%',
+    width: "100%",
     height: deviceHeight * 0.5,
   },
   map: {
     ...StyleSheet.absoluteFillObject,
   },
   cardStyle: {
-    marginTop: 'auto',
+    marginTop: "auto",
   },
-  rowElements: { flexDirection: 'row' },
+  rowElements: { flexDirection: "row" },
   touchableOpacityFilter: {
-    alignItems: 'center',
-    backgroundColor: '#28DDFB',
+    alignItems: "center",
+    backgroundColor: "#28DDFB",
     padding: 9,
     margin: 8,
     borderRadius: 50,
   },
   touchableText: {
-    color: 'white',
+    color: "white",
     fontSize: 15,
   },
 });

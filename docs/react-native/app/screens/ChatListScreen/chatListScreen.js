@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import { View, Text, Button, StatusBar, Image, ScrollView } from 'react-native';
-import styles from './style';
-import ConversationBanner from '../../components/ConversationBanner/conversationBanner';
-import SuggestCardView from '../../components/SuggestionsCardView/suggestionsCardView';
-import HeaderNavigationBar from '../../components/HeaderNavigationBar/HeaderNavigationBar';
-import { fauthstorage, database } from '../../../config/config.js';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { Component } from "react";
+import { View, Text, Button, StatusBar, Image, ScrollView } from "react-native";
+import styles from "./style";
+import ConversationBanner from "../../components/ConversationBanner/conversationBanner";
+import SuggestCardView from "../../components/SuggestionsCardView/suggestionsCardView";
+import HeaderNavigationBar from "../../components/HeaderNavigationBar/HeaderNavigationBar";
+import { fauthstorage, database } from "../../../config/config.js";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 export default class ChatListScreen extends Component {
   constructor(props) {
     super(props);
@@ -20,8 +20,8 @@ export default class ChatListScreen extends Component {
   fetchUsers = () => {
     var that = this;
     var userId = auth.currentUser.uid;
-    database.ref('users').once(
-      'value',
+    database.ref("users").once(
+      "value",
       function (snapshot) {
         const exsist = snapshot.val() != null;
         if (exsist) {
@@ -44,7 +44,7 @@ export default class ChatListScreen extends Component {
         }
       },
       function (errorObject) {
-        console.log('The read failed: ' + errorObject.code);
+        console.log("The read failed: " + errorObject.code);
       }
     );
   };
@@ -55,7 +55,7 @@ export default class ChatListScreen extends Component {
         return (
           <SuggestCardView
             key={items.id}
-            onPress={() => this.props.navigation.navigate('MessageView', { userId: items.id })}
+            onPress={() => this.props.navigation.navigate("MessageView", { userId: items.id })}
             name={items.name}
             userImage={{ uri: items.avatar }}
           />
@@ -68,11 +68,11 @@ export default class ChatListScreen extends Component {
       var that = this;
       var userId = auth.currentUser.uid;
       database
-        .ref('users')
+        .ref("users")
         .child(userId)
-        .child('userChats')
+        .child("userChats")
         .on(
-          'value',
+          "value",
           function (snapshot) {
             const exist = snapshot.exists();
             that.setState({
@@ -109,16 +109,16 @@ export default class ChatListScreen extends Component {
             }
           },
           function (errorObject) {
-            console.log('The read failed: ' + errorObject.code);
+            console.log("The read failed: " + errorObject.code);
           }
         );
     }
   };
   timePlural = s => {
     if (s == 1) {
-      return ' ago';
+      return " ago";
     } else {
-      return 's ago';
+      return "s ago";
     }
   };
 
@@ -128,30 +128,30 @@ export default class ChatListScreen extends Component {
 
     var interval = Math.floor(seconds / 31536000);
     if (interval >= 1) {
-      return interval + ' Year' + this.timePlural(interval);
+      return interval + " Year" + this.timePlural(interval);
     }
 
     var interval = Math.floor(seconds / 2592000);
     if (interval >= 1) {
-      return interval + ' Month' + this.timePlural(interval);
+      return interval + " Month" + this.timePlural(interval);
     }
 
     var interval = Math.floor(seconds / 86400);
     if (interval >= 1) {
-      return interval + ' Day' + this.timePlural(interval);
+      return interval + " Day" + this.timePlural(interval);
     }
 
     var interval = Math.floor(seconds / 3600);
     if (interval >= 1) {
-      return interval + ' Hour' + this.timePlural(interval);
+      return interval + " Hour" + this.timePlural(interval);
     }
 
     var interval = Math.floor(seconds / 60);
     if (interval >= 1) {
-      return interval + ' Minute' + this.timePlural(interval);
+      return interval + " Minute" + this.timePlural(interval);
     }
 
-    return Math.floor(seconds) + ' Second' + this.timePlural(seconds);
+    return Math.floor(seconds) + " Second" + this.timePlural(seconds);
   };
 
   renderMessageList = () => {
@@ -165,7 +165,7 @@ export default class ChatListScreen extends Component {
             key={items.id}
             name={items.name}
             posted={this.timeConvertor(items.posted)}
-            onPress={() => this.props.navigation.navigate('MessageView', { userId: items.id })}
+            onPress={() => this.props.navigation.navigate("MessageView", { userId: items.id })}
             userImage={{ uri: items.avatar }}
             message={items.lastMessage}
             count="2"
@@ -187,12 +187,12 @@ export default class ChatListScreen extends Component {
     });
   };
   viewChat = userId => {
-    this.props.navigation.navigate('MessageView', { userId: userId });
+    this.props.navigation.navigate("MessageView", { userId: userId });
   };
   render() {
     return (
       <View style={styles.container}>
-        <HeaderNavigationBar title={'Messages'} {...this.props} />
+        <HeaderNavigationBar title={"Messages"} {...this.props} />
         <ScrollView
           style={styles.scrollView}
           contentContainerStyle={styles.scrollViewContent}
@@ -211,38 +211,38 @@ export default class ChatListScreen extends Component {
               {this.renderUserList()}
               <SuggestCardView
                 onPress={this.viewChat}
-                name={'Cherryl'}
-                userImage={require('../../images/user_image_1.jpg')}
+                name={"Cherryl"}
+                userImage={require("../../images/user_image_1.jpg")}
               />
               <SuggestCardView
                 onPress={this.viewChat}
-                name={'Cherryl'}
-                userImage={require('../../images/user_image_1.jpg')}
+                name={"Cherryl"}
+                userImage={require("../../images/user_image_1.jpg")}
               />
               <SuggestCardView
                 onPress={this.viewChat}
-                name={'Cherryl'}
-                userImage={require('../../images/user_image_1.jpg')}
+                name={"Cherryl"}
+                userImage={require("../../images/user_image_1.jpg")}
               />
               <SuggestCardView
                 onPress={this.viewChat}
-                name={'Cherryl'}
-                userImage={require('../../images/user_image_1.jpg')}
+                name={"Cherryl"}
+                userImage={require("../../images/user_image_1.jpg")}
               />
               <SuggestCardView
                 onPress={this.viewChat}
-                name={'Cherryl'}
-                userImage={require('../../images/user_image_1.jpg')}
+                name={"Cherryl"}
+                userImage={require("../../images/user_image_1.jpg")}
               />
               <SuggestCardView
                 onPress={this.viewChat}
-                name={'Cherryl'}
-                userImage={require('../../images/user_image_1.jpg')}
+                name={"Cherryl"}
+                userImage={require("../../images/user_image_1.jpg")}
               />
               <SuggestCardView
                 onPress={this.viewChat}
-                name={'Cherryl'}
-                userImage={require('../../images/user_image_1.jpg')}
+                name={"Cherryl"}
+                userImage={require("../../images/user_image_1.jpg")}
               />
             </ScrollView>
           </View>
@@ -255,7 +255,7 @@ export default class ChatListScreen extends Component {
               name="Toney Herford"
               posted="2 days ago"
               onPress={this.viewChat}
-              userImage={require('../../images/user_image_1.jpg')}
+              userImage={require("../../images/user_image_1.jpg")}
               message="Hello Jhon, I would like to invite you to participate ..."
               count="5"
             />
@@ -263,7 +263,7 @@ export default class ChatListScreen extends Component {
               name="Toney Herford"
               posted="2 days ago"
               onPress={this.viewChat}
-              userImage={require('../../images/user_image_1.jpg')}
+              userImage={require("../../images/user_image_1.jpg")}
               message="Hello Jhon, I would like to invite you to participate ..."
               count="2"
             />
@@ -271,7 +271,7 @@ export default class ChatListScreen extends Component {
               name="Toney Herford"
               posted="2 days ago"
               onPress={this.viewChat}
-              userImage={require('../../images/user_image_1.jpg')}
+              userImage={require("../../images/user_image_1.jpg")}
               message="Hello Jhon, I would like to invite you to participate ..."
               count="3"
             />
@@ -279,7 +279,7 @@ export default class ChatListScreen extends Component {
               name="Toney Herford"
               posted="2 days ago"
               onPress={this.viewChat}
-              userImage={require('../../images/user_image_1.jpg')}
+              userImage={require("../../images/user_image_1.jpg")}
               message="Hello Jhon, I would like to invite you to participate ..."
               count="7"
             />
@@ -287,7 +287,7 @@ export default class ChatListScreen extends Component {
               name="Toney Herford"
               posted="2 days ago"
               onPress={this.viewChat}
-              userImage={require('../../images/user_image_1.jpg')}
+              userImage={require("../../images/user_image_1.jpg")}
               message="Hello Jhon, I would like to invite you to participate ..."
               count="2"
             />

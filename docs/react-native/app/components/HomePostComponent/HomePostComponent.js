@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { View, Text, Image } from 'react-native';
-import Icon from 'react-native-vector-icons/EvilIcons';
+import React, { Component } from "react";
+import { View, Text, Image } from "react-native";
+import Icon from "react-native-vector-icons/EvilIcons";
 
-import style from './styles';
+import style from "./styles";
 
 export default class HomePostComponent extends Component {
   render() {
@@ -11,7 +11,7 @@ export default class HomePostComponent extends Component {
         <View style={style.cardTitleBar}>
           <View style={style.userAvatarArea}>
             <Image
-              source={require('../../images/user_image_1.jpg')}
+              source={require("../../images/user_image_1.jpg")}
               style={style.userAvatarImage}
             />
           </View>
@@ -30,16 +30,16 @@ export default class HomePostComponent extends Component {
             has been the industry's standard dummy text ever since the 1500s
           </Text>
           <View style={style.postImageArea}>
-            <Image source={require('../../images/post_01.jpg')} style={style.postImage} />
+            <Image source={require("../../images/post_01.jpg")} style={style.postImage} />
           </View>
           <View
             style={{
-              borderBottomColor: 'black',
+              borderBottomColor: "black",
               borderBottomWidth: 1,
             }}
           />
 
-          <View style={{ flexDirection: 'row' }}>
+          <View style={{ flexDirection: "row" }}>
             <View style={{ width: 100, height: 30, paddingLeft: 50, marginTop: 10 }}>
               <Icon name="like" size={30} color="blue" />
             </View>

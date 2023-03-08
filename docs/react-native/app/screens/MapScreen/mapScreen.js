@@ -1,10 +1,10 @@
-import React, { Component, Fragment } from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
-import HeaderNavigationBar from '../../components/HeaderNavigationBar/HeaderNavigationBar';
-import MapView, { PROVIDER_GOOGLE, Marker, Polygon } from 'react-native-maps';
-import styles from './style';
-import Search from '../../components/SearchAndFixLocation/searchView.js';
-import { Card } from 'react-native-elements';
+import React, { Component, Fragment } from "react";
+import { Text, View, TouchableOpacity } from "react-native";
+import HeaderNavigationBar from "../../components/HeaderNavigationBar/HeaderNavigationBar";
+import MapView, { PROVIDER_GOOGLE, Marker, Polygon } from "react-native-maps";
+import styles from "./style";
+import Search from "../../components/SearchAndFixLocation/searchView.js";
+import { Card } from "react-native-elements";
 
 let id = 0;
 const DISTANCE = 0.01;
@@ -190,7 +190,7 @@ export default class MapScreen extends Component {
             />
           )}
         </MapView>
-        <HeaderNavigationBar title={'Locations'} {...this.props} />
+        <HeaderNavigationBar title={"Locations"} {...this.props} />
         {search && <Search onLocationSelected={this.handleLocationSelected} />}
 
         <Card title="OPTIONS" containerStyle={styles.cardStyle}>
