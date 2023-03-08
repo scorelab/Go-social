@@ -5,7 +5,7 @@ import styles from "./styles.js";
 
 export default class Search extends Component {
   state = {
-    searchFocused: false
+    searchFocused: false,
   };
 
   render() {
@@ -19,7 +19,7 @@ export default class Search extends Component {
         onPress={onLocationSelected}
         query={{
           key: MAP_API,
-          language: "en"
+          language: "en",
         }}
         textInputProps={{
           onFocus: () => {
@@ -29,7 +29,7 @@ export default class Search extends Component {
             this.setState({ searchFocused: false });
           },
           autoCapitalize: "none",
-          autoCorrect: false
+          autoCorrect: false,
         }}
         listViewDisplayed={searchFocused}
         fetchDetails

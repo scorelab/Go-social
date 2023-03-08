@@ -1,20 +1,19 @@
-import { StyleSheet, Dimensions } from 'react-native';
-import { COLOR_GRAY } from '../../config/styles';
-let deviceWidth = Dimensions.get('window').width;
-let deviceHeight = Dimensions.get('window').height;
+import { StyleSheet, Dimensions } from "react-native";
+import { COLOR_GRAY } from "../../config/styles";
+let deviceWidth = Dimensions.get("window").width;
+let deviceHeight = Dimensions.get("window").height;
 
 export default StyleSheet.create({
-
   container: {
     flex: 1,
-    flexDirection: 'column',
-    width:'100%'
+    flexDirection: "column",
+    width: "100%",
   },
   suggestUserArea: {
-    width: '100%',
+    width: "100%",
   },
   userCardView: {
-    backgroundColor: 'blue',
+    backgroundColor: "blue",
     width: deviceWidth * 0.25,
     height: deviceWidth * 0.3,
     marginLeft: 10,
@@ -23,11 +22,11 @@ export default StyleSheet.create({
   latestMessageArea: {
     marginTop: 10,
     // backgroundColor:'red',
-    width: '100%',
-    alignItems: 'center',
+    width: "100%",
+    alignItems: "center",
   },
   subHeaderArea: {
-    width: '90%',
+    width: "90%",
     marginBottom: 10,
   },
   horizontalScrollView: {
@@ -40,27 +39,26 @@ export default StyleSheet.create({
   imgBackground: {
     width: deviceWidth,
     height: deviceHeight,
-    backgroundColor: 'transparent',
-    position: 'absolute',
+    backgroundColor: "transparent",
+    position: "absolute",
   },
   scrollView: {
-    width: '100%',
+    width: "100%",
     backgroundColor: COLOR_GRAY,
-
   },
   scrollViewContent: {
-    alignItems: 'center',
+    alignItems: "center",
   },
 
   //Text-------
   subHeaderText: {
     fontSize: 14,
-    fontWeight: 'bold',
-    color: '#4e5861',
+    fontWeight: "bold",
+    color: "#4e5861",
   },
   headerText: {
     fontSize: 20,
-    fontWeight: 'bold',
-    color: '#fff',
-  }
+    fontWeight: "bold",
+    color: "#fff",
+  },
 });

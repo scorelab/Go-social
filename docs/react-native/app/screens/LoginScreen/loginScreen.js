@@ -7,25 +7,25 @@ import {
   Button,
   TouchableOpacity,
   KeyboardAvoidingView,
-  ScrollView
+  ScrollView,
 } from "react-native";
 import { AccessToken, LoginManager } from "react-native-fbsdk";
-import { f, auth } from "../../../config/config.js";
+import { f, auth, database } from "../../../config/config.js";
 import * as EmailValidator from "email-validator";
 import styles from "./style";
-import { SocialIcon  } from 'react-native-elements';
+import { SocialIcon } from "react-native-elements";
 export default class LoginScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
       email: "",
-      Password: ""
+      Password: "",
     };
   }
 
   componentDidMount() {
     var that = this;
-    f.auth().onAuthStateChanged(function (user) {
+    auth.onAuthStateChanged(function (user) {
       if (user) {
         that.redirectUser();
       }
@@ -38,7 +38,7 @@ export default class LoginScreen extends Component {
 
     let { navigate } = this.props.navigation;
 
-    f.auth()
+    auth
       .signInWithEmailAndPassword(email, password)
       .then(function (data) {
         navigate("App");
@@ -49,10 +49,10 @@ export default class LoginScreen extends Component {
       });
   }
 
-  redirectUser() {
-    const { navigate } = this.props.navigation;
-    navigate("App");
-  }
+  // redirectUser() {
+  //   const { navigate } = this.props.navigation;
+  //   navigate('App');
+  // }
 
   _signInAsync = async () => {
     if (EmailValidator.validate(this.state.email) === true) {
@@ -84,7 +84,7 @@ export default class LoginScreen extends Component {
         const token = data.accessToken;
         fetch(
           "https://graph.facebook.com/v2.8/me?fields=id,first_name,last_name,gender,birthday&access_token=" +
-          token
+            token
         )
           .then(response => response.json())
           .then(json => {
@@ -106,7 +106,7 @@ export default class LoginScreen extends Component {
   authenticate = token => {
     const provider = auth.FacebookAuthProvider;
     const credential = provider.credential(token);
-    let ret = f.auth().signInWithCredential(credential);
+    let ret = auth.signInWithCredential(credential);
     return ret;
   };
 
@@ -115,27 +115,25 @@ export default class LoginScreen extends Component {
       uid,
       token,
       dp,
-      ageRange: [20, 30]
+      ageRange: [20, 30],
     };
-    f.database()
+    database
       .ref("users")
       .child(uid)
       .update({ ...userData, ...defaults });
   };
-
 
   _signInAsync = async () => {
     if (EmailValidator.validate(this.state.email) === true) {
       if (this.state.Pasword != "") {
         this.login();
       } else {
-        alert("Enter the password")
+        alert("Enter the password");
       }
     } else {
-      alert("Please enter A Valid Email")
+      alert("Please enter A Valid Email");
     }
-  }
-
+  };
 
   render() {
     return (
@@ -144,10 +142,7 @@ export default class LoginScreen extends Component {
           <View style={styles.container}>
             <KeyboardAvoidingView behavior="position">
               <View style={styles.logoContainer}>
-                <Image
-                  source={require("../../images/logo.png")}
-                  style={styles.logo}
-                />
+                <Image source={require("../../images/logo.png")} style={styles.logo} />
               </View>
               <View style={styles.formContainer}>
                 <TextInput
@@ -156,7 +151,9 @@ export default class LoginScreen extends Component {
                   placeholderTextColor="rgba(255,255,255,0.7)"
                   style={styles.input}
                   onChangeText={text => this.setState({ email: text })}
-                  ref={input => { this.textInput = input }}
+                  ref={input => {
+                    this.textInput = input;
+                  }}
                 />
                 <TextInput
                   placeholder="Pasword"
@@ -164,46 +161,45 @@ export default class LoginScreen extends Component {
                   placeholderTextColor="rgba(255,255,255,0.7)"
                   style={styles.input}
                   onChangeText={text => this.setState({ Password: text })}
-                  ref={input => { this.textInput = input }}
+                  ref={input => {
+                    this.textInput = input;
+                  }}
                 />
               </View>
             </KeyboardAvoidingView>
-            <TouchableOpacity
-              onPress={this._signInAsync}
-              style={styles.loginButton}
-            >
+            <TouchableOpacity onPress={this._signInAsync} style={styles.loginButton}>
               <Text style={styles.buttonText}>Sign In</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate("ForgotPassword")}
-            >
+            <TouchableOpacity onPress={() => this.props.navigation.navigate("ForgotPassword")}>
               <Text style={styles.text}>Forgot Password?</Text>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={this.onPressLogin.bind(this)}>
-                <SocialIcon style={{width:200}} title='Sign In With Facebook'  button  type='facebook' />
+              <SocialIcon
+                style={{ width: 200 }}
+                title="Sign In With Facebook"
+                button
+                type="facebook"
+              />
             </TouchableOpacity>
-            
+
             <View style={styles.signUpTextArea}>
-              <TouchableOpacity
-                onPress={() => this.props.navigation.navigate("Signup")}
-              >
+              <TouchableOpacity onPress={() => this.props.navigation.navigate("Signup")}>
                 <Text style={styles.text}>
                   Don't have an account?
-              <Text style={{ color: "#0066cc" }}> Sign Up</Text>
+                  <Text style={{ color: "#0066cc" }}> Sign Up</Text>
                 </Text>
               </TouchableOpacity>
             </View>
 
             <Button
-              onPress={() => this.props.navigation.navigate('App')}
+              onPress={() => this.props.navigation.navigate("App")}
               title="Skip Login "
               color="#000"
             />
           </View>
         </ScrollView>
-
       </View>
     );
   }

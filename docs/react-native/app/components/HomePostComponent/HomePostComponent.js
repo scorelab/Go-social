@@ -26,39 +26,29 @@ export default class HomePostComponent extends Component {
         </View>
         <View style={style.cardViewBody}>
           <Text style={style.postContentFont}>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+            has been the industry's standard dummy text ever since the 1500s
           </Text>
           <View style={style.postImageArea}>
-            <Image
-              source={require("../../images/post_01.jpg")}
-              style={style.postImage}
-            />
+            <Image source={require("../../images/post_01.jpg")} style={style.postImage} />
           </View>
           <View
             style={{
               borderBottomColor: "black",
-              borderBottomWidth: 1
+              borderBottomWidth: 1,
             }}
           />
 
           <View style={{ flexDirection: "row" }}>
-            <View
-              style={{ width: 100, height: 30, paddingLeft: 50, marginTop: 10 }}
-            >
+            <View style={{ width: 100, height: 30, paddingLeft: 50, marginTop: 10 }}>
               <Icon name="like" size={30} color="blue" />
             </View>
 
-            <View
-              style={{ width: 100, height: 30, paddingLeft: 50, marginTop: 10 }}
-            >
+            <View style={{ width: 100, height: 30, paddingLeft: 50, marginTop: 10 }}>
               <Icon name="comment" size={30} color="blue" />
             </View>
-            
-            <View
-              style={{ width: 100, height: 30, paddingLeft: 50, marginTop: 10 }}
-            >
+
+            <View style={{ width: 100, height: 30, paddingLeft: 50, marginTop: 10 }}>
               <Icon name="share-google" size={30} color="blue" />
             </View>
           </View>

@@ -9,7 +9,7 @@ export default class MultipleMarkerPoints extends Component {
   state = {
     region: null,
     destination: null,
-    markers: []
+    markers: [],
   };
 
   onMapPress = e => {
@@ -18,9 +18,9 @@ export default class MultipleMarkerPoints extends Component {
         ...this.state.markers,
         {
           coordinate: e.nativeEvent.coordinate,
-          key: `foo${id++}`
-        }
-      ]
+          key: `foo${id++}`,
+        },
+      ],
     });
   };
 
@@ -32,8 +32,8 @@ export default class MultipleMarkerPoints extends Component {
             latitude,
             longitude,
             latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421
-          }
+            longitudeDelta: 0.0421,
+          },
         });
       }, //success
       error => {
@@ -42,7 +42,7 @@ export default class MultipleMarkerPoints extends Component {
       {
         timeout: 2000,
         enableHighAccuracy: true,
-        maximumAge: 10000
+        maximumAge: 10000,
       }
     );
   }
@@ -58,15 +58,10 @@ export default class MultipleMarkerPoints extends Component {
           region={region}
           showsUserLocation
           loadingEnabled
-          onPress={this.onMapPress}
-        >
-          { this.state.markers.map(marker => (
-              <Marker
-                coordinate={marker.coordinate}
-                title={marker.key}
-                key={marker.key}
-              />
-            ))}
+          onPress={this.onMapPress}>
+          {this.state.markers.map(marker => (
+            <Marker coordinate={marker.coordinate} title={marker.key} key={marker.key} />
+          ))}
         </MapView>
         <HeaderNavigationBar title={"Locations"} {...this.props} />
       </View>

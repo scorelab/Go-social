@@ -10,7 +10,7 @@ export default class PolygonArea extends Component {
     region: null,
     polygons: [],
     editing: null,
-    creatingHole: false
+    creatingHole: false,
   };
 
   onPress(e) {
@@ -20,29 +20,26 @@ export default class PolygonArea extends Component {
         editing: {
           id: id++,
           coordinates: [e.nativeEvent.coordinate],
-          holes: []
-        }
+          holes: [],
+        },
       });
     } else if (!creatingHole) {
       this.setState({
         editing: {
           ...editing,
-          coordinates: [...editing.coordinates, e.nativeEvent.coordinate]
-        }
+          coordinates: [...editing.coordinates, e.nativeEvent.coordinate],
+        },
       });
     } else {
       const holes = [...editing.holes];
-      holes[holes.length - 1] = [
-        ...holes[holes.length - 1],
-        e.nativeEvent.coordinate
-      ];
+      holes[holes.length - 1] = [...holes[holes.length - 1], e.nativeEvent.coordinate];
       this.setState({
         editing: {
           ...editing,
           id: id++, // keep incrementing id to trigger display refresh
           coordinates: [...editing.coordinates],
-          holes
-        }
+          holes,
+        },
       });
     }
   }
@@ -55,8 +52,8 @@ export default class PolygonArea extends Component {
             latitude,
             longitude,
             latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421
-          }
+            longitudeDelta: 0.0421,
+          },
         });
       }, //success
       error => {
@@ -65,7 +62,7 @@ export default class PolygonArea extends Component {
       {
         timeout: 2000,
         enableHighAccuracy: true,
-        maximumAge: 10000
+        maximumAge: 10000,
       }
     );
   }
@@ -74,7 +71,7 @@ export default class PolygonArea extends Component {
     const { region } = this.state;
 
     const mapOptions = {
-      scrollEnabled: true
+      scrollEnabled: true,
     };
 
     if (this.state.editing) {
@@ -89,8 +86,7 @@ export default class PolygonArea extends Component {
           region={region}
           showsUserLocation
           loadingEnabled
-          onPress={e => this.onPress(e)}
-        >
+          onPress={e => this.onPress(e)}>
           {this.state.polygons.map(polygon => (
             <Polygon
               key={polygon.id}

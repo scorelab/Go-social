@@ -1,13 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { View, Text } from 'react-native';
+import React from "react";
+import PropTypes from "prop-types";
+import { View, Text } from "react-native";
 
 export default class Welcome extends React.Component {
   styles = {
     wrapper: {
       flex: 1,
       padding: 24,
-      justifyContent: 'center',
+      justifyContent: "center",
     },
     header: {
       fontSize: 18,

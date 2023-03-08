@@ -28,29 +28,26 @@ export default class MapScreen extends Component {
         editing: {
           id: id++,
           coordinates: [e.nativeEvent.coordinate],
-          holes: []
-        }
+          holes: [],
+        },
       });
     } else if (!creatingHole) {
       this.setState({
         editing: {
           ...editing,
-          coordinates: [...editing.coordinates, e.nativeEvent.coordinate]
-        }
+          coordinates: [...editing.coordinates, e.nativeEvent.coordinate],
+        },
       });
     } else {
       const holes = [...editing.holes];
-      holes[holes.length - 1] = [
-        ...holes[holes.length - 1],
-        e.nativeEvent.coordinate
-      ];
+      holes[holes.length - 1] = [...holes[holes.length - 1], e.nativeEvent.coordinate];
       this.setState({
         editing: {
           ...editing,
           id: id++, // keep incrementing id to trigger display refresh
           coordinates: [...editing.coordinates],
-          holes
-        }
+          holes,
+        },
       });
     }
   }
@@ -61,9 +58,9 @@ export default class MapScreen extends Component {
         ...this.state.markers,
         {
           coordinate: e.nativeEvent.coordinate,
-          key: `foo${id++}`
-        }
-      ]
+          key: `foo${id++}`,
+        },
+      ],
     });
   };
 
@@ -75,8 +72,8 @@ export default class MapScreen extends Component {
             latitude,
             longitude,
             latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421
-          }
+            longitudeDelta: 0.0421,
+          },
           // draggableRegion: {
           //   latitude,
           //   longitude,
@@ -91,21 +88,21 @@ export default class MapScreen extends Component {
       {
         timeout: 2000,
         enableHighAccuracy: true,
-        maximumAge: 10000
+        maximumAge: 10000,
       }
     );
   }
 
   handleLocationSelected = (data, { geometry }) => {
     const {
-      location: { lat: latitude, lng: longitude }
+      location: { lat: latitude, lng: longitude },
     } = geometry;
     this.setState({
       destination: {
         latitude,
         longitude,
-        title: data.structured_formatting.main_text
-      }
+        title: data.structured_formatting.main_text,
+      },
     });
   };
 
@@ -113,7 +110,7 @@ export default class MapScreen extends Component {
     this.setState({
       search: true,
       surface: false,
-      multiplePoints: false
+      multiplePoints: false,
     });
   };
 
@@ -121,7 +118,7 @@ export default class MapScreen extends Component {
     this.setState({
       search: false,
       surface: false,
-      multiplePoints: true
+      multiplePoints: true,
     });
   };
 
@@ -129,7 +126,7 @@ export default class MapScreen extends Component {
     this.setState({
       search: false,
       surface: true,
-      multiplePoints: false
+      multiplePoints: false,
     });
   };
 
@@ -137,7 +134,7 @@ export default class MapScreen extends Component {
     const { region, destination, search, surface, multiplePoints } = this.state;
 
     const mapOptions = {
-      scrollEnabled: true
+      scrollEnabled: true,
     };
 
     if (this.state.editing) {
@@ -152,14 +149,7 @@ export default class MapScreen extends Component {
           initialRegion={region}
           showsUserLocation
           loadingEnabled
-          onPress={
-            surface
-              ? e => this.onPress(e)
-              : multiplePoints
-              ? this.onMapPress
-              : null
-          }
-        >
+          onPress={surface ? e => this.onPress(e) : multiplePoints ? this.onMapPress : null}>
           {/* <Marker
             coordinate={this.state.draggableRegion}
             title="key"
@@ -169,11 +159,7 @@ export default class MapScreen extends Component {
           /> */}
           {multiplePoints &&
             this.state.markers.map(marker => (
-              <Marker
-                coordinate={marker.coordinate}
-                title={marker.key}
-                key={marker.key}
-              />
+              <Marker coordinate={marker.coordinate} title={marker.key} key={marker.key} />
             ))}
           {destination && (
             <Fragment>
@@ -211,22 +197,19 @@ export default class MapScreen extends Component {
           <View style={styles.rowElements}>
             <TouchableOpacity
               style={styles.touchableOpacityFilter}
-              onPress={this.updateSearchState}
-            >
+              onPress={this.updateSearchState}>
               <Text style={styles.touchableText}>Fixed Point</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
               style={styles.touchableOpacityFilter}
-              onPress={this.updateMultiplePoints}
-            >
+              onPress={this.updateMultiplePoints}>
               <Text style={styles.touchableText}>Multiple Points</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
               style={styles.touchableOpacityFilter}
-              onPress={this.updateSurfaceArea}
-            >
+              onPress={this.updateSurfaceArea}>
               <Text style={styles.touchableText}>Surface Area</Text>
             </TouchableOpacity>
           </View>

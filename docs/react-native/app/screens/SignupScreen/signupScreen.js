@@ -7,13 +7,13 @@ import {
   Button,
   TouchableOpacity,
   KeyboardAvoidingView,
-  ScrollView
+  ScrollView,
 } from "react-native";
 import styles from "./style";
 import * as EmailValidator from "email-validator";
 import { AccessToken, LoginManager } from "react-native-fbsdk";
-import { f, auth } from "../../../config/config.js";
-import { SocialIcon  } from 'react-native-elements';
+import { f, auth, database } from "../../../config/config.js";
+import { SocialIcon } from "react-native-elements";
 
 export default class SignUpScreen extends Component {
   constructor(props) {
@@ -22,13 +22,13 @@ export default class SignUpScreen extends Component {
       email: "",
       name: "",
       Password: "",
-      ConfirmPassword: ""
+      ConfirmPassword: "",
     };
   }
 
   componentDidMount() {
     var that = this;
-    f.auth().onAuthStateChanged(function (user) {
+    auth.onAuthStateChanged(function (user) {
       if (user) {
         that.redirectUser();
       }
@@ -58,7 +58,7 @@ export default class SignUpScreen extends Component {
         const token = data.accessToken;
         fetch(
           "https://graph.facebook.com/v2.8/me?fields=id,first_name,last_name,gender,birthday&access_token=" +
-          token
+            token
         )
           .then(response => response.json())
           .then(json => {
@@ -80,7 +80,7 @@ export default class SignUpScreen extends Component {
   authenticate = token => {
     const provider = auth.FacebookAuthProvider;
     const credential = provider.credential(token);
-    let ret = f.auth().signInWithCredential(credential);
+    let ret = auth.signInWithCredential(credential);
     return ret;
   };
 
@@ -89,14 +89,13 @@ export default class SignUpScreen extends Component {
       uid,
       token,
       dp,
-      ageRange: [20, 30]
+      ageRange: [20, 30],
     };
-    f.database()
+    database
       .ref("users")
       .child(uid)
       .update({ ...userData, ...defaults });
   };
-
 
   render() {
     return (
@@ -105,10 +104,7 @@ export default class SignUpScreen extends Component {
           <View style={styles.container}>
             <KeyboardAvoidingView behavior="position">
               <View style={styles.logoContainer}>
-                <Image
-                  source={require("../../images/logo.png")}
-                  style={styles.logo}
-                />
+                <Image source={require("../../images/logo.png")} style={styles.logo} />
               </View>
               <View style={styles.formContainer}>
                 <TextInput
@@ -149,21 +145,25 @@ export default class SignUpScreen extends Component {
             </TouchableOpacity>
 
             <TouchableOpacity onPress={this.onPressLogin.bind(this)}>
-                <SocialIcon style={{width:200}} title='Sign Up With Facebook'  button  type='facebook' />
+              <SocialIcon
+                style={{ width: 200 }}
+                title="Sign Up With Facebook"
+                button
+                type="facebook"
+              />
             </TouchableOpacity>
-            
+
             <View style={styles.signInTextArea}>
               <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
                 <Text style={styles.text}>
                   Already have an account?
-              <Text style={{ color: "#0066cc" }}> Sign In</Text>
+                  <Text style={{ color: "#0066cc" }}> Sign In</Text>
                 </Text>
               </TouchableOpacity>
             </View>
           </View>
         </ScrollView>
       </View>
-
     );
   }
   register() {
@@ -173,15 +173,15 @@ export default class SignUpScreen extends Component {
 
     const { navigate } = this.props.navigation;
 
-    f.auth()
+    auth
       .createUserWithEmailAndPassword(email, password)
       .then(function (data) {
         data.user
           .updateProfile({
-            displayName: name
+            displayName: name,
           })
           .then(
-            function () {              
+            function () {
               console.log("Updated User Data..");
             },
             function (error) {

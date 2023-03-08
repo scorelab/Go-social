@@ -5,18 +5,18 @@ let deviceHeight = Dimensions.get("window").height;
 export default StyleSheet.create({
   container: {
     // ...StyleSheet.absoluteFillObject,
-    flex: 1
+    flex: 1,
   },
   mapArea: {
     // ...StyleSheet.absoluteFillObject,
     width: "100%",
-    height: deviceHeight * 0.5
+    height: deviceHeight * 0.5,
   },
   map: {
-    ...StyleSheet.absoluteFillObject
+    ...StyleSheet.absoluteFillObject,
   },
   cardStyle: {
-    marginTop: "auto"
+    marginTop: "auto",
   },
   rowElements: { flexDirection: "row" },
   touchableOpacityFilter: {
@@ -24,10 +24,10 @@ export default StyleSheet.create({
     backgroundColor: "#28DDFB",
     padding: 9,
     margin: 8,
-    borderRadius: 50
+    borderRadius: 50,
   },
   touchableText: {
     color: "white",
-    fontSize: 15
-  }
+    fontSize: 15,
+  },
 });
