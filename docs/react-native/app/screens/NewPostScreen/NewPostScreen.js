@@ -149,7 +149,7 @@ export default class NewPostScreen extends Component {
   setDatabse = imageURL => {
     var date = Date.now();
     var postId = this.state.postId;
-    var userID = f.auth().currentUser.uid;
+    var userID = auth.currentUser.uid;
     var posted = Math.floor(date / 1000);
     const postObj = {
       caption: this.state.caption,

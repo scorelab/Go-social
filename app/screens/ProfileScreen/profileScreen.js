@@ -36,12 +36,12 @@ export default class ProfileScreen extends Component {
 
   componentDidMount() {
     var that = this;
-    f.auth().onAuthStateChanged(function (user) {
+    auth.onAuthStateChanged(function (user) {
       if (user) {
-        that.state.email = f.auth().currentUser.email;
+        that.state.email = auth.currentUser.email;
         database
           .ref('users')
-          .child(f.auth().currentUser.uid)
+          .child(auth.currentUser.uid)
           .once('value', function (snapshot) {
             if (snapshot.child('firstName').val() != null) {
               that.setState({
@@ -125,7 +125,7 @@ export default class ProfileScreen extends Component {
     console.log('Uploading Image!!!!');
     var uri = this.state.pickedImage;
     var that = this;
-    var userId = f.auth().currentUser.uid;
+    var userId = auth.currentUser.uid;
     var re = /(?:\.([^.]+))?$/;
     var ext = re.exec(uri)[1];
 
@@ -173,8 +173,8 @@ export default class ProfileScreen extends Component {
   };
 
   setDatabse = imageURL => {
-    var user = f.auth().currentUser;
-    var userID = f.auth().currentUser.uid;
+    var user = auth.currentUser;
+    var userID = auth.currentUser.uid;
     database.ref('/users/' + userID).update({ avatar: imageURL });
     console.log('User: ' + user);
     user.updateProfile({
@@ -293,7 +293,7 @@ export default class ProfileScreen extends Component {
 
   logout = () => {
     this.props.navigation.navigate('Login');
-    f.auth().signOut();
+    auth.signOut();
   };
 
   save = () => {
@@ -312,6 +312,6 @@ export default class ProfileScreen extends Component {
     };
 
     console.log(user);
-    f.database().ref('users/').child(f.auth().currentUser.uid).set(user);
+    f.database().ref('users/').child(auth.currentUser.uid).set(user);
   };
 }

@@ -10,7 +10,7 @@ import {
   ScrollView,
 } from 'react-native';
 import { AccessToken, LoginManager } from 'react-native-fbsdk';
-import { f, auth } from '../../../config/config.js';
+import { f, auth, database } from '../../../config/config.js';
 import * as EmailValidator from 'email-validator';
 import styles from './style';
 import { SocialIcon } from 'react-native-elements';
@@ -25,7 +25,7 @@ export default class LoginScreen extends Component {
 
   componentDidMount() {
     var that = this;
-    f.auth().onAuthStateChanged(function (user) {
+    auth.onAuthStateChanged(function (user) {
       if (user) {
         that.redirectUser();
       }
@@ -38,7 +38,7 @@ export default class LoginScreen extends Component {
 
     let { navigate } = this.props.navigation;
 
-    f.auth()
+    auth
       .signInWithEmailAndPassword(email, password)
       .then(function (data) {
         navigate('App');
@@ -49,10 +49,10 @@ export default class LoginScreen extends Component {
       });
   }
 
-  redirectUser() {
-    const { navigate } = this.props.navigation;
-    navigate('App');
-  }
+  // redirectUser() {
+  //   const { navigate } = this.props.navigation;
+  //   navigate('App');
+  // }
 
   _signInAsync = async () => {
     if (EmailValidator.validate(this.state.email) === true) {
@@ -106,7 +106,7 @@ export default class LoginScreen extends Component {
   authenticate = token => {
     const provider = auth.FacebookAuthProvider;
     const credential = provider.credential(token);
-    let ret = f.auth().signInWithCredential(credential);
+    let ret = auth.signInWithCredential(credential);
     return ret;
   };
 
@@ -117,7 +117,7 @@ export default class LoginScreen extends Component {
       dp,
       ageRange: [20, 30],
     };
-    f.database()
+    database
       .ref('users')
       .child(uid)
       .update({ ...userData, ...defaults });

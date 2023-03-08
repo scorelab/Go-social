@@ -13,7 +13,7 @@ import {
 import styles from './style';
 import Ionicons from 'react-native-vector-icons/FontAwesome';
 import { f, auth, storage, database } from '../../../config/config.js';
-export default class messaginScreen extends Component {
+export default class MessageScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -135,7 +135,7 @@ export default class messaginScreen extends Component {
 
   fetchMessages = () => {
     var that = this;
-    var userId = f.auth().currentUser.uid;
+    var userId = auth.currentUser.uid;
     database
       .ref('users')
       .child(userId)
@@ -201,7 +201,7 @@ export default class messaginScreen extends Component {
       var that = this;
       var date = Date.now();
       var posted = Math.floor(date / 1000);
-      var userId = f.auth().currentUser.uid;
+      var userId = auth.currentUser.uid;
       database
         .ref('users')
         .child(userId)
@@ -244,7 +244,7 @@ export default class messaginScreen extends Component {
               lastMessage: that.state.newMessage,
               posted: posted,
               friend: userId,
-              name: f.auth().currentUser.displayName,
+              name: auth.currentUser.displayName,
               avatar: that.state.avatar,
             };
             var newMessage = {
@@ -285,13 +285,13 @@ export default class messaginScreen extends Component {
 
   componentDidMount = () => {
     var that = this;
-    f.auth().onAuthStateChanged(function (user) {
+    auth.onAuthStateChanged(function (user) {
       if (user) {
         that.setState({
           loggedin: true,
         });
         that.check();
-        var userId = f.auth().currentUser.uid;
+        var userId = auth.currentUser.uid;
         database
           .ref('users')
           .child(userId)
@@ -331,7 +331,7 @@ export default class messaginScreen extends Component {
     return this.state.messageList.map((item, index) => {
       return (
         <View>
-          {item.sendby != f.auth().currentUser.uid ? (
+          {item.sendby != auth.currentUser.uid ? (
             <FriendMessage message={item.message} posted={this.timeConvertor(item.posted)} />
           ) : (
             <MyMessage message={item.message} posted={this.timeConvertor(item.posted)} />

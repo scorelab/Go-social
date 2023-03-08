@@ -12,7 +12,7 @@ import {
 import styles from './style';
 import * as EmailValidator from 'email-validator';
 import { AccessToken, LoginManager } from 'react-native-fbsdk';
-import { f, auth } from '../../../config/config.js';
+import { f, auth, database } from '../../../config/config.js';
 import { SocialIcon } from 'react-native-elements';
 
 export default class SignUpScreen extends Component {
@@ -28,7 +28,7 @@ export default class SignUpScreen extends Component {
 
   componentDidMount() {
     var that = this;
-    f.auth().onAuthStateChanged(function (user) {
+    auth.onAuthStateChanged(function (user) {
       if (user) {
         that.redirectUser();
       }
@@ -80,7 +80,7 @@ export default class SignUpScreen extends Component {
   authenticate = token => {
     const provider = auth.FacebookAuthProvider;
     const credential = provider.credential(token);
-    let ret = f.auth().signInWithCredential(credential);
+    let ret = auth.signInWithCredential(credential);
     return ret;
   };
 
@@ -91,7 +91,7 @@ export default class SignUpScreen extends Component {
       dp,
       ageRange: [20, 30],
     };
-    f.database()
+    database
       .ref('users')
       .child(uid)
       .update({ ...userData, ...defaults });
@@ -173,7 +173,7 @@ export default class SignUpScreen extends Component {
 
     const { navigate } = this.props.navigation;
 
-    f.auth()
+    auth
       .createUserWithEmailAndPassword(email, password)
       .then(function (data) {
         data.user

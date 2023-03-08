@@ -29,6 +29,9 @@ public class MainApplication extends Application implements ReactApplication {
   // }
 
   private final ReactNativeHost mReactNativeHost = new DefaultReactNativeHost(this) {
+
+    // private FirebaseAuth mAuth;
+
     @Override
     public boolean getUseDeveloperSupport() {
       return BuildConfig.DEBUG;
@@ -80,5 +83,18 @@ public class MainApplication extends Application implements ReactApplication {
       DefaultNewArchitectureEntryPoint.load();
     }
     ReactNativeFlipper.initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
+    
+    // // Initialize Firebase Auth
+    // mAuth = FirebaseAuth.getInstance();
   }
+
+  // @Override
+  // public void onStart() {
+  //     super.onStart();
+  //     // Check if user is signed in (non-null) and update UI accordingly.
+  //     FirebaseUser currentUser = mAuth.getCurrentUser();
+  //     if(currentUser != null){
+  //         reload();
+  //     }
+  // }
 }

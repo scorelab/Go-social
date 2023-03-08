@@ -4,7 +4,7 @@ import styles from './style';
 import ConversationBanner from '../../components/ConversationBanner/conversationBanner';
 import SuggestCardView from '../../components/SuggestionsCardView/suggestionsCardView';
 import HeaderNavigationBar from '../../components/HeaderNavigationBar/HeaderNavigationBar';
-import { f, auth, storage, database } from '../../../config/config.js';
+import { fauthstorage, database } from '../../../config/config.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 export default class ChatListScreen extends Component {
   constructor(props) {
@@ -19,7 +19,7 @@ export default class ChatListScreen extends Component {
 
   fetchUsers = () => {
     var that = this;
-    var userId = f.auth().currentUser.uid;
+    var userId = auth.currentUser.uid;
     database.ref('users').once(
       'value',
       function (snapshot) {
@@ -49,7 +49,7 @@ export default class ChatListScreen extends Component {
     );
   };
   renderUserList = () => {
-    if (this.state.loggedin == true) {
+    if (this.state.loggedin) {
       console.log(this.state.userList);
       return this.state.userList.map((items, index) => {
         return (
@@ -64,9 +64,9 @@ export default class ChatListScreen extends Component {
     }
   };
   fetchchats = () => {
-    if (this.state.loggedin == true) {
+    if (this.state.loggedin) {
       var that = this;
-      var userId = f.auth().currentUser.uid;
+      var userId = auth.currentUser.uid;
       database
         .ref('users')
         .child(userId)
@@ -155,7 +155,7 @@ export default class ChatListScreen extends Component {
   };
 
   renderMessageList = () => {
-    if (this.state.loggedin == true) {
+    if (this.state.loggedin) {
       this.state.chatList.sort((a, b) => (a.posted > b.posted ? 1 : b.posted > a.posted ? -1 : 0));
       this.state.chatList.reverse();
 
@@ -176,7 +176,7 @@ export default class ChatListScreen extends Component {
   };
   componentDidMount = () => {
     var that = this;
-    f.auth().onAuthStateChanged(function (user) {
+    auth.onAuthStateChanged(function (user) {
       if (user) {
         that.setState({
           loggedin: true,

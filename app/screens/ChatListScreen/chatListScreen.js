@@ -18,13 +18,13 @@ export default class ChatListScreen extends Component {
 
   fetchUsers = () => {
     var that = this;
-    var userId = f.auth().currentUser.uid;
+    var userId = auth.currentUser.uid;
     database.ref('users').once(
       'value',
       function (snapshot) {
         const exsist = snapshot.val() != null;
         if (exsist) {
-          data = snapshot.val();
+          let data = snapshot.val();
           var userList = that.state.userList;
           for (var user in data) {
             let userObj = data[user];
@@ -65,7 +65,7 @@ export default class ChatListScreen extends Component {
   fetchchats = () => {
     if (this.state.loggedin == true) {
       var that = this;
-      var userId = f.auth().currentUser.uid;
+      var userId = auth.currentUser.uid;
       database
         .ref('users')
         .child(userId)
@@ -81,7 +81,7 @@ export default class ChatListScreen extends Component {
               var data = snapshot.val();
               const exsist = snapshot.exists();
               if (exsist) {
-                var data = snapshot.val();
+                data = snapshot.val();
                 var chatList = that.state.chatList;
                 Object.keys(data).forEach(key => {
                   var tempdata = data[key];
@@ -175,7 +175,7 @@ export default class ChatListScreen extends Component {
   };
   componentDidMount = () => {
     var that = this;
-    f.auth().onAuthStateChanged(function (user) {
+    auth.onAuthStateChanged(function (user) {
       if (user) {
         that.setState({
           loggedin: true,
