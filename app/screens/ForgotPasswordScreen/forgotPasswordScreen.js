@@ -17,7 +17,7 @@ import {
 // import Btn from 'react-native-micro-animated-button';
 import * as EmailValidator from "email-validator";
 import styles from "./style";
-import { f, auth } from "../../../config/config.js";
+import { app, auth, db } from "../../../config/config.js";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 export default class ForgotPasswordScreen extends Component {
   constructor(props) {
@@ -33,7 +33,7 @@ export default class ForgotPasswordScreen extends Component {
           <View style={styles.container}>
             <KeyboardAvoidingView behavior="position">
               <View style={styles.logoContainer}>
-                <Image source={require("../../images/logo.png")} style={styles.logo} />
+                <Image source={require("../../assets/images/logo.png")} style={styles.logo} />
               </View>
               <View style={styles.formContainer}>
                 <TextInput

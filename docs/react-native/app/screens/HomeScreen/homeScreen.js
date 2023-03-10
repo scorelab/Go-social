@@ -12,7 +12,10 @@ export default class HomeScreen extends Component {
           style={styles.postButton}
           onPress={() => this.props.navigation.navigate("NewPost")}>
           <View style={styles.row}>
-            <Image style={styles.profileImage} source={require("../../images/user_image_1.jpg")} />
+            <Image
+              style={styles.profileImage}
+              source={require("../../assets/images/user_image_1.jpg")}
+            />
             <Text style={styles.text}> Whats on Your Mind?</Text>
           </View>
         </TouchableOpacity>

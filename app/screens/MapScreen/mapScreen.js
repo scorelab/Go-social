@@ -8,6 +8,7 @@ import { Card } from "react-native-elements";
 
 let id = 0;
 const DISTANCE = 0.01;
+
 export default class MapScreen extends Component {
   state = {
     region: null,
@@ -65,32 +66,30 @@ export default class MapScreen extends Component {
   };
 
   async componentDidMount() {
-    navigator.geolocation.getCurrentPosition(
-      ({ coords: { latitude, longitude } }) => {
-        this.setState({
-          region: {
-            latitude,
-            longitude,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          },
-          // draggableRegion: {
-          //   latitude,
-          //   longitude,
-          //   latitudeDelta: 0.0922,
-          //   longitudeDelta: 0.0421
-          // }
-        });
-      }, //success
-      error => {
-        console.log(error);
-      }, //error
-      {
-        timeout: 2000,
-        enableHighAccuracy: true,
-        maximumAge: 10000,
-      }
-    );
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        ({ coords: { latitude, longitude } }) => {
+          this.setState({
+            region: {
+              latitude,
+              longitude,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            },
+          });
+        },
+        error => {
+          console.log(error);
+        },
+        {
+          timeout: 2000,
+          enableHighAccuracy: true,
+          maximumAge: 10000,
+        }
+      );
+    } else {
+      console.log("The user's device does not support geolocation");
+    }
   }
 
   handleLocationSelected = (data, { geometry }) => {

@@ -73,7 +73,7 @@ export default class ProfileScreen extends Component {
           firstName: "John",
           lastName: "Doe",
           address: "Los Angeles",
-          avatar: "../../images/user_image_1.jpg",
+          avatar: "../../assets/images/user_image_1.jpg",
           isLoading: false,
         });
       }
@@ -193,7 +193,10 @@ export default class ProfileScreen extends Component {
         <ScrollView style={{ width: "100%" }}>
           <View style={styles.container}>
             <View style={styles.coverImageArea}>
-              <Image style={styles.coverImage} source={require("../../images/cover_photo.jpeg")} />
+              <Image
+                style={styles.coverImage}
+                source={require("../../assets/images/cover_photo.jpeg")}
+              />
             </View>
             <Avatar
               onPress={this._handleButtonPress}
@@ -204,7 +207,7 @@ export default class ProfileScreen extends Component {
               }}
               showEditButton
             />
-            {/* <Image style={styles.profileImage} source={require('../../images/user_image_1.jpg')} /> */}
+            {/* <Image style={styles.profileImage} source={require('../../assets/images/user_image_1.jpg')} /> */}
             <View style={styles.contentArea}>
               <Text style={styles.nameFont}>
                 {this.state.firstName + " " + this.state.lastName}

@@ -11,7 +11,7 @@ export default class HomePostComponent extends Component {
         <View style={style.cardTitleBar}>
           <View style={style.userAvatarArea}>
             <Image
-              source={require("../../images/user_image_1.jpg")}
+              source={require("../../assets/images/user_image_1.jpg")}
               style={style.userAvatarImage}
             />
           </View>
@@ -30,7 +30,7 @@ export default class HomePostComponent extends Component {
             has been the industry's standard dummy text ever since the 1500s
           </Text>
           <View style={style.postImageArea}>
-            <Image source={require("../../images/post_01.jpg")} style={style.postImage} />
+            <Image source={require("../../assets/images/post_01.jpg")} style={style.postImage} />
           </View>
           <View
             style={{

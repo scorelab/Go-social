@@ -10,7 +10,7 @@ import {
   ScrollView,
 } from "react-native";
 import { AccessToken, LoginManager } from "react-native-fbsdk";
-import { f, auth } from "../../../config/config.js";
+import { app, auth, db } from "../../../config/config.js";
 import * as EmailValidator from "email-validator";
 import styles from "./style";
 import { SocialIcon } from "react-native-elements";
@@ -118,8 +118,7 @@ export default class LoginScreen extends Component {
       dp,
       ageRange: [20, 30],
     };
-    f.database()
-      .ref("users")
+    db.ref("users")
       .child(uid)
       .update({ ...userData, ...defaults });
   };
@@ -143,7 +142,7 @@ export default class LoginScreen extends Component {
           <View style={styles.container}>
             <KeyboardAvoidingView behavior="position">
               <View style={styles.logoContainer}>
-                <Image source={require("../../images/logo.png")} style={styles.logo} />
+                <Image source={require("../../assets/images/logo.png")} style={styles.logo} />
               </View>
               <View style={styles.formContainer}>
                 <TextInput

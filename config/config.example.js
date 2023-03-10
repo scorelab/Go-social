@@ -1,7 +1,7 @@
-import firebase from "firebase/app";
-import "firebase/auth";
-import "firebase/firestore";
-import "firebase/storage";
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getStorage } from "firebase/storage";
+import { getDatabase } from "firebase/database";
 
 const firebaseConfig = {
   apiKey: "<YOUR_API_KEY>",
@@ -12,15 +12,8 @@ const firebaseConfig = {
   appId: "<YOUR_APP_ID>",
   measurementId: "<YOUR_MEASUREMENT_ID>",
 };
-var MAP_API_KEY = "";
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
-
-export { firebase };
-// export const f = firebase;
-// export const database = firebase.database();
-// export const auth = firebase.auth();
-// export const storage = firebase.storage();
-// export const MAP_API = MAP_API_KEY;
+export const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
+export const storage = getStorage(app);
+export const db = getDatabase(app);

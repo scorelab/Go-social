@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import styles from "./style";
 import Ionicons from "react-native-vector-icons/FontAwesome";
-import { f, auth, storage, database } from "../../../config/config.js";
+import { app, auth, db } from "../../../config/config.js";
 export default class MessageScreen extends Component {
   constructor(props) {
     super(props);
@@ -61,8 +61,7 @@ export default class MessageScreen extends Component {
           friendId: params.userId,
         });
         var that = this;
-        database
-          .ref("users")
+        db.ref("users")
           .child(params.userId)
           .child("firstName")
           .once("value")
@@ -74,8 +73,7 @@ export default class MessageScreen extends Component {
               friendName: data,
             });
           });
-        database
-          .ref("users")
+        db.ref("users")
           .child(params.userId)
           .child("avatar")
           .once("value")
@@ -136,8 +134,7 @@ export default class MessageScreen extends Component {
   fetchMessages = () => {
     var that = this;
     var userId = auth.currentUser.uid;
-    database
-      .ref("users")
+    db.ref("users")
       .child(userId)
       .child("userChats")
       .child(this.state.friendId)
@@ -147,8 +144,7 @@ export default class MessageScreen extends Component {
           const exist = snapshot.exists();
           if (exist) {
             var data = snapshot.val();
-            database
-              .ref("chatMessages")
+            db.ref("chatMessages")
               .child(Object.keys(data)[0])
               .on(
                 "value",
@@ -202,8 +198,7 @@ export default class MessageScreen extends Component {
       var date = Date.now();
       var posted = Math.floor(date / 1000);
       var userId = auth.currentUser.uid;
-      database
-        .ref("users")
+      db.ref("users")
         .child(userId)
         .child("userChats")
         .child(this.state.friendId)
@@ -222,13 +217,15 @@ export default class MessageScreen extends Component {
             that.setState({
               newMessageId: that.uniqueId(),
             });
-            database.ref("/chatMessages/" + cId + "/" + that.state.newMessageId).set(newMessage);
-            database
-              .ref("/users/" + userId + "/userChats/" + that.state.friendId + "/" + cId)
-              .update({ posted: posted, lastMessage: that.state.newMessage });
-            database
-              .ref("/users/" + that.state.friendId + "/userChats/" + userId + "/" + cId)
-              .update({ posted: posted, lastMessage: that.state.newMessage });
+            db.ref("/chatMessages/" + cId + "/" + that.state.newMessageId).set(newMessage);
+            db.ref("/users/" + userId + "/userChats/" + that.state.friendId + "/" + cId).update({
+              posted: posted,
+              lastMessage: that.state.newMessage,
+            });
+            db.ref("/users/" + that.state.friendId + "/userChats/" + userId + "/" + cId).update({
+              posted: posted,
+              lastMessage: that.state.newMessage,
+            });
             that.setState({
               newMessage: "",
             });
@@ -253,29 +250,15 @@ export default class MessageScreen extends Component {
               status: 0,
               posted: posted,
             };
-            database
-              .ref(
-                "/users/" +
-                  userId +
-                  "/userChats/" +
-                  that.state.friendId +
-                  "/" +
-                  that.state.newChatId
-              )
-              .set(chatUserf);
-            database
-              .ref(
-                "/users/" +
-                  that.state.friendId +
-                  "/userChats/" +
-                  userId +
-                  "/" +
-                  that.state.newChatId
-              )
-              .set(chatUser);
-            database
-              .ref("/chatMessages/" + that.state.newChatId + "/" + that.state.newMessageId)
-              .set(newMessage);
+            db.ref(
+              "/users/" + userId + "/userChats/" + that.state.friendId + "/" + that.state.newChatId
+            ).set(chatUserf);
+            db.ref(
+              "/users/" + that.state.friendId + "/userChats/" + userId + "/" + that.state.newChatId
+            ).set(chatUser);
+            db.ref("/chatMessages/" + that.state.newChatId + "/" + that.state.newMessageId).set(
+              newMessage
+            );
           }
         })
         .catch();
@@ -292,8 +275,7 @@ export default class MessageScreen extends Component {
         });
         that.check();
         var userId = auth.currentUser.uid;
-        database
-          .ref("users")
+        db.ref("users")
           .child(userId)
           .child("name")
           .once("value")
@@ -305,8 +287,7 @@ export default class MessageScreen extends Component {
               name: data,
             });
           });
-        database
-          .ref("users")
+        db.ref("users")
           .child(userId)
           .child("avatar")
           .once("value")

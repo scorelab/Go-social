@@ -4,7 +4,7 @@ import styles from "./style";
 import ConversationBanner from "../../components/ConversationBanner/conversationBanner";
 import SuggestCardView from "../../components/SuggestionsCardView/suggestionsCardView";
 import HeaderNavigationBar from "../../components/HeaderNavigationBar/HeaderNavigationBar";
-import { f, auth, storage, database } from "../../../config/config.js";
+import { app, auth, db } from "../../../config/config.js";
 export default class ChatListScreen extends Component {
   constructor(props) {
     super(props);
@@ -19,7 +19,7 @@ export default class ChatListScreen extends Component {
   fetchUsers = () => {
     var that = this;
     var userId = auth.currentUser.uid;
-    database.ref("users").once(
+    db.ref("users").once(
       "value",
       function (snapshot) {
         const exsist = snapshot.val() != null;
@@ -66,8 +66,7 @@ export default class ChatListScreen extends Component {
     if (this.state.loggedin == true) {
       var that = this;
       var userId = auth.currentUser.uid;
-      database
-        .ref("users")
+      db.ref("users")
         .child(userId)
         .child("userChats")
         .on(
@@ -211,37 +210,37 @@ export default class ChatListScreen extends Component {
               <SuggestCardView
                 onPress={this.viewChat}
                 name={"Cherryl"}
-                userImage={require("../../images/user_image_1.jpg")}
+                userImage={require("../../assets/images/user_image_1.jpg")}
               />
               <SuggestCardView
                 onPress={this.viewChat}
                 name={"Cherryl"}
-                userImage={require("../../images/user_image_1.jpg")}
+                userImage={require("../../assets/images/user_image_1.jpg")}
               />
               <SuggestCardView
                 onPress={this.viewChat}
                 name={"Cherryl"}
-                userImage={require("../../images/user_image_1.jpg")}
+                userImage={require("../../assets/images/user_image_1.jpg")}
               />
               <SuggestCardView
                 onPress={this.viewChat}
                 name={"Cherryl"}
-                userImage={require("../../images/user_image_1.jpg")}
+                userImage={require("../../assets/images/user_image_1.jpg")}
               />
               <SuggestCardView
                 onPress={this.viewChat}
                 name={"Cherryl"}
-                userImage={require("../../images/user_image_1.jpg")}
+                userImage={require("../../assets/images/user_image_1.jpg")}
               />
               <SuggestCardView
                 onPress={this.viewChat}
                 name={"Cherryl"}
-                userImage={require("../../images/user_image_1.jpg")}
+                userImage={require("../../assets/images/user_image_1.jpg")}
               />
               <SuggestCardView
                 onPress={this.viewChat}
                 name={"Cherryl"}
-                userImage={require("../../images/user_image_1.jpg")}
+                userImage={require("../../assets/images/user_image_1.jpg")}
               />
             </ScrollView>
           </View>
@@ -254,7 +253,7 @@ export default class ChatListScreen extends Component {
               name="Toney Herford"
               posted="2 days ago"
               onPress={this.viewChat}
-              userImage={require("../../images/user_image_1.jpg")}
+              userImage={require("../../assets/images/user_image_1.jpg")}
               message="Hello Jhon, I would like to invite you to participate ..."
               count="5"
             />
@@ -262,7 +261,7 @@ export default class ChatListScreen extends Component {
               name="Toney Herford"
               posted="2 days ago"
               onPress={this.viewChat}
-              userImage={require("../../images/user_image_1.jpg")}
+              userImage={require("../../assets/images/user_image_1.jpg")}
               message="Hello Jhon, I would like to invite you to participate ..."
               count="2"
             />
@@ -270,7 +269,7 @@ export default class ChatListScreen extends Component {
               name="Toney Herford"
               posted="2 days ago"
               onPress={this.viewChat}
-              userImage={require("../../images/user_image_1.jpg")}
+              userImage={require("../../assets/images/user_image_1.jpg")}
               message="Hello Jhon, I would like to invite you to participate ..."
               count="3"
             />
@@ -278,7 +277,7 @@ export default class ChatListScreen extends Component {
               name="Toney Herford"
               posted="2 days ago"
               onPress={this.viewChat}
-              userImage={require("../../images/user_image_1.jpg")}
+              userImage={require("../../assets/images/user_image_1.jpg")}
               message="Hello Jhon, I would like to invite you to participate ..."
               count="7"
             />
@@ -286,7 +285,7 @@ export default class ChatListScreen extends Component {
               name="Toney Herford"
               posted="2 days ago"
               onPress={this.viewChat}
-              userImage={require("../../images/user_image_1.jpg")}
+              userImage={require("../../assets/images/user_image_1.jpg")}
               message="Hello Jhon, I would like to invite you to participate ..."
               count="2"
             />

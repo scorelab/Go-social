@@ -111,12 +111,24 @@ To use Google Maps in the Go-social app, you'll need a Google Maps API key. Foll
 > - Click the "+ CREATE CREDENTIALS" button and select "API key".
 > - Copy the API key that is generated for you.
 > - In the Go-social app, navigate to the `config/config.js` file and replace the GMAP_API_KEY_HERE placeholder with your API key.
-> - Open `android/app/src/main/AndroidManifest.xml` and replace your Google map API key there.
+> - For Android: Open `android/app/src/main/AndroidManifest.xml` and replace your Google map API key there.
 
 ```sh
 <meta-data
 android:name="com.google.android.geo.API_KEY"
 android:value="AIzaSyDmwJddIPTcALyZtj7p9mFFlkMvpMkati8"/>
+```
+
+> - For IOS: You need to add Google Maps API key in your `ios/Go_social/AppDelegate.m` file:
+
+```sh
+#import <GoogleMaps/GoogleMaps.h>
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+  [GMSServices provideAPIKey:@"AIzaSyDmwJddIPTcALyZtj7p9mFFlkMvpMkati8"];
+  ...
+}
 ```
 
 **Note:** that it's important to enable all maps, routes, and places in your API key to ensure that the Go-social app functions properly. While you can use the given API key provided in the app, it's not guaranteed to work indefinitely, so it's recommended to generate your own API key.
