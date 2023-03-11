@@ -4,53 +4,44 @@
 
 Go-social is a customizable React Native app template designed for community-based mobile applications. The template provides a common foundation for building such applications, saving development time and allowing developers to focus on adding unique features and functionality specific to their community.
 
-## Features
-
-This app template includes the following features:
-
-- Customizable components
-- Firebase Authentication and Real-time database
-- Feed with posts and comments
-- Social sharing and messaging functionality
-- Notifications for new posts and comments
-- Additional features such as easy theming will be implemented in the near future.
-
 ## Getting Started
 
 To get started, you'll need to have the following software installed on your machine:
 
-- `Node.js`
-- `React Native CLI`
-- `VSCode` and `Android Studio` (for Android development)
-- `Xcode` (for iOS development)
+- [`Node.js`](https://nodejs.org/en/)
+- [`React Native CLI`](https://reactnative.dev/docs/environment-setup)
+- [`VSCode`](https://code.visualstudio.com/) and [`Android Studio`](https://developer.android.com/studio) (for Android development)
+- [`Xcode`](https://developer.apple.com/xcode/) (for iOS development)
 
 Once you have these installed, follow these steps:
 
 1. Clone the repository to your machine:
 
-```sh
-git clone https://github.com/scorelab/Go-social.git
-```
+   ```sh
+   git clone https://github.com/scorelab/Go-social.git
+   ```
 
 2. Navigate to the project directory:
 
-```sh
-npm install
-```
+   ```sh
+   cd Go-social
+   ```
 
 3. Install all dependencies:
 
-```sh
-npm install
-```
+   ```sh
+   npm install
+   # Or
+   yarn install
+   ```
 
 Before using the app, you'll need to configure your app.
 
-### Go-social app Configuration ~[IMPORTANT!]
+## Go-social app Configuration ~[IMPORTANT!]
 
 To configure your app, follow these steps:
 
-##### Firebase Setup:
+#### A. Firebase Setup:
 
 1. Go to the [Firebase Console](https://console.firebase.google.com/) and create a new project for the Go-social application. This is free for everyone. It's recommended to use the **Web App** instead of the Android or iOS app.
 
@@ -59,7 +50,7 @@ To configure your app, follow these steps:
 4. Create a `Firebase Realtime Database` and update its ruleset to allow read and write access.
 5. Update the Firebase configuration object in `config/config.js` with app-specific config details obtained from the Firebase console app settings.
 
-##### Google Maps Setup:
+#### B. Google Maps Setup:
 
 1. Generate a `Google Maps API Key` using this [Link](https://mapsplatform.google.com/) for G-social's map view, or use the provided key (not guaranteed to always work). Ensure the key has all maps, routes, and places enabled
 2. After obtaining your Google Maps API key, replace the example key with your own.
@@ -78,15 +69,15 @@ To configure your app, follow these steps:
 [GMSServices provideAPIKey:@"AIzaSyDmwJddIPTcALyZtj7p9mFFlkMvpMkati8"];
 ```
 
-##### Facebook Authentication Setup:
+#### C. Facebook Authentication Setup:
 
 1. To enable `Facebook login` for Go-social, obtain a Facebook app id using the provided [link](https://developers.facebook.com/) and enable both email/password and Facebook sign-in method in Firebase.
 2. After setting up Facebook authentication, use your Facebook App ID and App Secret to enable the "Facebook" `Sign-in method` in Firebase.
-3. Update the following file in your repository:
+3. Update the following file in your repository: `Example app_id: 2349388348405699`
    > - For Android open `android/app/src/main/res/values/strings.xml` and replace
 
 ```sh
-<string name=“facebook_app_id”>2349388348405699</string>
+<string name=“facebook_app_id”>{YOUR_APP_ID}</string>
 ```
 
 > - For iOS open `ios/Go_social/info.plist` and replace
@@ -109,12 +100,16 @@ Now you are ready to run Go-social
 
 ```sh
 npx react-native run-android
+# Or
+yarn react-native run-android
 ```
 
 (for iOS)
 
 ```sh
 npx react-native run-ios
+# Or
+yarn react-native run-ios
 ```
 
 ## Contributing
