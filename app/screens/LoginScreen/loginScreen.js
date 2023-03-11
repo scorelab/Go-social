@@ -48,8 +48,9 @@ export default class LoginScreen extends Component {
       let password = this.state.password;
       // let { navigate } = this.props.navigation;
 
-      await signInWithEmailAndPassword(auth, email, password);
+      const res = await signInWithEmailAndPassword(auth, email, password);
       console.log("User signed in!");
+      this.props.navigation.navigate("App");
     } catch (error) {
       alert(error.message.toString());
     }
