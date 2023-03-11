@@ -12,6 +12,7 @@ import {
 import { AccessToken, LoginManager } from "react-native-fbsdk";
 import { app, auth, db } from "../../../config/config.js";
 import {
+  signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   updateProfile,
@@ -32,31 +33,33 @@ export default class LoginScreen extends Component {
   }
 
   componentDidMount() {
+    const that = this;
     onAuthStateChanged(auth, function (user) {
       if (user) {
-        this.props.navigation.navigate("App");
+        that.props.navigation.navigate("App");
       }
     });
   }
 
   async onLogin() {
     try {
+      console.log("reached here", this.state);
       let email = this.state.email;
       let password = this.state.password;
-      let { navigate } = this.props.navigation;
+      // let { navigate } = this.props.navigation;
 
       await signInWithEmailAndPassword(auth, email, password);
       console.log("User signed in!");
-      navigate("App");
     } catch (error) {
       alert(error.message.toString());
     }
   }
 
   async _signInAsync() {
+    console.log(this.state);
     if (EmailValidator.validate(this.state.email) === true) {
       if (this.state.password != "") {
-        this.onLogin.bind(this);
+        this.onLogin();
       } else {
         alert("Enter the password");
       }

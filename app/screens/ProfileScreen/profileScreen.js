@@ -15,6 +15,7 @@ import { Info, DeatilView } from "..";
 import HeaderNavigationBar from "../../components/HeaderNavigationBar/HeaderNavigationBar";
 import styles from "./style";
 import { app, auth, storage, db } from "../../../config/config.js";
+import { signOut } from "firebase/auth";
 import { Avatar } from "react-native-elements";
 import ImagePicker from "react-native-image-picker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -81,27 +82,27 @@ export default class ProfileScreen extends Component {
         });
       }
     });
-    this.requestCameraPermission();
+    // this.requestCameraPermission();
   }
 
-  requestCameraPermission = async () => {
-    try {
-      const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA, {
-        title: "Go Social Camera Permission",
-        message: "Go Social App needs access to your camera " + "so you can take awesome pictures.",
-        buttonNeutral: "Ask Me Later",
-        buttonNegative: "Cancel",
-        buttonPositive: "OK",
-      });
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        console.log("You can use the camera");
-      } else {
-        console.log("Camera permission denied");
-      }
-    } catch (err) {
-      console.warn(err);
-    }
-  };
+  // requestCameraPermission = async () => {
+  //   try {
+  //     const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA, {
+  //       title: "Go Social Camera Permission",
+  //       message: "Go Social App needs access to your camera " + "so you can take awesome pictures.",
+  //       buttonNeutral: "Ask Me Later",
+  //       buttonNegative: "Cancel",
+  //       buttonPositive: "OK",
+  //     });
+  //     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+  //       console.log("You can use the camera");
+  //     } else {
+  //       console.log("Camera permission denied");
+  //     }
+  //   } catch (err) {
+  //     console.warn(err);
+  //   }
+  // };
 
   _handleButtonPress = () => {
     //console.log("User hihi!");
@@ -189,6 +190,30 @@ export default class ProfileScreen extends Component {
     });
   };
 
+  logout = () => {
+    this.props.navigation.navigate("Login");
+    // signOut();
+  };
+
+  save = () => {
+    var firstName = this.state.firstName;
+    var lastName = this.state.lastName;
+    var contact = this.state.contact;
+    var address = this.state.address;
+    var email = this.state.email;
+
+    let user = {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      contact: contact,
+      address: address,
+    };
+
+    console.log(user);
+    db.ref("users/").child(auth.currentUser.uid).set(user);
+  };
+
   render() {
     return (
       <View style={styles.container}>
@@ -205,9 +230,12 @@ export default class ProfileScreen extends Component {
               onPress={this._handleButtonPress}
               rounded
               style={styles.profileImage}
-              source={{
-                uri: this.state.avatar,
-              }}
+              source={
+                require("../../assets/images/cover_photo.jpeg")
+                //   {
+                //   uri: this.state.avatar,
+                // }
+              }
               showEditButton
             />
             {/* <Image style={styles.profileImage} source={require('../../assets/images/user_image_1.jpg')} /> */}
@@ -219,9 +247,9 @@ export default class ProfileScreen extends Component {
             </View>
           </View>
           <View style={{ marginHorizontal: 15 }}>
-            {this.state.isLoading && (
+            {/* {this.state.isLoading && (
               <ActivityIndicator style={{ height: 80 }} color="#C00" size="large" />
-            )}
+            )} */}
             <View>
               <View style={styles.label}>
                 <Text style={styles.labelText}>First Name</Text>
@@ -292,28 +320,4 @@ export default class ProfileScreen extends Component {
       </View>
     );
   }
-
-  logout = () => {
-    this.props.navigation.navigate("Login");
-    auth.signOut();
-  };
-
-  save = () => {
-    var firstName = this.state.firstName;
-    var lastName = this.state.lastName;
-    var contact = this.state.contact;
-    var address = this.state.address;
-    var email = this.state.email;
-
-    let user = {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      contact: contact,
-      address: address,
-    };
-
-    console.log(user);
-    f.db().ref("users/").child(auth.currentUser.uid).set(user);
-  };
 }

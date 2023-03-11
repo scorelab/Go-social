@@ -44,15 +44,14 @@ export default class SignUpScreen extends Component {
 
   async onSignup() {
     try {
-      console.log("reached here", this.state);
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         this.state.email,
         this.state.password
       );
 
-      const user = userCredential.user;
-      await updateProfile(user, { displayName: this.state.name });
+      // const user = userCredential.user;
+      // await updateProfile(user, { displayName: this.state.name });
       console.log("User signed up successfully");
     } catch (error) {
       console.log(error);
@@ -61,8 +60,6 @@ export default class SignUpScreen extends Component {
   }
 
   async _signUpAsync() {
-    console.log("------ auth: ", auth);
-    console.log(this.state);
     if (this.state.name == "") {
       alert("Please enter your name");
     } else if (EmailValidator.validate(this.state.email) === true) {
