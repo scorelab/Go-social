@@ -11,129 +11,101 @@ import {
 } from "react-native";
 import { AccessToken, LoginManager } from "react-native-fbsdk";
 import { app, auth, db } from "../../../config/config.js";
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  updateProfile,
+  signInWithCredential,
+  FacebookAuthProvider,
+} from "firebase/auth";
 import * as EmailValidator from "email-validator";
-import styles from "./style";
 import { SocialIcon } from "react-native-elements";
+import styles from "./style";
+
 export default class LoginScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
       email: "",
-      Password: "",
+      password: "",
     };
   }
 
   componentDidMount() {
-    var that = this;
-
-    auth.onAuthStateChanged(function (user) {
+    onAuthStateChanged(auth, function (user) {
       if (user) {
-        that.redirectUser();
+        this.props.navigation.navigate("App");
       }
     });
   }
 
-  login() {
-    let email = this.state.email;
-    let password = this.state.Password;
+  async onLogin() {
+    try {
+      let email = this.state.email;
+      let password = this.state.password;
+      let { navigate } = this.props.navigation;
 
-    let { navigate } = this.props.navigation;
-
-    auth
-      .signInWithEmailAndPassword(email, password)
-      .then(function (data) {
-        navigate("App");
-      })
-      .catch(function (error) {
-        var errorMessage = error.message;
-        alert(errorMessage.toString());
-      });
+      await signInWithEmailAndPassword(auth, email, password);
+      console.log("User signed in!");
+      navigate("App");
+    } catch (error) {
+      alert(error.message.toString());
+    }
   }
 
-  redirectUser() {
-    const { navigate } = this.props.navigation;
-    navigate("App");
-  }
-
-  _signInAsync = async () => {
+  async _signInAsync() {
     if (EmailValidator.validate(this.state.email) === true) {
-      if (this.state.Pasword != "") {
-        this.login();
+      if (this.state.password != "") {
+        this.onLogin.bind(this);
       } else {
         alert("Enter the password");
       }
     } else {
       alert("Please enter A Valid Email");
     }
-  };
-
-  onPressLogin() {
-    LoginManager.logInWithReadPermissions(["public_profile", "email"]).then(
-      result => this._handleCallBack(result),
-      function (error) {
-        alert("Login fail with error: " + error);
-      }
-    );
   }
 
-  _handleCallBack(result) {
-    let _this = this;
-    if (result.isCancelled) {
-      alert("Login cancelled");
-    } else {
-      AccessToken.getCurrentAccessToken().then(data => {
-        const token = data.accessToken;
-        fetch(
-          "https://graph.facebook.com/v2.8/me?fields=id,first_name,last_name,gender,birthday&access_token=" +
-            token
-        )
-          .then(response => response.json())
-          .then(json => {
-            const imageSize = 120;
-            const facebookID = json.id;
-            const fbImage = `https://graph.facebook.com/${facebookID}/picture?height=${imageSize}`;
-            this.authenticate(data.accessToken).then(function (result) {
-              const { uid } = result;
-              _this.createUser(uid, json, token, fbImage);
-            });
-          })
-          .catch(function (err) {
-            console.log(err);
-          });
-      });
+  async onFbLogin() {
+    try {
+      const result = await LoginManager.logInWithPermissions(["public_profile", "email"]);
+
+      if (result.isCancelled) {
+        throw new Error("User cancelled the login process");
+      }
+
+      // You can get the user's access token using the following code:
+      const data = await AccessToken.getCurrentAccessToken();
+
+      // You can use the user's access token to authenticate with Firebase Authentication:
+      const credential = FacebookAuthProvider.credential(data.accessToken);
+      const response = await fetch(
+        `https://graph.facebook.com/v2.8/me?fields=id,first_name,last_name,gender,birthday&access_token=${data.accessToken}`
+      );
+      const userData = await response.json();
+      const { uid } = await signInWithCredential(auth, credential);
+
+      // Fetch fb image from facebook
+      const imageSize = 120;
+      const facebookID = userData.id;
+      const fbImage = `https://graph.facebook.com/${facebookID}/picture?height=${imageSize}`;
+
+      // create new user using facebook credentials
+      this.createUser(uid, userData, data.AccessToken, fbImage);
+    } catch (error) {
+      console.log(error);
     }
   }
 
-  authenticate = token => {
-    const provider = auth.FacebookAuthProvider;
-    const credential = provider.credential(token);
-    let ret = auth.signInWithCredential(credential);
-    return ret;
-  };
-
-  createUser = (uid, userData, token, dp) => {
-    const defaults = {
-      uid,
-      token,
-      dp,
-      ageRange: [20, 30],
-    };
+  createUser(uid, userData, token, dp) {
+    const defaults = { uid, token, dp, ageRange: [20, 30] };
     db.ref("users")
       .child(uid)
       .update({ ...userData, ...defaults });
-  };
+  }
 
-  _signInAsync = async () => {
-    if (EmailValidator.validate(this.state.email) === true) {
-      if (this.state.Pasword != "") {
-        this.login();
-      } else {
-        alert("Enter the password");
-      }
-    } else {
-      alert("Please enter A Valid Email");
-    }
-  };
+  handleInput(input, text) {
+    this.setState(prevState => ({ ...prevState, [input]: text }));
+  }
 
   render() {
     return (
@@ -150,7 +122,7 @@ export default class LoginScreen extends Component {
                   keyboardType="email-address"
                   placeholderTextColor="rgba(255,255,255,0.7)"
                   style={styles.input}
-                  onChangeText={text => this.setState({ email: text })}
+                  onChangeText={text => this.handleInput("email", text)}
                   ref={input => {
                     this.textInput = input;
                   }}
@@ -160,14 +132,14 @@ export default class LoginScreen extends Component {
                   secureTextEntry={true}
                   placeholderTextColor="rgba(255,255,255,0.7)"
                   style={styles.input}
-                  onChangeText={text => this.setState({ Password: text })}
+                  onChangeText={text => this.handleInput("password", text)}
                   ref={input => {
                     this.textInput = input;
                   }}
                 />
               </View>
             </KeyboardAvoidingView>
-            <TouchableOpacity onPress={this._signInAsync} style={styles.loginButton}>
+            <TouchableOpacity onPress={this._signInAsync.bind(this)} style={styles.loginButton}>
               <Text style={styles.buttonText}>Sign In</Text>
             </TouchableOpacity>
 
@@ -175,7 +147,7 @@ export default class LoginScreen extends Component {
               <Text style={styles.text}>Forgot Password?</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={this.onPressLogin.bind(this)}>
+            <TouchableOpacity onPress={this.onFbLogin.bind(this)}>
               <SocialIcon
                 style={{ width: 200 }}
                 title="Sign In With Facebook"

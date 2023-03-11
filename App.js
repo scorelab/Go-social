@@ -3,6 +3,7 @@ import React from "react";
 import { SafeAreaView, StyleSheet, StatusBar } from "react-native";
 import { enableScreens } from "react-native-screens";
 import Navigation from "./app/navigations";
+import { app } from "./config/config";
 
 enableScreens();
 

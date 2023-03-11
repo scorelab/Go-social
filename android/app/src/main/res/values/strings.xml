@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Go_social</string>
-    <string name="facebook_app_id">2349388348405699</string>
+    <string name="facebook_app_id">2349388348405699</string> #IGNORE
+    <!-- <string name="facebook_app_id">FACEBOOK_APP_ID</string>  -->
 </resources>

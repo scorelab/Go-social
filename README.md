@@ -142,10 +142,30 @@ To enable Facebook login in the Go-social app, you'll need to create a Facebook 
 > - In the Firebase Console, navigate to the "Authentication" section and enable the "Facebook" sign-in method.
 > - Enter your Facebook App ID and App Secret in the Firebase Console.
 > - Make sure to also enable the "Email/Password" sign-in method in Firebase.
-> - In the `android/app/src/main/res/values/strings.xml` file, replace the facebookAppId value with your Facebook App ID:
+> - For Android: In the `android/app/src/main/res/values/strings.xml` file, replace the facebookAppId value with your Facebook App ID:
 
 ```sh
 <string name=“facebook_app_id”>2349388348405699</string>
+```
+
+> - For iOS: In the `ios/Go_social/info.plist` file, Replace `{YOUR_APP_ID}` and `{YOUR_APP_NAME}` with the values from your Facebook App settings.
+
+```sh
+...
+<key>CFBundleURLTypes</key>
+<array>
+  <dict>
+    <key>CFBundleURLSchemes</key>
+    <array>
+      <string>fb{YOUR_APP_ID}</string>
+    </array>
+  </dict>
+</array>
+<key>FacebookAppID</key>
+<string>{YOUR_APP_ID}</string>
+<key>FacebookDisplayName</key>
+<string>{YOUR_APP_NAME}</string>
+...
 ```
 
 Once Facebook login is set up, users can log in to the G-social app using their Facebook credentials. **Note** that users will also be able to create an account using their email and password if you've enabled the "Email/Password" sign-in method in Firebase.
