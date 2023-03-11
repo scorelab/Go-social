@@ -114,12 +114,4 @@ yarn react-native run-ios
 
 ## Contributing
 
-Contributions to this project are welcome! To contribute, follow these steps:
-
-[Contribution Guidelines](https://github.com/scorelab/Go-social/blob/14e5dfcdfb59888efc318bb4835e3577d5d09532/.github/CONTRIBUTING.md)
-
-1. Fork the repository to your own GitHub account
-2. Clone the forked repository to your machine
-3. Make your changes and commit them with descriptive commit messages
-4. Push your changes to your forked repository
-5. Open a pull request from your forked repository to the original repository
+Contributions to this project are welcome! To contribute, follow our [Contribution Guidelines](https://github.com/scorelab/Go-social/blob/14e5dfcdfb59888efc318bb4835e3577d5d09532/.github/CONTRIBUTING.md)

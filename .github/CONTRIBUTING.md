@@ -1,7 +1,15 @@
 # Contributing
 
-When contributing to this repository, please first discuss the change you wish to make via issue,
-email, or any other method with the owners of this repository before making a change.
+Thank you for your interest in contributing to our project! We welcome all contributions, whether it's a bug fix, feature suggestion, or documentation improvement.
+
+Before you start contributing, please take a moment to read the following guidelines:
+
+1. Initiate a discussion with the repository owners, this can be done through an `Github Issue`. [Issue_Template](https://github.com/scorelab/Go-social/blob/14e5dfcdfb59888efc318bb4835e3577d5d09532/.github/ISSUE_TEMPLATE.md).
+2. Please ensure that you discuss the change you intend to make before proceeding.
+3. `Fork` the repository to your own GitHub account
+4. `Clone` the forked repository to your machine
+5. Make your changes and commit them with descriptive commit messages
+6. Open a `Pull request` from your forked repository to the original repository. [Pull_Request_Template](https://github.com/scorelab/Go-social/blob/14e5dfcdfb59888efc318bb4835e3577d5d09532/.github/PULL_REQUEST_TEMPLATE.md)
 
 Please note we have a code of conduct, please follow it in all your interactions with the project.
 
