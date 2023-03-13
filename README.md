@@ -6,7 +6,7 @@ Go-social is a customizable React Native app template designed for community-bas
 
 ## Getting Started
 
-To get started, you'll need to have the following software installed on your machine:
+To get started, you'll need to have the following softwares installed on your machine:
 
 - [`Node.js`](https://nodejs.org/en/)
 - [`React Native CLI`](https://reactnative.dev/docs/environment-setup)
@@ -52,7 +52,7 @@ To configure your app, follow these steps:
 
 #### B. Google Maps Setup:
 
-1. Generate a `Google Maps API Key` using this [Link](https://mapsplatform.google.com/) for G-social's map view, or use the provided key (not guaranteed to always work). Ensure the key has all maps, routes, and places enabled
+1. Generate a `Google Maps API Key` using this [Link](https://mapsplatform.google.com/) for Go-social's map view, or use the provided key (not guaranteed to always work). Ensure the key has all maps, routes, and places enabled
 2. After obtaining your Google Maps API key, replace the example key with your own.
    > - For Android open `android/app/src/main/AndroidManifest.xml` and replace
 
