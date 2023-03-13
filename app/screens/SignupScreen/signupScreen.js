@@ -11,9 +11,16 @@ import {
 } from "react-native";
 import styles from "./style";
 import * as EmailValidator from "email-validator";
-import { AccessToken, LoginManager } from "react-native-fbsdk";
-import { auth, db } from "../../../config/config.js";
-import { createUserWithEmailAndPassword, onAuthStateChanged, updateProfile } from "firebase/auth";
+import { LoginManager, AccessToken } from "react-native-fbsdk-next";
+import { app, auth, db } from "../../../config/config.js";
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  updateProfile,
+  signInWithCredential,
+  FacebookAuthProvider,
+} from "firebase/auth";
+import { ref, set, orderByChild, equalTo, once } from "firebase/database";
 import { SocialIcon } from "react-native-elements";
 
 export default class SignUpScreen extends Component {
@@ -41,21 +48,7 @@ export default class SignUpScreen extends Component {
     navigate("App");
   }
 
-  async signup() {
-    try {
-      let name = this.state.name;
-      let email = this.state.email;
-      let password = this.state.password;
-
-      const { user } = await createUserWithEmailAndPassword(auth, email, password);
-      await updateProfile(user, { displayName: name });
-      console.log("\n\nUpdated user data successfully! : ", auth.currentUser);
-    } catch (error) {
-      console.log(error);
-      alert(error.message.toString());
-    }
-  }
-
+  // Validate user input for sign up
   async _signUpAsync() {
     if (this.state.name == "") {
       alert("Please enter your name!");
@@ -70,62 +63,54 @@ export default class SignUpScreen extends Component {
     }
   }
 
-  onPressLogin() {
-    LoginManager.logInWithReadPermissions(["public_profile", "email"]).then(
-      result => this._handleCallBack(result),
-      function (error) {
-        alert("Login fail with error: " + error);
-      }
-    );
-  }
+  // Sign up with email and password
+  async signup() {
+    try {
+      let name = this.state.name;
+      let email = this.state.email;
+      let password = this.state.password;
 
-  _handleCallBack(result) {
-    let _this = this;
-    if (result.isCancelled) {
-      alert("Login cancelled");
-    } else {
-      AccessToken.getCurrentAccessToken().then(data => {
-        const token = data.accessToken;
-        fetch(
-          "https://graph.facebook.com/v2.8/me?fields=id,first_name,last_name,gender,birthday&access_token=" +
-            token
-        )
-          .then(response => response.json())
-          .then(json => {
-            const imageSize = 120;
-            const facebookID = json.id;
-            const fbImage = `https://graph.facebook.com/${facebookID}/picture?height=${imageSize}`;
-            this.authenticate(data.accessToken).then(function (result) {
-              const { uid } = result;
-              _this.createUser(uid, json, token, fbImage);
-            });
-          })
-          .catch(function (err) {
-            console.log(err);
-          });
-      });
+      const { user } = await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(user, { displayName: name });
+    } catch (error) {
+      alert(error.message.toString());
     }
   }
 
-  authenticate = token => {
-    const provider = auth.FacebookAuthProvider;
-    const credential = provider.credential(token);
-    let ret = auth.signInWithCredential(credential);
-    return ret;
-  };
+  // Signup user with facebook account
+  async _fbSignUpAsync() {
+    try {
+      const result = await LoginManager.logInWithPermissions(["public_profile", "email"]);
+      if (!result.isCancelled) {
+        // Get the user's access token
+        const data = await AccessToken.getCurrentAccessToken();
 
-  createUser = (uid, userData, token, dp) => {
-    const defaults = {
-      uid,
-      token,
-      dp,
-      ageRange: [20, 30],
-    };
-    f.database()
-      .ref("users")
-      .child(uid)
-      .update({ ...userData, ...defaults });
-  };
+        // Use the user's access token to authenticate with Firebase Authentication
+        const credential = FacebookAuthProvider.credential(data.accessToken);
+        const { user } = await signInWithCredential(auth, credential);
+
+        const response = await fetch(
+          `https://graph.facebook.com/v2.8/me?fields=id,first_name,last_name,email,birthday&access_token=${data.accessToken}`
+        );
+        const userData = await response.json();
+        const photoURL = `https://graph.facebook.com/${userData.id}/picture?height=120`;
+        this.createUser(user.uid, userData, data.accessToken, photoURL);
+      }
+    } catch (error) {
+      alert(error.message.toString());
+    }
+  }
+
+  // Create user
+  async createUser(uid, userData, token, photoURL) {
+    try {
+      const defaults = { uid, token, photoURL, Range: [20, 30] };
+      const usersRef = ref(db, "users/" + uid);
+      set(usersRef, { ...userData, ...defaults });
+    } catch (error) {
+      alert(error.message.toString());
+    }
+  }
 
   handleInput(input, text) {
     this.setState(prevState => ({ ...prevState, [input]: text }));
@@ -178,9 +163,9 @@ export default class SignUpScreen extends Component {
               <Text style={styles.text}>or</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={this.onPressLogin.bind(this)}>
+            <TouchableOpacity onPress={this._fbSignUpAsync.bind(this)}>
               <SocialIcon
-                style={{ width: 200 }}
+                style={{ width: 290 }}
                 title="Sign Up With Facebook"
                 button
                 type="facebook"
