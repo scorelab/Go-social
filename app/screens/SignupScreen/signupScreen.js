@@ -12,7 +12,8 @@ import {
 import styles from "./style";
 import * as EmailValidator from "email-validator";
 import { AccessToken, LoginManager } from "react-native-fbsdk";
-import { f, auth } from "../../../config/config.js";
+import { auth, db } from "../../../config/config.js";
+import { createUserWithEmailAndPassword, onAuthStateChanged, updateProfile } from "firebase/auth";
 import { SocialIcon } from "react-native-elements";
 
 export default class SignUpScreen extends Component {
@@ -21,14 +22,14 @@ export default class SignUpScreen extends Component {
     this.state = {
       email: "",
       name: "",
-      Password: "",
-      ConfirmPassword: "",
+      password: "",
+      confirmPassword: "",
     };
   }
 
   componentDidMount() {
     var that = this;
-    auth.onAuthStateChanged(function (user) {
+    onAuthStateChanged(auth, function (user) {
       if (user) {
         that.redirectUser();
       }
@@ -38,6 +39,35 @@ export default class SignUpScreen extends Component {
   redirectUser() {
     const { navigate } = this.props.navigation;
     navigate("App");
+  }
+
+  async signup() {
+    try {
+      let name = this.state.name;
+      let email = this.state.email;
+      let password = this.state.password;
+
+      const { user } = await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(user, { displayName: name });
+      console.log("\n\nUpdated user data successfully! : ", auth.currentUser);
+    } catch (error) {
+      console.log(error);
+      alert(error.message.toString());
+    }
+  }
+
+  async _signUpAsync() {
+    if (this.state.name == "") {
+      alert("Please enter your name!");
+    } else if (!EmailValidator.validate(this.state.email)) {
+      alert("Please enter a valid email!");
+    } else if (this.state.password == "") {
+      alert("Please enter a password!");
+    } else if (this.state.password != this.state.confirmPassword) {
+      alert("Password and Confirm password must be same");
+    } else {
+      this.signup();
+    }
   }
 
   onPressLogin() {
@@ -97,6 +127,10 @@ export default class SignUpScreen extends Component {
       .update({ ...userData, ...defaults });
   };
 
+  handleInput(input, text) {
+    this.setState(prevState => ({ ...prevState, [input]: text }));
+  }
+
   render() {
     return (
       <View style={styles.firstContainer}>
@@ -111,32 +145,32 @@ export default class SignUpScreen extends Component {
                   placeholder="Name"
                   placeholderTextColor="rgba(255,255,255,0.7)"
                   style={styles.input}
-                  onChangeText={text => this.setState({ name: text })}
+                  onChangeText={text => this.handleInput("name", text)}
                 />
                 <TextInput
                   placeholder="Email"
                   keyboardType="email-address"
                   placeholderTextColor="rgba(255,255,255,0.7)"
                   style={styles.input}
-                  onChangeText={text => this.setState({ email: text })}
+                  onChangeText={text => this.handleInput("email", text)}
                 />
                 <TextInput
                   placeholder="Pasword"
                   secureTextEntry={true}
                   placeholderTextColor="rgba(255,255,255,0.7)"
                   style={styles.input}
-                  onChangeText={text => this.setState({ Password: text })}
+                  onChangeText={text => this.handleInput("password", text)}
                 />
                 <TextInput
                   placeholder="Confirm Pasword"
                   secureTextEntry={true}
                   placeholderTextColor="rgba(255,255,255,0.7)"
                   style={styles.input}
-                  onChangeText={text => this.setState({ ConfirmPassword: text })}
+                  onChangeText={text => this.handleInput("confirmPassword", text)}
                 />
               </View>
             </KeyboardAvoidingView>
-            <TouchableOpacity onPress={this.signUpAsync} style={styles.loginButton}>
+            <TouchableOpacity onPress={this._signUpAsync.bind(this)} style={styles.loginButton}>
               <Text style={styles.buttonText}>Sign Up</Text>
             </TouchableOpacity>
 
@@ -166,47 +200,4 @@ export default class SignUpScreen extends Component {
       </View>
     );
   }
-  register() {
-    let email = this.state.email;
-    let name = this.state.name;
-    let password = this.state.Password;
-
-    const { navigate } = this.props.navigation;
-
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then(function (data) {
-        data.user
-          .updateProfile({
-            displayName: name,
-          })
-          .then(
-            function () {
-              console.log("Updated User Data..");
-            },
-            function (error) {
-              console.log("Error Updating User Data.." + error);
-            }
-          );
-        alert("Welcome to Go Social!");
-        navigate("App");
-      })
-      .catch(function (error) {
-        var errorMessage = error.message;
-        console.log("Error = " + errorMessage);
-        alert(errorMessage);
-      });
-  }
-
-  signUpAsync = async () => {
-    if (EmailValidator.validate(this.state.email) === true) {
-      if (this.state.Password === this.state.ConfirmPassword) {
-        this.register();
-      } else {
-        alert("password Missmatch");
-      }
-    } else {
-      alert("Please enter A Valid Email");
-    }
-  };
 }

@@ -10,44 +10,28 @@ import {
   ScrollView,
 } from "react-native";
 import { AccessToken, LoginManager } from "react-native-fbsdk";
-import { f, auth } from "../../../config/config.js";
+import { app, auth, db } from "../../../config/config.js";
+import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import * as EmailValidator from "email-validator";
-import styles from "./style";
 import { SocialIcon } from "react-native-elements";
+import styles from "./style";
+
 export default class LoginScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
       email: "",
-      Password: "",
+      password: "",
     };
   }
 
   componentDidMount() {
     var that = this;
-
-    auth.onAuthStateChanged(function (user) {
+    onAuthStateChanged(auth, function (user) {
       if (user) {
         that.redirectUser();
       }
     });
-  }
-
-  login() {
-    let email = this.state.email;
-    let password = this.state.Password;
-
-    let { navigate } = this.props.navigation;
-
-    auth
-      .signInWithEmailAndPassword(email, password)
-      .then(function (data) {
-        navigate("App");
-      })
-      .catch(function (error) {
-        var errorMessage = error.message;
-        alert(errorMessage.toString());
-      });
   }
 
   redirectUser() {
@@ -55,17 +39,27 @@ export default class LoginScreen extends Component {
     navigate("App");
   }
 
-  _signInAsync = async () => {
-    if (EmailValidator.validate(this.state.email) === true) {
-      if (this.state.Pasword != "") {
-        this.login();
-      } else {
-        alert("Enter the password");
-      }
-    } else {
-      alert("Please enter A Valid Email");
+  async login() {
+    try {
+      let email = this.state.email;
+      let password = this.state.password;
+
+      const res = await signInWithEmailAndPassword(auth, email, password);
+      console.log("User signed in successfully!");
+    } catch (error) {
+      alert(error.message.toString());
     }
-  };
+  }
+
+  async _signInAsync() {
+    if (!EmailValidator.validate(this.state.email)) {
+      alert("Please enter a valid email!");
+    } else if (this.state.password == "") {
+      alert("Enter your password!");
+    } else {
+      this.login();
+    }
+  }
 
   onPressLogin() {
     LoginManager.logInWithReadPermissions(["public_profile", "email"]).then(
@@ -124,17 +118,9 @@ export default class LoginScreen extends Component {
       .update({ ...userData, ...defaults });
   };
 
-  _signInAsync = async () => {
-    if (EmailValidator.validate(this.state.email) === true) {
-      if (this.state.Pasword != "") {
-        this.login();
-      } else {
-        alert("Enter the password");
-      }
-    } else {
-      alert("Please enter A Valid Email");
-    }
-  };
+  handleInput(input, text) {
+    this.setState(prevState => ({ ...prevState, [input]: text }));
+  }
 
   render() {
     return (
@@ -151,7 +137,7 @@ export default class LoginScreen extends Component {
                   keyboardType="email-address"
                   placeholderTextColor="rgba(255,255,255,0.7)"
                   style={styles.input}
-                  onChangeText={text => this.setState({ email: text })}
+                  onChangeText={text => this.handleInput("email", text)}
                   ref={input => {
                     this.textInput = input;
                   }}
@@ -161,14 +147,14 @@ export default class LoginScreen extends Component {
                   secureTextEntry={true}
                   placeholderTextColor="rgba(255,255,255,0.7)"
                   style={styles.input}
-                  onChangeText={text => this.setState({ Password: text })}
+                  onChangeText={text => this.handleInput("password", text)}
                   ref={input => {
                     this.textInput = input;
                   }}
                 />
               </View>
             </KeyboardAvoidingView>
-            <TouchableOpacity onPress={this._signInAsync} style={styles.loginButton}>
+            <TouchableOpacity onPress={this._signInAsync.bind(this)} style={styles.loginButton}>
               <Text style={styles.buttonText}>Sign In</Text>
             </TouchableOpacity>
 
