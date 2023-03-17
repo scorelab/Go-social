@@ -10,7 +10,7 @@ import {
   ScrollView,
 } from "react-native";
 import { AccessToken, LoginManager } from "react-native-fbsdk";
-import { f, auth } from "../../../config/config.js";
+import { f, auth } from "../../../config/config.example.js";
 import * as EmailValidator from "email-validator";
 import styles from "./style";
 import { SocialIcon } from "react-native-elements";
@@ -68,7 +68,7 @@ export default class LoginScreen extends Component {
   };
 
   onPressLogin() {
-    LoginManager.logInWithReadPermissions(["public_profile", "email"]).then(
+    LoginManager.logInWithPermissions(["public_profile", "email"]).then(
       result => this._handleCallBack(result),
       function (error) {
         alert("Login fail with error: " + error);

@@ -12,7 +12,7 @@ import {
 import styles from "./style";
 import * as EmailValidator from "email-validator";
 import { AccessToken, LoginManager } from "react-native-fbsdk";
-import { f, auth } from "../../../config/config.js";
+import { f, auth } from "../../../config/config.example.js";
 import { SocialIcon } from "react-native-elements";
 
 export default class SignUpScreen extends Component {
@@ -41,7 +41,7 @@ export default class SignUpScreen extends Component {
   }
 
   onPressLogin() {
-    LoginManager.logInWithReadPermissions(["public_profile", "email"]).then(
+    LoginManager.logInWithPermissions(["public_profile", "email"]).then(
       result => this._handleCallBack(result),
       function (error) {
         alert("Login fail with error: " + error);
