@@ -20,7 +20,7 @@ import {
   signInWithCredential,
   FacebookAuthProvider,
 } from "firebase/auth";
-import { ref, set, orderByChild, equalTo, once } from "firebase/database";
+import { ref, set} from "firebase/database";
 import { SocialIcon } from "react-native-elements";
 
 export default class SignUpScreen extends Component {
