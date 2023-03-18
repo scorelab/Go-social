@@ -149,7 +149,7 @@ export default class LoginScreen extends Component {
 
             <TouchableOpacity onPress={this._fbSignInAsync.bind(this)}>
               <SocialIcon
-                style={{ width: 290 }}
+                style={styles.loginButtonFacebook}
                 title="Sign In With Facebook"
                 button
                 type="facebook"

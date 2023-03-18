@@ -9,10 +9,11 @@ const guidelineBaseHeight = 926;
 export const SCALE = size => (width / guidelineBaseWidth) * size;
 
 export const COLORS = {
-  primary: "#4885ed",
+  primary: "#3d9bf9",
   secondary: "#1dd1a1",
   black: "#000000",
-  while: "#000000",
+  white: "#ffffff",
+  white2: "rgba(255,255,255,0.2)",
   gray: "#E8E8E8",
 };
 

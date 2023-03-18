@@ -165,7 +165,7 @@ export default class SignUpScreen extends Component {
 
             <TouchableOpacity onPress={this._fbSignUpAsync.bind(this)}>
               <SocialIcon
-                style={{ width: 290 }}
+                style={styles.signupButtonFacebook}
                 title="Sign Up With Facebook"
                 button
                 type="facebook"

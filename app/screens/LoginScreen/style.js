@@ -1,17 +1,15 @@
-import { StyleSheet, Dimensions } from "react-native";
-import { COLOR_PRIMARY, COLOR_SECONDARY, COLOR_LIGHT } from "../../config/styles";
+import { StyleSheet } from "react-native";
+import {COLORS, FONTS, SCALE, SIZES} from '../../constants'
 
-let deviceWidth = Dimensions.get("window").width;
-let deviceHeight = Dimensions.get("window").height;
 
 export default StyleSheet.create({
   firstContainer: {
     flex: 1,
-    backgroundColor: "#3d9bf9",
+    backgroundColor: COLORS.primary,
   },
   container: {
     flex: 1,
-    backgroundColor: "#3d9bf9",
+    backgroundColor: COLORS.primary,
     alignItems: "center",
     justifyContent: "flex-start",
   },
@@ -20,66 +18,64 @@ export default StyleSheet.create({
     flex: 1,
   },
   logoContainer: {
-    //width:deviceWidth*0.4,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 30,
-    marginBottom: 25,
-    height: 100,
+    marginTop: SIZES.m20,
+    marginBottom: SIZES.m4,
+    height: SIZES.s100,
   },
   logo: {
-    width: 100,
-    height: 100,
+    width: SCALE(120),
+    height: SCALE(120),
   },
   formContainer: {
-    paddingTop: 0,
+    marginTop: SIZES.m20,
   },
   input: {
-    height: 45,
-    width: deviceWidth * 0.8,
-    borderRadius: 5,
-    backgroundColor: "rgba(255,255,255,0.15)",
-    marginBottom: 20,
-    color: "#FFF",
-    paddingHorizontal: 10,
+    height: SCALE(55),
+    width: SIZES.s372,
+    borderRadius: SIZES.r10,
+    backgroundColor: COLORS.white2,
+    marginBottom: SIZES.m16,
+    color: COLORS.white,
+    paddingHorizontal: SIZES.m10,
   },
   loginButton: {
-    width: deviceWidth * 0.8,
-    height: 45,
-    borderRadius: 5,
-    borderWidth: 0,
-    backgroundColor: "#fff",
-    marginBottom: 20,
-    justifyContent: "center",
+    width: SIZES.s372,
+    height: SIZES.s50,
+    borderRadius: SIZES.r10,
+    backgroundColor: COLORS.white,
+    marginVertical: SIZES.m14,
     alignItems: "center",
+    justifyContent: "center",
+    marginBottom: SIZES.m20,
   },
   loginButtonFacebook: {
-    width: deviceWidth * 0.8,
-    height: 45,
-    borderRadius: 5,
-    borderWidth: 0,
+    width: SIZES.s372,
+    height: SIZES.s60,
     backgroundColor: "#3B5998",
-    marginBottom: 20,
-    marginTop: 10,
+    marginBottom: SIZES.m30,
+    marginTop: SIZES.m18,
   },
   buttonText: {
-    fontSize: 16,
-    color: "#3d9bf9",
+    ...FONTS.medium16,
+    color: COLORS.primary,
   },
   buttonTextFacebookButton: {
-    fontSize: 16,
-    color: "#fff",
+    ...FONTS.medium16,
+    color: COLORS.white,
   },
   imgBackground: {
-    width: deviceWidth * 0.3,
+    width: SCALE(40),
     resizeMode: "contain",
   },
   text: {
-    color: "#fff",
-    marginBottom: 10,
+    color: COLORS.white,
+    marginBottom: SIZES.m10,
   },
   signUpTextArea: {
     alignItems: "center",
-    marginTop: 25,
+    marginTop: SIZES.m24,
+    marginBottom: SIZES.m10,
   },
 });
