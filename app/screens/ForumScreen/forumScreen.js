@@ -8,7 +8,7 @@ export default class ForumScreen extends Component {
   render() {
     return (
       <View>
-        <HeaderBar image={require("../../images/Ask-SCORE-Logo.png")} title={"Home"} />
+        <HeaderBar image={require("../../assets/images/Ask-SCORE-Logo.png")} title={"Home"} />
 
         <ScrollView
           style={styles.scrollView}

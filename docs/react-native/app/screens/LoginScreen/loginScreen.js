@@ -142,7 +142,7 @@ export default class LoginScreen extends Component {
           <View style={styles.container}>
             <KeyboardAvoidingView behavior="position">
               <View style={styles.logoContainer}>
-                <Image source={require("../../images/logo.png")} style={styles.logo} />
+                <Image source={require("../../assets/images/logo.png")} style={styles.logo} />
               </View>
               <View style={styles.formContainer}>
                 <TextInput
