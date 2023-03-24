@@ -1,7 +1,7 @@
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import { getStorage } from "firebase/storage";
-import { getDatabase } from "firebase/database";
+import firebase from "firebase/compat/app"
+import "firebase/compat/auth"
+import "firebase/compat/storage";
+import "firebase/compat/database";
 
 const firebaseConfig = {
   apiKey: "",
@@ -14,10 +14,12 @@ const firebaseConfig = {
   measurementId: "",
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const storage = getStorage(app);
-const db = getDatabase(app);
+firebase.initializeApp(firebaseConfig)
+
+const app = firebase;
+const auth = firebase.auth();
+const storage = firebase.storage();
+const db = firebase.database();
 const MAP_API = "";
 
 export { app, auth, storage, db, MAP_API };
