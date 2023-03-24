@@ -34,7 +34,7 @@ Today's community use mobile phones to make their life easier, and community-bas
 
 - Use [this link](https://cloud.google.com/maps-platform/) to **generate Google Map Api key** for the map view in G-social. This is not necessary. You can use the given api key. But it is not guaranteed that the given key will always work. It is better to have your own key. Enable all maps, routes, places in your key.
 
-- Now you need a **Facebook app id** if you want to enable Facebook login for Go-social. Use [this link](https://developers.facebook.com/) for that and make sure to enable both email/password and Facebook sign-in method in Firebase.
+- Now you need a **Facebook app id** & **Facebook Client Token** if you want to enable Facebook login for Go-social. Use [this link](https://developers.facebook.com/) for that and make sure to enable both email/password and Facebook sign-in method in Firebase.
 
 So place your Firebase details and Google map API key in **config.example.js** file and **rename it** to **config.js**.
 
@@ -42,14 +42,19 @@ So place your Firebase details and Google map API key in **config.example.js** f
 
 1.  Find the file name `AndroidManifest.xml` which is located in `android/app/src/main` path. Place your **Google map API key** in there.
 
-    > Ex : <meta-data
+```sh
+<meta-data
+       android: name="com.google.android.geo.API_KEY"
+       android: value="AIzaSyDmwJddIPTcALyZtj7p9mFFlkMvpMkati8"/>
+```
 
-        android:name="com.google.android.geo.API_KEY"
-        android:value=**"AIzaSyDmwJddIPTcALyZtj7p9mFFlkMvpMkati8"**/>
+1.  Find the file name as `strings.xml` located in `android/app/src/main/res/values`. Place your **Facebook app id** & **Facebook Client Token** in there.
 
-1.  Find the file name as `strings.xml` located in `android/app/src/main/res/values`. Place your **Facebook app id** in there.
-
-    > Ex: <string name="facebook_app_id">**2349388348405699**</string>
+```sh
+<string name="facebook_app_id">2349388348405699</string>
+<string name="fb_login_protocol_scheme">fb1234</string>
+<string name="facebook_client_token">PLACE_YOUR_CLIENT_TOKEN_HERE</string>
+```
 
 So now you are ready to run Go-social.
 
