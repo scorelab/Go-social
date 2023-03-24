@@ -12,16 +12,10 @@ import {
 import styles from "./style";
 import * as EmailValidator from "email-validator";
 import { LoginManager, AccessToken } from "react-native-fbsdk-next";
-import { app, auth, db } from "../../../config/config.js";
-import {
-  createUserWithEmailAndPassword,
-  onAuthStateChanged,
-  updateProfile,
-  signInWithCredential,
-  FacebookAuthProvider,
-} from "firebase/auth";
-import { ref, set} from "firebase/database";
+import { app, auth, database } from "../../../config/config.js";
+import { updateProfile, FacebookAuthProvider} from "firebase/auth";
 import { SocialIcon } from "react-native-elements";
+import { fetchUserFbData } from "../../constants/auth";
 
 export default class SignUpScreen extends Component {
   constructor(props) {
@@ -36,7 +30,7 @@ export default class SignUpScreen extends Component {
 
   componentDidMount() {
     var that = this;
-    onAuthStateChanged(auth, function (user) {
+    auth.onAuthStateChanged(function (user) {
       if (user) {
         that.redirectUser();
       }
@@ -50,27 +44,33 @@ export default class SignUpScreen extends Component {
 
   // Validate user input for sign up
   async _signUpAsync() {
-    if (this.state.name == "") {
-      alert("Please enter your name!");
-    } else if (!EmailValidator.validate(this.state.email)) {
-      alert("Please enter a valid email!");
-    } else if (this.state.password == "") {
-      alert("Please enter a password!");
-    } else if (this.state.password != this.state.confirmPassword) {
-      alert("Password and Confirm password must be same");
-    } else {
-      this.signup();
+    switch (true) {
+      case (this.state.name === ""):
+        alert("Please enter your name!");
+        break;
+      case (!EmailValidator.validate(this.state.email)):
+        alert("Please enter a valid email!");
+        break;
+      case (this.state.password === ""):
+        alert("Please enter a password!");
+        break;
+      case (this.state.password !== this.state.confirmPassword):
+        alert("Password and Confirm password must be same");
+        break;
+      default:
+        this.signup();
+        break;
     }
   }
 
   // Sign up with email and password
   async signup() {
     try {
-      let name = this.state.name;
-      let email = this.state.email;
-      let password = this.state.password;
+      const name = this.state.name;
+      const email = this.state.email;
+      const password = this.state.password;
 
-      const { user } = await createUserWithEmailAndPassword(auth, email, password);
+      const { user } = await auth.createUserWithEmailAndPassword(email, password);
       await updateProfile(user, { displayName: name });
     } catch (error) {
       alert(error.message.toString());
@@ -87,12 +87,11 @@ export default class SignUpScreen extends Component {
 
         // Use the user's access token to authenticate with Firebase Authentication
         const credential = FacebookAuthProvider.credential(data.accessToken);
-        const { user } = await signInWithCredential(auth, credential);
+        const { user } = await auth.signInWithCredential(credential);
 
-        const response = await fetch(
-          `https://graph.facebook.com/v2.8/me?fields=id,first_name,last_name,email,birthday&access_token=${data.accessToken}`
-        );
+        const response = await fetchUserFbData(data.accessToken)
         const userData = await response.json();
+
         const photoURL = `https://graph.facebook.com/${userData.id}/picture?height=120`;
         this.createUser(user.uid, userData, data.accessToken, photoURL);
       }
@@ -105,8 +104,7 @@ export default class SignUpScreen extends Component {
   async createUser(uid, userData, token, photoURL) {
     try {
       const defaults = { uid, token, photoURL, Range: [20, 30] };
-      const usersRef = ref(db, "users/" + uid);
-      set(usersRef, { ...userData, ...defaults });
+      await database.ref(`users/${uid}`).set({ ...userData, ...defaults });
     } catch (error) {
       alert(error.message.toString());
     }

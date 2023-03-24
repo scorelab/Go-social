@@ -10,17 +10,12 @@ import {
   ScrollView,
 } from "react-native";
 import { LoginManager, AccessToken } from "react-native-fbsdk-next";
-import { app, auth, db } from "../../../config/config.js";
-import {
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signInWithCredential,
-  FacebookAuthProvider,
-} from "firebase/auth";
-import { ref, set } from "firebase/database";
+import { app, auth, database } from "../../../config/config.js";
+import {FacebookAuthProvider} from "firebase/auth";
 import * as EmailValidator from "email-validator";
 import { SocialIcon } from "react-native-elements";
 import styles from "./style";
+import { fetchUserFbData } from "../../constants/auth.js";
 
 export default class LoginScreen extends Component {
   constructor(props) {
@@ -33,7 +28,7 @@ export default class LoginScreen extends Component {
 
   componentDidMount() {
     var that = this;
-    onAuthStateChanged(auth, function (user) {
+    auth.onAuthStateChanged(function (user) {
       if (user) {
         that.redirectUser();
       }
@@ -47,22 +42,26 @@ export default class LoginScreen extends Component {
 
   // Validate the user's email and password
   async _signInAsync() {
-    if (!EmailValidator.validate(this.state.email)) {
-      alert("Please enter a valid email!");
-    } else if (this.state.password == "") {
-      alert("Enter your password!");
-    } else {
-      this.login();
+    switch(true) {
+      case !EmailValidator.validate(this.state.email):
+        alert("Please enter a valid email!");
+        break;
+      case this.state.password === "":
+        alert("Enter your password!");
+        break;
+      default:
+        this.login();
+        break;
     }
   }
 
   // Signin with email and password
   async login() {
     try {
-      let email = this.state.email;
-      let password = this.state.password;
+      const email = this.state.email;
+      const password = this.state.password;
 
-      const res = await signInWithEmailAndPassword(auth, email, password);
+      const res = await auth.signInWithEmailAndPassword(email, password);
     } catch (error) {
       alert(error.message.toString());
     }
@@ -78,12 +77,11 @@ export default class LoginScreen extends Component {
 
         // Use the user's access token to authenticate with Firebase Authentication
         const credential = FacebookAuthProvider.credential(data.accessToken);
-        const { user } = await signInWithCredential(auth, credential);
+        const { user } = await auth.signInWithCredential(credential);
 
-        const response = await fetch(
-          `https://graph.facebook.com/v2.8/me?fields=id,first_name,last_name,email,birthday&access_token=${data.accessToken}`
-        );
+        const response = await fetchUserFbData(data.accessToken)
         const userData = await response.json();
+
         const photoURL = `https://graph.facebook.com/${userData.id}/picture?height=120`;
         this.createUser(user.uid, userData, data.accessToken, photoURL);
       }
@@ -95,9 +93,8 @@ export default class LoginScreen extends Component {
   // Create user
   async createUser(uid, userData, token, photoURL) {
     try {
-      const defaults = { uid, token, photoURL, Range: [20, 30] };
-      const usersRef = ref(db, "users/" + uid);
-      set(usersRef, { ...userData, ...defaults });
+        const defaults = { uid, token, photoURL, Range: [20, 30] };
+        await database.ref(`users/${uid}`).set({ ...userData, ...defaults });
     } catch (error) {
       alert(error.message.toString());
     }
