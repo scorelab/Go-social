@@ -10,7 +10,7 @@ import {
   ScrollView,
 } from "react-native";
 import { AccessToken, LoginManager } from "react-native-fbsdk";
-import { f, auth } from "../../../config/config.example.js";
+import { f, auth } from "../../../config/config.js";
 import * as EmailValidator from "email-validator";
 import styles from "./style";
 import { SocialIcon } from "react-native-elements";
