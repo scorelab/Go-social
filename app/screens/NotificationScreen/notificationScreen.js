@@ -20,51 +20,51 @@ export default class NotificationScreen extends Component {
             contentContainerStyle={styles.scrollViewContent}
             showsVerticalScrollIndicator={false}>
             <NotificationBanner
-              image={require("../../images/user_image_1.jpg")}
+              image={require("../../assets/images/user_image_1.jpg")}
               text="Lorem Ipsum is simply dummy text of the printing and typesetting industry ... "
             />
             <NotificationBanner
-              image={require("../../images/user_image_1.jpg")}
+              image={require("../../assets/images/user_image_1.jpg")}
               text="Lorem Ipsum is simply dummy text of the printing and typesetting industry ... "
             />
             <NotificationBanner
-              image={require("../../images/user_image_1.jpg")}
+              image={require("../../assets/images/user_image_1.jpg")}
               text="Lorem Ipsum is simply dummy text of the printing and typesetting industry ... "
             />
             <NotificationBanner
-              image={require("../../images/user_image_1.jpg")}
+              image={require("../../assets/images/user_image_1.jpg")}
               text="Lorem Ipsum is simply dummy text of the printing and typesetting industry ... "
             />
             <NotificationBanner
-              image={require("../../images/user_image_1.jpg")}
+              image={require("../../assets/images/user_image_1.jpg")}
               text="Lorem Ipsum is simply dummy text of the printing and typesetting industry ... "
             />
             <NotificationBanner
-              image={require("../../images/user_image_1.jpg")}
+              image={require("../../assets/images/user_image_1.jpg")}
               text="Lorem Ipsum is simply dummy text of the printing and typesetting industry ... "
             />
             <NotificationBanner
-              image={require("../../images/user_image_1.jpg")}
+              image={require("../../assets/images/user_image_1.jpg")}
               text="Lorem Ipsum is simply dummy text of the printing and typesetting industry ... "
             />
             <NotificationBanner
-              image={require("../../images/user_image_1.jpg")}
+              image={require("../../assets/images/user_image_1.jpg")}
               text="Lorem Ipsum is simply dummy text of the printing and typesetting industry ... "
             />
             <NotificationBanner
-              image={require("../../images/user_image_1.jpg")}
+              image={require("../../assets/images/user_image_1.jpg")}
               text="Lorem Ipsum is simply dummy text of the printing and typesetting industry ... "
             />
             <NotificationBanner
-              image={require("../../images/user_image_1.jpg")}
+              image={require("../../assets/images/user_image_1.jpg")}
               text="Lorem Ipsum is simply dummy text of the printing and typesetting industry ... "
             />
             <NotificationBanner
-              image={require("../../images/user_image_1.jpg")}
+              image={require("../../assets/images/user_image_1.jpg")}
               text="Lorem Ipsum is simply dummy text of the printing and typesetting industry ... "
             />
             <NotificationBanner
-              image={require("../../images/user_image_1.jpg")}
+              image={require("../../assets/images/user_image_1.jpg")}
               text="Lorem Ipsum is simply dummy text of the printing and typesetting industry ... "
             />
           </ScrollView>

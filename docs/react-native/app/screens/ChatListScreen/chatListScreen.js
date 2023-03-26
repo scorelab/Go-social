@@ -212,37 +212,37 @@ export default class ChatListScreen extends Component {
               <SuggestCardView
                 onPress={this.viewChat}
                 name={"Cherryl"}
-                userImage={require("../../images/user_image_1.jpg")}
+                userImage={require("../../assets/images/user_image_1.jpg")}
               />
               <SuggestCardView
                 onPress={this.viewChat}
                 name={"Cherryl"}
-                userImage={require("../../images/user_image_1.jpg")}
+                userImage={require("../../assets/images/user_image_1.jpg")}
               />
               <SuggestCardView
                 onPress={this.viewChat}
                 name={"Cherryl"}
-                userImage={require("../../images/user_image_1.jpg")}
+                userImage={require("../../assets/images/user_image_1.jpg")}
               />
               <SuggestCardView
                 onPress={this.viewChat}
                 name={"Cherryl"}
-                userImage={require("../../images/user_image_1.jpg")}
+                userImage={require("../../assets/images/user_image_1.jpg")}
               />
               <SuggestCardView
                 onPress={this.viewChat}
                 name={"Cherryl"}
-                userImage={require("../../images/user_image_1.jpg")}
+                userImage={require("../../assets/images/user_image_1.jpg")}
               />
               <SuggestCardView
                 onPress={this.viewChat}
                 name={"Cherryl"}
-                userImage={require("../../images/user_image_1.jpg")}
+                userImage={require("../../assets/images/user_image_1.jpg")}
               />
               <SuggestCardView
                 onPress={this.viewChat}
                 name={"Cherryl"}
-                userImage={require("../../images/user_image_1.jpg")}
+                userImage={require("../../assets/images/user_image_1.jpg")}
               />
             </ScrollView>
           </View>
@@ -255,7 +255,7 @@ export default class ChatListScreen extends Component {
               name="Toney Herford"
               posted="2 days ago"
               onPress={this.viewChat}
-              userImage={require("../../images/user_image_1.jpg")}
+              userImage={require("../../assets/images/user_image_1.jpg")}
               message="Hello Jhon, I would like to invite you to participate ..."
               count="5"
             />
@@ -263,7 +263,7 @@ export default class ChatListScreen extends Component {
               name="Toney Herford"
               posted="2 days ago"
               onPress={this.viewChat}
-              userImage={require("../../images/user_image_1.jpg")}
+              userImage={require("../../assets/images/user_image_1.jpg")}
               message="Hello Jhon, I would like to invite you to participate ..."
               count="2"
             />
@@ -271,7 +271,7 @@ export default class ChatListScreen extends Component {
               name="Toney Herford"
               posted="2 days ago"
               onPress={this.viewChat}
-              userImage={require("../../images/user_image_1.jpg")}
+              userImage={require("../../assets/images/user_image_1.jpg")}
               message="Hello Jhon, I would like to invite you to participate ..."
               count="3"
             />
@@ -279,7 +279,7 @@ export default class ChatListScreen extends Component {
               name="Toney Herford"
               posted="2 days ago"
               onPress={this.viewChat}
-              userImage={require("../../images/user_image_1.jpg")}
+              userImage={require("../../assets/images/user_image_1.jpg")}
               message="Hello Jhon, I would like to invite you to participate ..."
               count="7"
             />
@@ -287,7 +287,7 @@ export default class ChatListScreen extends Component {
               name="Toney Herford"
               posted="2 days ago"
               onPress={this.viewChat}
-              userImage={require("../../images/user_image_1.jpg")}
+              userImage={require("../../assets/images/user_image_1.jpg")}
               message="Hello Jhon, I would like to invite you to participate ..."
               count="2"
             />

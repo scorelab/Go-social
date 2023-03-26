@@ -1,19 +1,23 @@
-import firebase from "firebase";
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getStorage } from "firebase/storage";
+import { getDatabase } from "firebase/database";
 
-var config = {
+const firebaseConfig = {
   apiKey: "",
   authDomain: "",
   databaseURL: "",
   projectId: "",
   storageBucket: "",
   messagingSenderId: "",
+  appId: "",
+  measurementId: "",
 };
-firebase.initializeApp(config);
 
-var MAP_API_KEY = "";
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const storage = getStorage(app);
+const db = getDatabase(app);
+const MAP_API = "";
 
-export const f = firebase;
-export const database = firebase.database();
-export const auth = firebase.auth();
-export const storage = firebase.storage();
-export const MAP_API = MAP_API_KEY;
+export { app, auth, storage, db, MAP_API };

@@ -11,8 +11,16 @@ import {
 } from "react-native";
 import styles from "./style";
 import * as EmailValidator from "email-validator";
-import { AccessToken, LoginManager } from "react-native-fbsdk";
-import { f, auth } from "../../../config/config.js";
+import { LoginManager, AccessToken } from "react-native-fbsdk-next";
+import { app, auth, db } from "../../../config/config.js";
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  updateProfile,
+  signInWithCredential,
+  FacebookAuthProvider,
+} from "firebase/auth";
+import { ref, set} from "firebase/database";
 import { SocialIcon } from "react-native-elements";
 
 export default class SignUpScreen extends Component {
@@ -21,14 +29,14 @@ export default class SignUpScreen extends Component {
     this.state = {
       email: "",
       name: "",
-      Password: "",
-      ConfirmPassword: "",
+      password: "",
+      confirmPassword: "",
     };
   }
 
   componentDidMount() {
     var that = this;
-    auth.onAuthStateChanged(function (user) {
+    onAuthStateChanged(auth, function (user) {
       if (user) {
         that.redirectUser();
       }
@@ -40,62 +48,73 @@ export default class SignUpScreen extends Component {
     navigate("App");
   }
 
-  onPressLogin() {
-    LoginManager.logInWithReadPermissions(["public_profile", "email"]).then(
-      result => this._handleCallBack(result),
-      function (error) {
-        alert("Login fail with error: " + error);
-      }
-    );
-  }
-
-  _handleCallBack(result) {
-    let _this = this;
-    if (result.isCancelled) {
-      alert("Login cancelled");
+  // Validate user input for sign up
+  async _signUpAsync() {
+    if (this.state.name == "") {
+      alert("Please enter your name!");
+    } else if (!EmailValidator.validate(this.state.email)) {
+      alert("Please enter a valid email!");
+    } else if (this.state.password == "") {
+      alert("Please enter a password!");
+    } else if (this.state.password != this.state.confirmPassword) {
+      alert("Password and Confirm password must be same");
     } else {
-      AccessToken.getCurrentAccessToken().then(data => {
-        const token = data.accessToken;
-        fetch(
-          "https://graph.facebook.com/v2.8/me?fields=id,first_name,last_name,gender,birthday&access_token=" +
-            token
-        )
-          .then(response => response.json())
-          .then(json => {
-            const imageSize = 120;
-            const facebookID = json.id;
-            const fbImage = `https://graph.facebook.com/${facebookID}/picture?height=${imageSize}`;
-            this.authenticate(data.accessToken).then(function (result) {
-              const { uid } = result;
-              _this.createUser(uid, json, token, fbImage);
-            });
-          })
-          .catch(function (err) {
-            console.log(err);
-          });
-      });
+      this.signup();
     }
   }
 
-  authenticate = token => {
-    const provider = auth.FacebookAuthProvider;
-    const credential = provider.credential(token);
-    let ret = auth.signInWithCredential(credential);
-    return ret;
-  };
+  // Sign up with email and password
+  async signup() {
+    try {
+      let name = this.state.name;
+      let email = this.state.email;
+      let password = this.state.password;
 
-  createUser = (uid, userData, token, dp) => {
-    const defaults = {
-      uid,
-      token,
-      dp,
-      ageRange: [20, 30],
-    };
-    f.database()
-      .ref("users")
-      .child(uid)
-      .update({ ...userData, ...defaults });
-  };
+      const { user } = await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(user, { displayName: name });
+    } catch (error) {
+      alert(error.message.toString());
+    }
+  }
+
+  // Signup user with facebook account
+  async _fbSignUpAsync() {
+    try {
+      const result = await LoginManager.logInWithPermissions(["public_profile", "email"]);
+      if (!result.isCancelled) {
+        // Get the user's access token
+        const data = await AccessToken.getCurrentAccessToken();
+
+        // Use the user's access token to authenticate with Firebase Authentication
+        const credential = FacebookAuthProvider.credential(data.accessToken);
+        const { user } = await signInWithCredential(auth, credential);
+
+        const response = await fetch(
+          `https://graph.facebook.com/v2.8/me?fields=id,first_name,last_name,email,birthday&access_token=${data.accessToken}`
+        );
+        const userData = await response.json();
+        const photoURL = `https://graph.facebook.com/${userData.id}/picture?height=120`;
+        this.createUser(user.uid, userData, data.accessToken, photoURL);
+      }
+    } catch (error) {
+      alert(error.message.toString());
+    }
+  }
+
+  // Create user
+  async createUser(uid, userData, token, photoURL) {
+    try {
+      const defaults = { uid, token, photoURL, Range: [20, 30] };
+      const usersRef = ref(db, "users/" + uid);
+      set(usersRef, { ...userData, ...defaults });
+    } catch (error) {
+      alert(error.message.toString());
+    }
+  }
+
+  handleInput(input, text) {
+    this.setState(prevState => ({ ...prevState, [input]: text }));
+  }
 
   render() {
     return (
@@ -104,39 +123,39 @@ export default class SignUpScreen extends Component {
           <View style={styles.container}>
             <KeyboardAvoidingView behavior="position">
               <View style={styles.logoContainer}>
-                <Image source={require("../../images/logo.png")} style={styles.logo} />
+                <Image source={require("../../assets/images/logo.png")} style={styles.logo} />
               </View>
               <View style={styles.formContainer}>
                 <TextInput
                   placeholder="Name"
                   placeholderTextColor="rgba(255,255,255,0.7)"
                   style={styles.input}
-                  onChangeText={text => this.setState({ name: text })}
+                  onChangeText={text => this.handleInput("name", text)}
                 />
                 <TextInput
                   placeholder="Email"
                   keyboardType="email-address"
                   placeholderTextColor="rgba(255,255,255,0.7)"
                   style={styles.input}
-                  onChangeText={text => this.setState({ email: text })}
+                  onChangeText={text => this.handleInput("email", text)}
                 />
                 <TextInput
                   placeholder="Pasword"
                   secureTextEntry={true}
                   placeholderTextColor="rgba(255,255,255,0.7)"
                   style={styles.input}
-                  onChangeText={text => this.setState({ Password: text })}
+                  onChangeText={text => this.handleInput("password", text)}
                 />
                 <TextInput
                   placeholder="Confirm Pasword"
                   secureTextEntry={true}
                   placeholderTextColor="rgba(255,255,255,0.7)"
                   style={styles.input}
-                  onChangeText={text => this.setState({ ConfirmPassword: text })}
+                  onChangeText={text => this.handleInput("confirmPassword", text)}
                 />
               </View>
             </KeyboardAvoidingView>
-            <TouchableOpacity onPress={this.signUpAsync} style={styles.loginButton}>
+            <TouchableOpacity onPress={this._signUpAsync.bind(this)} style={styles.loginButton}>
               <Text style={styles.buttonText}>Sign Up</Text>
             </TouchableOpacity>
 
@@ -144,9 +163,9 @@ export default class SignUpScreen extends Component {
               <Text style={styles.text}>or</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={this.onPressLogin.bind(this)}>
+            <TouchableOpacity onPress={this._fbSignUpAsync.bind(this)}>
               <SocialIcon
-                style={{ width: 200 }}
+                style={styles.signupButtonFacebook}
                 title="Sign Up With Facebook"
                 button
                 type="facebook"
@@ -166,47 +185,4 @@ export default class SignUpScreen extends Component {
       </View>
     );
   }
-  register() {
-    let email = this.state.email;
-    let name = this.state.name;
-    let password = this.state.Password;
-
-    const { navigate } = this.props.navigation;
-
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then(function (data) {
-        data.user
-          .updateProfile({
-            displayName: name,
-          })
-          .then(
-            function () {
-              console.log("Updated User Data..");
-            },
-            function (error) {
-              console.log("Error Updating User Data.." + error);
-            }
-          );
-        alert("Welcome to Go Social!");
-        navigate("App");
-      })
-      .catch(function (error) {
-        var errorMessage = error.message;
-        console.log("Error = " + errorMessage);
-        alert(errorMessage);
-      });
-  }
-
-  signUpAsync = async () => {
-    if (EmailValidator.validate(this.state.email) === true) {
-      if (this.state.Password === this.state.ConfirmPassword) {
-        this.register();
-      } else {
-        alert("password Missmatch");
-      }
-    } else {
-      alert("Please enter A Valid Email");
-    }
-  };
 }

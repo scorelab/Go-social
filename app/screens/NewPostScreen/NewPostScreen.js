@@ -187,7 +187,7 @@ export default class NewPostScreen extends Component {
             <View style={styles.row}>
               <Image
                 style={styles.profileImage}
-                source={require("../../images/user_image_1.jpg")}
+                source={require("../../assets/images/user_image_1.jpg")}
               />
               <Text style={styles.nameText}>John Doe</Text>
               {this.state.imageSelected == true && this.state.caption != "" ? (
