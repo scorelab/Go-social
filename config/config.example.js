@@ -1,19 +1,25 @@
-import firebase from "firebase";
+import firebase from "firebase/compat/app"
+import "firebase/compat/auth"
+import "firebase/compat/storage";
+import "firebase/compat/database";
 
-var config = {
+const firebaseConfig = {
   apiKey: "",
   authDomain: "",
   databaseURL: "",
   projectId: "",
   storageBucket: "",
   messagingSenderId: "",
+  appId: "",
+  measurementId: "",
 };
-firebase.initializeApp(config);
 
-var MAP_API_KEY = "";
+firebase.initializeApp(firebaseConfig)
 
-export const f = firebase;
-export const database = firebase.database();
-export const auth = firebase.auth();
-export const storage = firebase.storage();
-export const MAP_API = MAP_API_KEY;
+const app = firebase;
+const auth = firebase.auth();
+const storage = firebase.storage();
+const db = firebase.database();
+const MAP_API = "";
+
+export { app, auth, storage, db, MAP_API };

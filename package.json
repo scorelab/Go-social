@@ -21,7 +21,7 @@
     "react": "18.2.0",
     "react-native": "0.71.3",
     "react-native-elements": "^3.4.3",
-    "react-native-fbsdk": "^3.0.0",
+    "react-native-fbsdk-next": "^11.1.0",
     "react-native-gesture-handler": "^2.9.0",
     "react-native-google-places-autocomplete": "^2.5.1",
     "react-native-image-crop-picker": "^0.39.0",
