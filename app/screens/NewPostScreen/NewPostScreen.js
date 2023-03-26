@@ -14,9 +14,10 @@ import ModalHeaderNavigationBar from "../../components/ModalHeaderNavigationBar/
 import styles from "./style";
 import { Card, ListItem, Button } from "react-native-elements";
 import { TextInput } from "react-native-gesture-handler";
-import ImagePicker from "react-native-image-picker";
+import { launchImageLibrary } from "react-native-image-picker";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { f, auth, storage, database } from "../../../config/config.js";
+import EvilIcons from "react-native-vector-icons/EvilIcons";
 export default class NewPostScreen extends Component {
   constructor() {
     super();
@@ -51,14 +52,14 @@ export default class NewPostScreen extends Component {
     }
   };
   _handleButtonPress = () => {
-    ImagePicker.showImagePicker({ title: "Pick an Image", maxWidth: 800, maxHeight: 600 }, res => {
+    launchImageLibrary({ title: "Pick an Image", maxWidth: 800, maxHeight: 600 }, res => {
       if (res.didCancel) {
         console.log("User cancelled!");
       } else if (res.error) {
         console.log("Error", res.error);
       } else {
         this.setState({
-          pickedImage: res.uri,
+          pickedImage: res.assets[0].uri,
           imageSelected: true,
         });
       }
@@ -120,8 +121,7 @@ export default class NewPostScreen extends Component {
       xhr.open("GET", uri, true);
       xhr.send(null);
     });
-    var filePath = postId + "." + that.state.currentFileType;
-
+    var filePath = postId + "." + ext;
     var uploadTask = storage.ref("post/img").child(filePath).put(blob);
 
     uploadTask.on(
@@ -181,7 +181,9 @@ export default class NewPostScreen extends Component {
             <Text style={styles.progressText}>Publishing ...</Text>
           </View>
         ) : (
-          <View>
+          <View style={{
+            flex: 1,
+          }} >
             <View style={styles.row}>
               <Image
                 style={styles.profileImage}
@@ -212,34 +214,35 @@ export default class NewPostScreen extends Component {
                 <View></View>
               )}
             </View>
-            <TextInput
-              style={styles.text}
-              placeholder={"What is on your mind?"}
-              editable={true}
-              multiline={true}
-              onChangeText={text => this.setState({ caption: text })}
-              ref={input => {
-                this.textInput = input;
-              }}></TextInput>
-
-            <ScrollView
-              style={styles.scrollView}
-              contentContainerStyle={styles.scrollViewContent}
-              showsVerticalScrollIndicator={false}>
-              {this.state.imageSelected == true ? (
-                <TouchableOpacity style={styles.list} onPress={this._handleButtonPress}>
-                  <ListItem title={"Change Photo"} leftIcon={{ name: "edit" }} />
-                </TouchableOpacity>
-              ) : (
-                <TouchableOpacity style={styles.list} onPress={this._handleButtonPress}>
-                  <ListItem title={"Add Photo"} leftIcon={{ name: "photo" }} />
-                </TouchableOpacity>
-              )}
-
-              <TouchableOpacity style={styles.list}>
-                <ListItem title={"Tag People"} leftIcon={{ name: "people" }} />
+            <View style={styles.inputContainer} >
+              <TextInput
+                style={styles.text}
+                placeholder={"What is on your mind?"}
+                editable={true}
+                multiline={true}
+                onChangeText={text => this.setState({ caption: text })}
+                ref={input => {
+                  this.textInput = input;
+                }}></TextInput>
+            </View>
+            <View style={{
+              flexDirection: 'row',
+              justifyContent: 'space-evenly',
+              paddingBottom: 10,
+            }} >
+              <TouchableOpacity onPress={this._handleButtonPress} style={styles.button} >
+                <EvilIcons color="gray" size={30} name="image" />
+                <Text>Add Image</Text>
               </TouchableOpacity>
-            </ScrollView>
+              <TouchableOpacity style={styles.button} >
+                <Image style={{
+                  width: 25,
+                  height: 25,
+                  tintColor: 'gray',
+                }} source={require('../../icons/TagPersonIcon.png')} />
+                <Text>Tag People</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         )}
       </View>
