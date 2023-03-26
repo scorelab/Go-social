@@ -68,7 +68,7 @@ export default class LoginScreen extends Component {
   };
 
   onPressLogin() {
-    LoginManager.logInWithReadPermissions(["public_profile", "email"]).then(
+    LoginManager.logInWithPermissions(["public_profile", "email"]).then(
       result => this._handleCallBack(result),
       function (error) {
         alert("Login fail with error: " + error);
