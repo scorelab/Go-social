@@ -6,9 +6,12 @@ let deviceHeight = Dimensions.get("window").height;
 
 export default StyleSheet.create({
   container: {
-    flex: 1,
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
     justifyContent: "flex-start",
-    alignItems: "center",
   },
   scrollView: {
     width: deviceWidth,
@@ -19,14 +22,17 @@ export default StyleSheet.create({
     paddingBottom: 10,
   },
   text: {
-    height: "30%",
+    flex: 1,
+    color: "#000",
+    fontSize: 16,
+    textAlignVertical: "top",
+  },
+  inputContainer: {
     width: "90%",
     backgroundColor: "rgba(255,255,255,0.15)",
     marginVertical: 10,
-    color: "#000",
     paddingHorizontal: 10,
-    fontSize: 16,
-    textAlignVertical: "top",
+    flex: 1,
   },
   nameText: {
     height: "auto",
@@ -100,4 +106,9 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  button: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 2,
+  }
 });
