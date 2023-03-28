@@ -1,7 +1,12 @@
 # Contributing
 
-When contributing to this repository, please first discuss the change you wish to make via issue,
-email, or any other method with the owners of this repository before making a change.
+Thank you for your interest in contributing to our project! We welcome all contributions, whether it's a bug fix, feature suggestion, or documentation improvement.
+
+Before you start contributing, please take a moment to read the following guidelines:
+
+1. Initiate a discussion with the repository owners, either by creating a `GitHub Issue` or using any other communication method, to discuss your intended changes before making any modifications.
+2. Maintain a `Fork` copy of the code base as a developer and it would be easy to contribute if the developer has a `Clone` copy in local development workspace.
+3. Commit your changes with clear messages and open a `Pull Request` from your forked repository to the original one for contribution.
 
 Please note we have a code of conduct, please follow it in all your interactions with the project.
 
