@@ -77,7 +77,9 @@ To configure your app, follow these steps:
    > - For Android open `android/app/src/main/res/values/strings.xml` and replace
 
 ```sh
-<string name=“facebook_app_id”>{YOUR_APP_ID}</string>
+<string name="facebook_app_id">YOUR_APP_ID</string>
+<string name="fb_login_protocol_scheme">fb1234</string>
+<string name="facebook_client_token">PLACE_YOUR_CLIENT_TOKEN_HERE</string>
 ```
 
 > - For iOS open `ios/Go_social/info.plist` and replace
@@ -90,6 +92,8 @@ To configure your app, follow these steps:
 <string>{YOUR_APP_ID}</string>
 <key>FacebookDisplayName</key>
 <string>{YOUR_APP_NAME}</string>
+<key>FacebookClientToken</key>
+<string>{YOUR_CLIENT_TOKEN_HERE}</string>
 ...
 ```
 

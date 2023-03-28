@@ -152,6 +152,7 @@ dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.0.0")
+    implementation 'com.facebook.android:facebook-android-sdk:11.1.0'
 
     // Import the BoM for the Firebase platform
     implementation platform('com.google.firebase:firebase-bom:31.2.3')
