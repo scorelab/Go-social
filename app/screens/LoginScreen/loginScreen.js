@@ -10,10 +10,12 @@ import {
   ScrollView,
 } from "react-native";
 import { AccessToken, LoginManager } from "react-native-fbsdk";
-import { f, auth } from "../../../config/config.js";
+import { auth, database } from "../../../config/config.js";
 import * as EmailValidator from "email-validator";
 import styles from "./style";
 import { SocialIcon } from "react-native-elements";
+import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
+import { ref, update } from "firebase/database";
 export default class LoginScreen extends Component {
   constructor(props) {
     super(props);
@@ -25,8 +27,7 @@ export default class LoginScreen extends Component {
 
   componentDidMount() {
     var that = this;
-
-    auth.onAuthStateChanged(function (user) {
+    onAuthStateChanged(auth, function (user) {
       if (user) {
         that.redirectUser();
       }
@@ -38,14 +39,12 @@ export default class LoginScreen extends Component {
     let password = this.state.Password;
 
     let { navigate } = this.props.navigation;
-
-    auth
-      .signInWithEmailAndPassword(email, password)
-      .then(function (data) {
+    signInWithEmailAndPassword(auth, email, password).then(
+      function (data) {
         navigate("App");
       })
       .catch(function (error) {
-        var errorMessage = error.message;
+        const errorMessage = error.message;
         alert(errorMessage.toString());
       });
   }
@@ -118,10 +117,7 @@ export default class LoginScreen extends Component {
       dp,
       ageRange: [20, 30],
     };
-    f.database()
-      .ref("users")
-      .child(uid)
-      .update({ ...userData, ...defaults });
+    update(ref(database, "users/" + uid), { ...userData, ...defaults });
   };
 
   _signInAsync = async () => {

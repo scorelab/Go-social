@@ -12,7 +12,9 @@ import {
 } from "react-native";
 import styles from "./style";
 import Ionicons from "react-native-vector-icons/FontAwesome";
-import { f, auth, storage, database } from "../../../config/config.js";
+import { auth, database } from "../../../config/config.js";
+import { onValue, ref, set, update } from "firebase/database";
+import { onAuthStateChanged } from "firebase/auth";
 export default class MessageScreen extends Component {
   constructor(props) {
     super(props);
@@ -61,32 +63,23 @@ export default class MessageScreen extends Component {
           friendId: params.userId,
         });
         var that = this;
-        database
-          .ref("users")
-          .child(params.userId)
-          .child("firstName")
-          .once("value")
-          .then(function (snapshot) {
-            const exist = snapshot.val() != null;
-            if (exist) data = snapshot.val();
-            console.log(data);
-            that.setState({
-              friendName: data,
-            });
+        onValue(ref(database, "users/" + params.userId + "/firstName"), (snapshot) => {
+          const exist = snapshot.val() != null;
+          if (exist) data = snapshot.val();
+          console.log("First Name" + data);
+          console.log(data);
+          that.setState({
+            friendName: data,
           });
-        database
-          .ref("users")
-          .child(params.userId)
-          .child("avatar")
-          .once("value")
-          .then(function (snapshot) {
-            const exist = snapshot.val() != null;
-            if (exist) data = snapshot.val();
-            console.log(data);
-            that.setState({
-              friendAvatar: data,
-            });
+        });
+        onValue(ref(database, "users/" + params.userId + "/avatar"), (snapshot) => {
+          const exist = snapshot.val() != null;
+          if (exist) data = snapshot.val();
+          console.log(data);
+          that.setState({
+            friendAvatar: data,
           });
+        });
 
         this.fetchMessages(params.userId);
       }
@@ -136,60 +129,48 @@ export default class MessageScreen extends Component {
   fetchMessages = () => {
     var that = this;
     var userId = auth.currentUser.uid;
-    database
-      .ref("users")
-      .child(userId)
-      .child("userChats")
-      .child(this.state.friendId)
-      .on(
-        "value",
-        function (snapshot) {
-          const exist = snapshot.exists();
-          if (exist) {
+    onValue(database, ref(`users/${userId}/userChats/${this.state.friendId}`), (snapshot) => {
+      const exist = snapshot.exists();
+      if (exist) {
+        var data = snapshot.val();
+        onValue(database, ref(`chatMessages/${Object.keys(data)[0]}`), (snapshot) => {
+          const exsist = snapshot.exists();
+          if (exsist) {
+            that.setState({
+              messageList: [],
+            });
             var data = snapshot.val();
-            database
-              .ref("chatMessages")
-              .child(Object.keys(data)[0])
-              .on(
-                "value",
-                function (snapshot) {
-                  const exsist = snapshot.exists();
-                  if (exsist) {
-                    that.setState({
-                      messageList: [],
-                    });
-                    var data = snapshot.val();
-                    console.log(Object.keys(data)[0].message);
-                    var messageList = that.state.messageList;
-                    Object.keys(data).forEach(key => {
-                      messageList.push({
-                        message: data[key].message,
-                        posted: data[key].posted,
-                        sendby: data[key].sendby,
-                      });
-                    });
+            console.log(Object.keys(data)[0].message);
+            var messageList = that.state.messageList;
+            Object.keys(data).forEach(key => {
+              messageList.push({
+                message: data[key].message,
+                posted: data[key].posted,
+                sendby: data[key].sendby,
+              });
+            });
 
-                    console.log(messageList);
-                    that.setState({
-                      loaded: true,
-                    });
-                  } else {
-                    that.setState({
-                      messageList: [],
-                      loaded: true,
-                    });
-                  }
-                },
-                function (errorObject) {
-                  console.log("The read failed: " + errorObject.code);
-                }
-              );
+            console.log(messageList);
+            that.setState({
+              loaded: true,
+            });
+          } else {
+            that.setState({
+              messageList: [],
+              loaded: true,
+            });
           }
         },
-        function (errorObject) {
-          console.log("The read failed: " + errorObject.code);
-        }
-      );
+          function (errorObject) {
+            console.log("The read failed: " + errorObject.code);
+          }
+        );
+      }
+    },
+      function (errorObject) {
+        console.log("The read failed: " + errorObject.code);
+      }
+    );
   };
 
   sendMessage = () => {
@@ -202,82 +183,52 @@ export default class MessageScreen extends Component {
       var date = Date.now();
       var posted = Math.floor(date / 1000);
       var userId = auth.currentUser.uid;
-      database
-        .ref("users")
-        .child(userId)
-        .child("userChats")
-        .child(this.state.friendId)
-        .once("value")
-        .then(function (snapshot) {
-          const exist = snapshot.exists();
-          if (exist) {
-            data = snapshot.val();
-            let cId = Object.keys(data)[0];
-            var newMessage = {
-              sendby: userId,
-              message: that.state.newMessage,
-              status: 0,
-              posted: posted,
-            };
-            that.setState({
-              newMessageId: that.uniqueId(),
-            });
-            database.ref("/chatMessages/" + cId + "/" + that.state.newMessageId).set(newMessage);
-            database
-              .ref("/users/" + userId + "/userChats/" + that.state.friendId + "/" + cId)
-              .update({ posted: posted, lastMessage: that.state.newMessage });
-            database
-              .ref("/users/" + that.state.friendId + "/userChats/" + userId + "/" + cId)
-              .update({ posted: posted, lastMessage: that.state.newMessage });
-            that.setState({
-              newMessage: "",
-            });
-          } else {
-            var chatUserf = {
-              lastMessage: that.state.newMessage,
-              posted: posted,
-              friend: that.state.friendId,
-              name: that.state.friendName,
-              avatar: that.state.friendAvatar,
-            };
-            var chatUser = {
-              lastMessage: that.state.newMessage,
-              posted: posted,
-              friend: userId,
-              name: auth.currentUser.displayName,
-              avatar: that.state.avatar,
-            };
-            var newMessage = {
-              sendby: userId,
-              message: that.state.newMessage,
-              status: 0,
-              posted: posted,
-            };
-            database
-              .ref(
-                "/users/" +
-                  userId +
-                  "/userChats/" +
-                  that.state.friendId +
-                  "/" +
-                  that.state.newChatId
-              )
-              .set(chatUserf);
-            database
-              .ref(
-                "/users/" +
-                  that.state.friendId +
-                  "/userChats/" +
-                  userId +
-                  "/" +
-                  that.state.newChatId
-              )
-              .set(chatUser);
-            database
-              .ref("/chatMessages/" + that.state.newChatId + "/" + that.state.newMessageId)
-              .set(newMessage);
-          }
-        })
+      onValue(database, ref(`users/${userId}/userChats/${this.state.friendId}`), (snapshot) => {
+        const exist = snapshot.exists();
+        if (exist) {
+          data = snapshot.val();
+          let cId = Object.keys(data)[0];
+          var newMessage = {
+            sendby: userId,
+            message: that.state.newMessage,
+            status: 0,
+            posted: posted,
+          };
+          that.setState({
+            newMessageId: that.uniqueId(),
+          });
+          set(ref(database, `/chatMessages/${cId}/${that.state.newMessageId}`), newMessage);
+          update(ref(database, `/users/${userId}/userChats/${that.state.friendId}/${cId}`), { posted: posted, lastMessage: that.state.newMessage });
+          update(ref(database, `/users/${that.state.friendId}/userChats/${userId}/${cId}`), { posted: posted, lastMessage: that.state.newMessage });
+          that.setState({
+            newMessage: "",
+          });
+        } else {
+          var chatUserf = {
+            lastMessage: that.state.newMessage,
+            posted: posted,
+            friend: that.state.friendId,
+            name: that.state.friendName,
+            avatar: that.state.friendAvatar,
+          };
+          var chatUser = {
+            lastMessage: that.state.newMessage,
+            posted: posted,
+            friend: userId,
+            name: auth.currentUser.displayName,
+            avatar: that.state.avatar,
+          };
+          var newMessage = {
+            sendby: userId,
+            message: that.state.newMessage,
+            status: 0,
+            posted: posted,
+          };
+          set(ref(database, `/users/${userId}/userChats/${that.state.friendId}/${that.state.newChatId}`), chatUserf);
+          set(ref(database, `/users/${that.state.friendId}/userChats/${userId}/${that.state.newChatId}`), chatUser);
+          set(ref(database, `/chatMessages/${that.state.newChatId}/${that.state.newMessageId}`), newMessage);
+        }
+      })
         .catch();
       that.textInput.clear();
     }
@@ -285,39 +236,29 @@ export default class MessageScreen extends Component {
 
   componentDidMount = () => {
     var that = this;
-    auth.onAuthStateChanged(function (user) {
+    onAuthStateChanged(auth, function (user) {
       if (user) {
         that.setState({
           loggedin: true,
         });
         that.check();
         var userId = auth.currentUser.uid;
-        database
-          .ref("users")
-          .child(userId)
-          .child("name")
-          .once("value")
-          .then(function (snapshot) {
-            const exist = snapshot.val() != null;
-            if (exist) data = snapshot.val();
-            console.log(data);
-            that.setState({
-              name: data,
-            });
+        onValue(database, ref(`users/${userId}/name`), function (snapshot) {
+          const exist = snapshot.val() != null;
+          if (exist) data = snapshot.val();
+          console.log(data);
+          that.setState({
+            name: data,
           });
-        database
-          .ref("users")
-          .child(userId)
-          .child("avatar")
-          .once("value")
-          .then(function (snapshot) {
-            const exist = snapshot.val() != null;
-            if (exist) data = snapshot.val();
-            console.log(data);
-            that.setState({
-              avatar: data,
-            });
+        });
+        onValue(database, ref(`users/${userId}/avatar`), (snapshot) => {
+          const exist = snapshot.val() != null;
+          if (exist) data = snapshot.val();
+          console.log(data);
+          that.setState({
+            avatar: data,
           });
+        });
       } else {
         that.setState({
           loggedin: false,

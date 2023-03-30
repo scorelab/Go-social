@@ -12,8 +12,10 @@ import {
 import styles from "./style";
 import * as EmailValidator from "email-validator";
 import { AccessToken, LoginManager } from "react-native-fbsdk";
-import { f, auth } from "../../../config/config.js";
+import { auth, database } from "../../../config/config.js";
 import { SocialIcon } from "react-native-elements";
+import { FacebookAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged, signInWithCredential, updateProfile } from "firebase/auth";
+import { ref, update } from "firebase/database";
 
 export default class SignUpScreen extends Component {
   constructor(props) {
@@ -28,7 +30,7 @@ export default class SignUpScreen extends Component {
 
   componentDidMount() {
     var that = this;
-    auth.onAuthStateChanged(function (user) {
+    onAuthStateChanged(auth, function (user) {
       if (user) {
         that.redirectUser();
       }
@@ -77,10 +79,9 @@ export default class SignUpScreen extends Component {
     }
   }
 
-  authenticate = token => {
-    const provider = auth.FacebookAuthProvider;
-    const credential = provider.credential(token);
-    let ret = auth.signInWithCredential(credential);
+  authenticate = async (token) => {
+    const credential = FacebookAuthProvider.credential(token);
+    const ret = await signInWithCredential(auth, credential);
     return ret;
   };
 
@@ -91,10 +92,7 @@ export default class SignUpScreen extends Component {
       dp,
       ageRange: [20, 30],
     };
-    f.database()
-      .ref("users")
-      .child(uid)
-      .update({ ...userData, ...defaults });
+    update(ref(database, "users/" + uid), { ...userData, ...defaults });
   };
 
   render() {
@@ -173,13 +171,11 @@ export default class SignUpScreen extends Component {
 
     const { navigate } = this.props.navigation;
 
-    auth
-      .createUserWithEmailAndPassword(email, password)
+    createUserWithEmailAndPassword(auth, email, password)
       .then(function (data) {
-        data.user
-          .updateProfile({
-            displayName: name,
-          })
+        updateProfile(data.user, {
+          displayName: name,
+        })
           .then(
             function () {
               console.log("Updated User Data..");

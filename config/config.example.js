@@ -1,4 +1,7 @@
-import firebase from "firebase";
+import { initializeApp } from "firebase/app";
+import { getAuth } from 'firebase/auth'
+import { getDatabase } from 'firebase/database'
+import { getStorage } from 'firebase/storage'
 
 var config = {
   apiKey: "",
@@ -8,12 +11,12 @@ var config = {
   storageBucket: "",
   messagingSenderId: "",
 };
-firebase.initializeApp(config);
+const app = initializeApp(config);
 
 var MAP_API_KEY = "";
 
-export const f = firebase;
-export const database = firebase.database();
-export const auth = firebase.auth();
-export const storage = firebase.storage();
+export const f = app;
+export const database = getDatabase();
+export const auth = getAuth();
+export const storage = getStorage();
 export const MAP_API = MAP_API_KEY;

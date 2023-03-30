@@ -16,8 +16,11 @@ import { Card, ListItem, Button } from "react-native-elements";
 import { TextInput } from "react-native-gesture-handler";
 import { launchImageLibrary } from "react-native-image-picker";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { f, auth, storage, database } from "../../../config/config.js";
+import { auth, storage, database } from "../../../config/config.js";
 import EvilIcons from "react-native-vector-icons/EvilIcons";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { set, ref as dbRef } from "firebase/database";
+
 export default class NewPostScreen extends Component {
   constructor() {
     super();
@@ -31,9 +34,9 @@ export default class NewPostScreen extends Component {
     };
   }
   componentDidMount = () => {
-    this.equestCameraPermission();
+    this.requestCameraPermission();
   };
-  equestCameraPermission = async () => {
+  requestCameraPermission = async () => {
     try {
       const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA, {
         title: "Go Social Camera Permission",
@@ -121,13 +124,12 @@ export default class NewPostScreen extends Component {
       xhr.open("GET", uri, true);
       xhr.send(null);
     });
-    var filePath = postId + "." + ext;
-    var uploadTask = storage.ref("post/img").child(filePath).put(blob);
-
+    const filePath = postId + "." + ext;
+    const uploadTask = uploadBytesResumable(ref(storage, "post/img/" + filePath), blob);
     uploadTask.on(
       "state_changed",
       function (snapshot) {
-        let progress = ((snapshot.bytesTransferred / snapshot.totalBytes) * 100).toFixed(0);
+        const progress = ((snapshot.bytesTransferred / snapshot.totalBytes) * 100).toFixed(0);
         that.setState({
           progress: progress,
         });
@@ -139,14 +141,14 @@ export default class NewPostScreen extends Component {
         that.setState({
           progress: 100,
         });
-        uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+        getDownloadURL(uploadTask.snapshot.ref).then(function (downloadURL) {
           that.setDatabse(downloadURL);
         });
       }
     );
   };
 
-  setDatabse = imageURL => {
+  setDatabse = async imageURL => {
     var date = Date.now();
     var postId = this.state.postId;
     var userID = auth.currentUser.uid;
@@ -157,7 +159,7 @@ export default class NewPostScreen extends Component {
       image: imageURL,
       posted: posted,
     };
-    database.ref("/post/" + postId).set(postObj);
+    await set(dbRef(database, "post/" + postId), postObj);
     alert("SuccessFully Published!!");
     this.setState({
       imageSelected: false,

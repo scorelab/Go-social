@@ -14,10 +14,13 @@ import {
 import { Info, DeatilView } from "..";
 import HeaderNavigationBar from "../../components/HeaderNavigationBar/HeaderNavigationBar";
 import styles from "./style";
-import { f, auth, storage, database } from "../../../config/config.js";
+import { auth, storage, database } from "../../../config/config.js";
 import { Avatar } from "react-native-elements";
-import ImagePicker from "react-native-image-picker";
+import {  launchImageLibrary } from "react-native-image-picker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { onValue, ref, set, update } from "firebase/database";
+import { onAuthStateChanged, signOut, updateProfile } from "firebase/auth";
+import { uploadBytesResumable, ref as storageRef, getDownloadURL } from "firebase/storage";
 // import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default class ProfileScreen extends Component {
@@ -36,42 +39,40 @@ export default class ProfileScreen extends Component {
 
   componentDidMount() {
     var that = this;
-    auth.onAuthStateChanged(function (user) {
+    onAuthStateChanged(auth, function (user) {
       if (user) {
         that.state.email = auth.currentUser.email;
-        database
-          .ref("users")
-          .child(auth.currentUser.uid)
-          .once("value", function (snapshot) {
-            if (snapshot.child("firstName").val() != null) {
-              that.setState({
-                firstName: snapshot.child("firstName").val(),
-              });
-            }
-            if (snapshot.child("lastName").val() != null) {
-              that.setState({
-                lastName: snapshot.child("lastName").val(),
-              });
-            }
-            if (snapshot.child("contact").val() != null) {
-              that.setState({
-                contact: snapshot.child("contact").val(),
-              });
-            }
-            if (snapshot.child("address").val() != null) {
-              that.setState({
-                address: snapshot.child("address").val(),
-              });
-            }
-            if (snapshot.child("avatar").val != null) {
-              that.setState({
-                avatar: snapshot.child("avatar").val(),
-              });
-            }
+        const userRef = ref(database, 'users/' + auth.currentUser.uid);
+        onValue(userRef, function (snapshot) {
+          if (snapshot.child("firstName").val() != null) {
             that.setState({
-              isLoading: false,
+              firstName: snapshot.child("firstName").val(),
             });
+          }
+          if (snapshot.child("lastName").val() != null) {
+            that.setState({
+              lastName: snapshot.child("lastName").val(),
+            });
+          }
+          if (snapshot.child("contact").val() != null) {
+            that.setState({
+              contact: snapshot.child("contact").val(),
+            });
+          }
+          if (snapshot.child("address").val() != null) {
+            that.setState({
+              address: snapshot.child("address").val(),
+            });
+          }
+          if (snapshot.child("avatar").val != null) {
+            that.setState({
+              avatar: snapshot.child("avatar").val(),
+            });
+          }
+          that.setState({
+            isLoading: false,
           });
+        });
       } else {
         that.setState({
           firstName: "John",
@@ -106,7 +107,7 @@ export default class ProfileScreen extends Component {
 
   _handleButtonPress = () => {
     //console.log("User hihi!");
-    ImagePicker.showImagePicker({ title: "Pick an Image", maxWidth: 800, maxHeight: 600 }, res => {
+    launchImageLibrary({ title: "Pick an Image", maxWidth: 800, maxHeight: 600 }, res => {
       if (res.didCancel) {
         console.log("User cancelled!");
       } else if (res.error) {
@@ -116,14 +117,13 @@ export default class ProfileScreen extends Component {
           pickedImage: res.uri,
           imageSelected: true,
         });
-        this.uploadImage();
+        this.uploadImage(res.assets[0].uri);
       }
     });
   };
 
-  uploadImage = async () => {
+  uploadImage = async (uri) => {
     console.log("Uploading Image!!!!");
-    var uri = this.state.pickedImage;
     var that = this;
     var userId = auth.currentUser.uid;
     var re = /(?:\.([^.]+))?$/;
@@ -146,9 +146,9 @@ export default class ProfileScreen extends Component {
       xhr.open("GET", uri, true);
       xhr.send(null);
     });
-    var filePath = userId + "." + that.state.currentFileType;
+    const filePath = userId + "." + ext;
 
-    var uploadTask = storage.ref("user/img").child(filePath).put(blob);
+    const uploadTask = uploadBytesResumable(storageRef(storage, 'user/img/' + filePath), blob);
 
     uploadTask.on(
       "state_changed",
@@ -165,19 +165,20 @@ export default class ProfileScreen extends Component {
         that.setState({
           progress: 100,
         });
-        uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+        getDownloadURL(uploadTask.snapshot.ref).then(function (downloadURL) {
+          console.log("File available at", downloadURL);
           that.setDatabse(downloadURL);
         });
       }
     );
   };
 
-  setDatabse = imageURL => {
-    var user = auth.currentUser;
-    var userID = auth.currentUser.uid;
-    database.ref("/users/" + userID).update({ avatar: imageURL });
+  setDatabse = async imageURL => {
+    const user = auth.currentUser;
+    const userID = auth.currentUser.uid;
+    await update(ref(database, "users/" + userID), { avatar: imageURL });
     console.log("User: " + user);
-    user.updateProfile({
+    await updateProfile(user, {
       photoURL: imageURL,
     });
     alert("SuccessFully Published!!");
@@ -293,17 +294,17 @@ export default class ProfileScreen extends Component {
 
   logout = () => {
     this.props.navigation.navigate("Login");
-    auth.signOut();
+    signOut(auth);
   };
 
   save = () => {
-    var firstName = this.state.firstName;
-    var lastName = this.state.lastName;
-    var contact = this.state.contact;
-    var address = this.state.address;
-    var email = this.state.email;
+    const firstName = this.state.firstName;
+    const lastName = this.state.lastName;
+    const contact = this.state.contact;
+    const address = this.state.address;
+    const email = this.state.email;
 
-    let user = {
+    const user = {
       firstName: firstName,
       lastName: lastName,
       email: email,
@@ -312,6 +313,12 @@ export default class ProfileScreen extends Component {
     };
 
     console.log(user);
-    f.database().ref("users/").child(auth.currentUser.uid).set(user);
+    update(ref(database, "users/" + auth.currentUser.uid), {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      contact: contact,
+      address: address,
+    });
   };
 }

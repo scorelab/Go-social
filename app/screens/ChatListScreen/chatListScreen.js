@@ -4,7 +4,9 @@ import styles from "./style";
 import ConversationBanner from "../../components/ConversationBanner/conversationBanner";
 import SuggestCardView from "../../components/SuggestionsCardView/suggestionsCardView";
 import HeaderNavigationBar from "../../components/HeaderNavigationBar/HeaderNavigationBar";
-import { f, auth, storage, database } from "../../../config/config.js";
+import {  auth, database } from "../../../config/config.js";
+import { onAuthStateChanged } from "firebase/auth";
+import { onValue, ref } from "firebase/database";
 export default class ChatListScreen extends Component {
   constructor(props) {
     super(props);
@@ -19,11 +21,10 @@ export default class ChatListScreen extends Component {
   fetchUsers = () => {
     var that = this;
     var userId = auth.currentUser.uid;
-    database.ref("users").once(
-      "value",
+    onValue(ref(database, 'users'),
       function (snapshot) {
-        const exsist = snapshot.val() != null;
-        if (exsist) {
+        const exist = snapshot.val() != null;
+        if (exist) {
           let data = snapshot.val();
           var userList = that.state.userList;
           for (var user in data) {
@@ -66,12 +67,7 @@ export default class ChatListScreen extends Component {
     if (this.state.loggedin == true) {
       var that = this;
       var userId = auth.currentUser.uid;
-      database
-        .ref("users")
-        .child(userId)
-        .child("userChats")
-        .on(
-          "value",
+      onValue(ref(database, `users/${userId}/userChats`),
           function (snapshot) {
             const exist = snapshot.exists();
             that.setState({
@@ -175,7 +171,7 @@ export default class ChatListScreen extends Component {
   };
   componentDidMount = () => {
     var that = this;
-    auth.onAuthStateChanged(function (user) {
+    onAuthStateChanged(auth, function (user) {
       if (user) {
         that.setState({
           loggedin: true,
