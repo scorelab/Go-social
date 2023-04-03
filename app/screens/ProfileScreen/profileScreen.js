@@ -1,3 +1,4 @@
+//done
 /* eslint-disable prettier/prettier */
 import React, { Component } from "react";
 import {
@@ -14,10 +15,12 @@ import {
 import { Info, DeatilView } from "..";
 import HeaderNavigationBar from "../../components/HeaderNavigationBar/HeaderNavigationBar";
 import styles from "./style";
-import { f, auth, storage, database } from "../../../config/config.js";
+import { firebaseApp, auth, storage, database } from "../../../config/config.js";
 import { Avatar } from "react-native-elements";
 import ImagePicker from "react-native-image-picker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { set,ref,child,onValue, update } from "firebase/database";
+import { getStorage } from "firebase/storage";
 // import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default class ProfileScreen extends Component {
@@ -36,42 +39,42 @@ export default class ProfileScreen extends Component {
 
   componentDidMount() {
     var that = this;
-    auth.onAuthStateChanged(function (user) {
+    onAuthStateChanged(auth,function (user) {
       if (user) {
         that.state.email = auth.currentUser.email;
-        database
-          .ref("users")
-          .child(auth.currentUser.uid)
-          .once("value", function (snapshot) {
-            if (snapshot.child("firstName").val() != null) {
-              that.setState({
-                firstName: snapshot.child("firstName").val(),
-              });
-            }
-            if (snapshot.child("lastName").val() != null) {
-              that.setState({
-                lastName: snapshot.child("lastName").val(),
-              });
-            }
-            if (snapshot.child("contact").val() != null) {
-              that.setState({
-                contact: snapshot.child("contact").val(),
-              });
-            }
-            if (snapshot.child("address").val() != null) {
-              that.setState({
-                address: snapshot.child("address").val(),
-              });
-            }
-            if (snapshot.child("avatar").val != null) {
-              that.setState({
-                avatar: snapshot.child("avatar").val(),
-              });
-            }
+        var userRef=child(ref(database,"users"),auth.currentUser.uid);
+        
+        onValue(userRef,function (snapshot) {
+          if (snapshot.child("firstName").val() != null) {
             that.setState({
-              isLoading: false,
+              firstName: snapshot.child("firstName").val(),
             });
+          }
+          if (snapshot.child("lastName").val() != null) {
+            that.setState({
+              lastName: snapshot.child("lastName").val(),
+            });
+          }
+          if (snapshot.child("contact").val() != null) {
+            that.setState({
+              contact: snapshot.child("contact").val(),
+            });
+          }
+          if (snapshot.child("address").val() != null) {
+            that.setState({
+              address: snapshot.child("address").val(),
+            });
+          }
+          if (snapshot.child("avatar").val != null) {
+            that.setState({
+              avatar: snapshot.child("avatar").val(),
+            });
+          }
+          that.setState({
+            isLoading: false,
           });
+        })
+        
       } else {
         that.setState({
           firstName: "John",
@@ -147,11 +150,11 @@ export default class ProfileScreen extends Component {
       xhr.send(null);
     });
     var filePath = userId + "." + that.state.currentFileType;
+    const storage = getStorage();
 
-    var uploadTask = storage.ref("user/img").child(filePath).put(blob);
+    var uploadTask = child(ref(storage,"user/img"),filePath);
 
-    uploadTask.on(
-      "state_changed",
+    onValue(uploadTask,
       function (snapshot) {
         let progress = ((snapshot.bytesTransferred / snapshot.totalBytes) * 100).toFixed(0);
         that.setState({
@@ -166,21 +169,21 @@ export default class ProfileScreen extends Component {
           progress: 100,
         });
         uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
-          that.setDatabse(downloadURL);
+          that.setDatabase(downloadURL);
         });
       }
     );
   };
 
-  setDatabse = imageURL => {
+  setDatabase = imageURL => {
     var user = auth.currentUser;
     var userID = auth.currentUser.uid;
-    database.ref("/users/" + userID).update({ avatar: imageURL });
+    update(ref(database,"/users/"+ userID),{avatar:imageURL});
     console.log("User: " + user);
     user.updateProfile({
       photoURL: imageURL,
     });
-    alert("SuccessFully Published!!");
+    Alert("SuccessFully Published!!");
     this.setState({
       imageSelected: false,
       uploading: false,
@@ -312,6 +315,6 @@ export default class ProfileScreen extends Component {
     };
 
     console.log(user);
-    f.database().ref("users/").child(auth.currentUser.uid).set(user);
+    set(child(ref(database,"users/"),auth.currentUser.uid),user);
   };
 }

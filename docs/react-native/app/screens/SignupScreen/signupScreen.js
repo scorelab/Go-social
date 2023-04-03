@@ -1,3 +1,4 @@
+//done
 import React, { Component } from "react";
 import {
   View,
@@ -12,8 +13,10 @@ import {
 import styles from "./style";
 import * as EmailValidator from "email-validator";
 import { AccessToken, LoginManager } from "react-native-fbsdk";
-import { f, auth, database } from "../../../config/config.js";
+import { onAuthStateChanged,signInWithCredential,createUserWithEmailAndPassword } from "firebase/auth";
+import { firebaseApp, auth, database } from "../../../config/config.js";
 import { SocialIcon } from "react-native-elements";
+import{ref,update,child,onValue} from "firebase/database";
 
 export default class SignUpScreen extends Component {
   constructor(props) {
@@ -28,7 +31,7 @@ export default class SignUpScreen extends Component {
 
   componentDidMount() {
     var that = this;
-    auth.onAuthStateChanged(function (user) {
+    onAuthStateChanged(auth,function (user) {
       if (user) {
         that.redirectUser();
       }
@@ -44,7 +47,7 @@ export default class SignUpScreen extends Component {
     LoginManager.logInWithReadPermissions(["public_profile", "email"]).then(
       result => this._handleCallBack(result),
       function (error) {
-        alert("Login fail with error: " + error);
+        Alert("Login fail with error: " + error);
       }
     );
   }
@@ -52,7 +55,7 @@ export default class SignUpScreen extends Component {
   _handleCallBack(result) {
     let _this = this;
     if (result.isCancelled) {
-      alert("Login cancelled");
+      Alert("Login cancelled");
     } else {
       AccessToken.getCurrentAccessToken().then(data => {
         const token = data.accessToken;
@@ -80,7 +83,7 @@ export default class SignUpScreen extends Component {
   authenticate = token => {
     const provider = auth.FacebookAuthProvider;
     const credential = provider.credential(token);
-    let ret = auth.signInWithCredential(credential);
+    let ret = signInWithCredential(auth,credential);
     return ret;
   };
 
@@ -91,10 +94,8 @@ export default class SignUpScreen extends Component {
       dp,
       ageRange: [20, 30],
     };
-    database
-      .ref("users")
-      .child(uid)
-      .update({ ...userData, ...defaults });
+    update(child(ref(database,"users"),uid),{ ...userData, ...defaults });
+    
   };
 
   render() {
@@ -173,8 +174,7 @@ export default class SignUpScreen extends Component {
 
     const { navigate } = this.props.navigation;
 
-    auth
-      .createUserWithEmailAndPassword(email, password)
+    createUserWithEmailAndPassword(auth,email, password)
       .then(function (data) {
         data.user
           .updateProfile({
@@ -188,13 +188,13 @@ export default class SignUpScreen extends Component {
               console.log("Error Updating User Data.." + error);
             }
           );
-        alert("Welcome to Go Social!");
+        Alert("Welcome to Go Social!");
         navigate("App");
       })
       .catch(function (error) {
         var errorMessage = error.message;
         console.log("Error = " + errorMessage);
-        alert(errorMessage);
+        Alert(errorMessage);
       });
   }
 
@@ -203,10 +203,10 @@ export default class SignUpScreen extends Component {
       if (this.state.Password === this.state.ConfirmPassword) {
         this.register();
       } else {
-        alert("password Missmatch");
+        Alert("password Missmatch");
       }
     } else {
-      alert("Please enter A Valid Email");
+      Alert("Please enter A Valid Email");
     }
   };
 }
