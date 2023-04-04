@@ -1,3 +1,4 @@
+//done
 import React, { Component } from "react";
 import {
   ScrollView,
@@ -16,8 +17,10 @@ import { Card, ListItem, Button } from "react-native-elements";
 import { TextInput } from "react-native-gesture-handler";
 import { launchImageLibrary } from "react-native-image-picker";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { f, auth, storage, database } from "../../../config/config.js";
+import { firebaseApp, auth, storage, database } from "../../../config/config.js";
 import EvilIcons from "react-native-vector-icons/EvilIcons";
+import { getStorage } from "firebase/storage";
+import{ref,set,onValue,child} from "firebase/database"
 export default class NewPostScreen extends Component {
   constructor() {
     super();
@@ -122,10 +125,11 @@ export default class NewPostScreen extends Component {
       xhr.send(null);
     });
     var filePath = postId + "." + ext;
-    var uploadTask = storage.ref("post/img").child(filePath).put(blob);
+    const storage = getStorage();
+    var uploadTask = child(ref(storage,"post/img"),filePath).put(blob);
 
-    uploadTask.on(
-      "state_changed",
+   onValue(
+      uploadTask,
       function (snapshot) {
         let progress = ((snapshot.bytesTransferred / snapshot.totalBytes) * 100).toFixed(0);
         that.setState({
@@ -157,8 +161,8 @@ export default class NewPostScreen extends Component {
       image: imageURL,
       posted: posted,
     };
-    database.ref("/post/" + postId).set(postObj);
-    alert("SuccessFully Published!!");
+    set(ref(database,"/post/" + postId),postObj);
+    Alert("SuccessFully Published!!");
     this.setState({
       imageSelected: false,
       uploading: false,

@@ -1,3 +1,4 @@
+//done
 import React, { Component } from "react";
 import {
   View,
@@ -10,10 +11,12 @@ import {
   ScrollView,
 } from "react-native";
 import { AccessToken, LoginManager } from "react-native-fbsdk";
-import { f, auth, database } from "../../../config/config.js";
+import { firebaseApp, auth, database } from "../../../config/config.js";
+import {onAuthStateChanged,signInWithEmailAndPassword,signInWithCredential} from "firebase/auth";
 import * as EmailValidator from "email-validator";
 import styles from "./style";
 import { SocialIcon } from "react-native-elements";
+import { update, ref, child, onValue, set} from "firebase/database";
 export default class LoginScreen extends Component {
   constructor(props) {
     super(props);
@@ -25,7 +28,7 @@ export default class LoginScreen extends Component {
 
   componentDidMount() {
     var that = this;
-    auth.onAuthStateChanged(function (user) {
+    onAuthStateChanged(auth,function (user) {
       if (user) {
         that.redirectUser();
       }
@@ -38,14 +41,13 @@ export default class LoginScreen extends Component {
 
     let { navigate } = this.props.navigation;
 
-    auth
-      .signInWithEmailAndPassword(email, password)
+    signInWithEmailAndPassword(auth,email, password)
       .then(function (data) {
         navigate("App");
       })
       .catch(function (error) {
         var errorMessage = error.message;
-        alert(errorMessage.toString());
+        Alert(errorMessage.toString());
       });
   }
 
@@ -59,10 +61,10 @@ export default class LoginScreen extends Component {
       if (this.state.Pasword != "") {
         this.login();
       } else {
-        alert("Enter the password");
+        Alert("Enter the password");
       }
     } else {
-      alert("Please enter A Valid Email");
+      Alert("Please enter A Valid Email");
     }
   };
 
@@ -70,7 +72,7 @@ export default class LoginScreen extends Component {
     LoginManager.logInWithReadPermissions(["public_profile", "email"]).then(
       result => this._handleCallBack(result),
       function (error) {
-        alert("Login fail with error: " + error);
+        Alert("Login fail with error: " + error);
       }
     );
   }
@@ -78,7 +80,7 @@ export default class LoginScreen extends Component {
   _handleCallBack(result) {
     let _this = this;
     if (result.isCancelled) {
-      alert("Login cancelled");
+      Alert("Login cancelled");
     } else {
       AccessToken.getCurrentAccessToken().then(data => {
         const token = data.accessToken;
@@ -106,7 +108,7 @@ export default class LoginScreen extends Component {
   authenticate = token => {
     const provider = auth.FacebookAuthProvider;
     const credential = provider.credential(token);
-    let ret = auth.signInWithCredential(credential);
+    let ret = signInWithCredential(auth,credential);
     return ret;
   };
 
@@ -117,10 +119,8 @@ export default class LoginScreen extends Component {
       dp,
       ageRange: [20, 30],
     };
-    database
-      .ref("users")
-      .child(uid)
-      .update({ ...userData, ...defaults });
+    update(child(ref(database,"users"),uid),{ ...userData, ...defaults });
+    
   };
 
   _signInAsync = async () => {
@@ -128,10 +128,10 @@ export default class LoginScreen extends Component {
       if (this.state.Pasword != "") {
         this.login();
       } else {
-        alert("Enter the password");
+        Alert("Enter the password");
       }
     } else {
-      alert("Please enter A Valid Email");
+      Alert("Please enter A Valid Email");
     }
   };
 

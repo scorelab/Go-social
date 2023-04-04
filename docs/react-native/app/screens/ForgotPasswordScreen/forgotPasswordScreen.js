@@ -1,3 +1,4 @@
+//done
 import React, { Component } from "react";
 import {
   Platform,
@@ -16,7 +17,8 @@ import {
 // import Btn from 'react-native-micro-animated-button';
 import * as EmailValidator from "email-validator";
 import styles from "./style";
-import { f, auth } from "../../../config/config.js";
+import { firebaseApp, auth } from "../../../config/config.js";
+import {sendPasswordResetEmail} from "firebase/auth"
 import AsyncStorage from "@react-native-async-storage/async-storage";
 export default class ForgotPasswordScreen extends Component {
   constructor(props) {
@@ -60,18 +62,17 @@ export default class ForgotPasswordScreen extends Component {
   resetPassword = () => {
     if (EmailValidator.validate(this.state.email) === true) {
       var that = this;
-      auth
-        .sendPasswordResetEmail(this.state.email)
+      sendPasswordResetEmail(auth,this.state.email)
         .then(function () {
-          alert("Please Check Your Email To Reset Your Password");
+          Alert("Please Check Your Email To Reset Your Password");
           let { navigate } = that.props.navigation;
           navigate("Login");
         })
         .catch(function (error) {
-          alert(error);
+          Alert(error);
         });
     } else {
-      alert("Please enter A Valid Email");
+      Alert("Please enter A Valid Email");
     }
   };
 }

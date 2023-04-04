@@ -7,7 +7,7 @@ cache:
     - node_modules
 
 before_install:
-- mv config/config.example.js config/config.js
+- mv config/config.js config/config.js
 
 install:
   - npm install

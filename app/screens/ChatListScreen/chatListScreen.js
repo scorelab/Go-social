@@ -1,10 +1,15 @@
+// done
+
 import React, { Component } from "react";
 import { View, Text, Button, StatusBar, Image, ScrollView } from "react-native";
 import styles from "./style";
 import ConversationBanner from "../../components/ConversationBanner/conversationBanner";
 import SuggestCardView from "../../components/SuggestionsCardView/suggestionsCardView";
 import HeaderNavigationBar from "../../components/HeaderNavigationBar/HeaderNavigationBar";
-import { f, auth, storage, database } from "../../../config/config.js";
+import { auth, database } from "../../../config/config.js";
+import { ref, onValue, child } from "firebase/database";
+import { onAuthStateChanged } from "firebase/auth";
+
 export default class ChatListScreen extends Component {
   constructor(props) {
     super(props);
@@ -19,33 +24,33 @@ export default class ChatListScreen extends Component {
   fetchUsers = () => {
     var that = this;
     var userId = auth.currentUser.uid;
-    database.ref("users").once(
-      "value",
+    var userRef = ref(database,"users");
+    onValue(
+      userRef, 
       function (snapshot) {
-        const exsist = snapshot.val() != null;
-        if (exsist) {
-          let data = snapshot.val();
-          var userList = that.state.userList;
-          for (var user in data) {
-            let userObj = data[user];
-            let uId = user;
-            if (uId != userId) {
-              userList.push({
-                id: uId,
-                name: userObj.firstName,
-                avatar: userObj.avatar,
-              });
-            }
+      const exsist = snapshot.val() != null;
+      if (exsist) {
+        let data = snapshot.val();
+        var userList = that.state.userList;
+        for (var user in data) {
+          let userObj = data[user];
+          let uId = user;
+          if (uId != userId) {
+            userList.push({
+              id: uId,
+              name: userObj.firstName,
+              avatar: userObj.avatar,
+            });
           }
-          that.setState({
-            userList: userList,
-          });
         }
-      },
-      function (errorObject) {
-        console.log("The read failed: " + errorObject.code);
+        that.setState({
+          userList: userList,
+        });
       }
-    );
+    },
+    function (errorObject) {
+      console.log("The read failed: " + errorObject.code);
+    })
   };
   renderUserList = () => {
     if (this.state.loggedin == true) {
@@ -66,51 +71,50 @@ export default class ChatListScreen extends Component {
     if (this.state.loggedin == true) {
       var that = this;
       var userId = auth.currentUser.uid;
-      database
-        .ref("users")
-        .child(userId)
-        .child("userChats")
-        .on(
-          "value",
-          function (snapshot) {
-            const exist = snapshot.exists();
-            that.setState({
-              chatList: [],
-            });
-            if (exist) {
-              var data = snapshot.val();
-              const exsist = snapshot.exists();
-              if (exsist) {
-                data = snapshot.val();
-                var chatList = that.state.chatList;
-                Object.keys(data).forEach(key => {
-                  var tempdata = data[key];
-                  Object.keys(tempdata).forEach(key => {
-                    chatList.push({
-                      posted: tempdata[key].posted,
-                      lastMessage: tempdata[key].lastMessage,
-                      name: tempdata[key].name,
-                      avatar: tempdata[key].avatar,
-                      id: tempdata[key].friend,
-                    });
+      var userRef = ref(database, "users");
+      var chatRef = child(child(userRef, userId),"userChats");
+
+      onValue(
+        chatRef, 
+        function (snapshot) {
+          const exist = snapshot.exists();
+          that.setState({
+            chatList: [],
+          });
+          if (exist) {
+            var data = snapshot.val();
+            const exsist = snapshot.exists();
+            if (exsist) {
+              data = snapshot.val();
+              var chatList = that.state.chatList;
+              Object.keys(data).forEach(key => {
+                var tempdata = data[key];
+                Object.keys(tempdata).forEach(key => {
+                  chatList.push({
+                    posted: tempdata[key].posted,
+                    lastMessage: tempdata[key].lastMessage,
+                    name: tempdata[key].name,
+                    avatar: tempdata[key].avatar,
+                    id: tempdata[key].friend,
                   });
                 });
-                console.log(chatList);
-                that.setState({
-                  loaded: true,
-                });
-              } else {
-                that.setState({
-                  chatList: [],
-                  loaded: true,
-                });
-              }
+              });
+              console.log(chatList);
+              that.setState({
+                loaded: true,
+              });
+            } else {
+              that.setState({
+                chatList: [],
+                loaded: true,
+              });
             }
-          },
-          function (errorObject) {
-            console.log("The read failed: " + errorObject.code);
           }
-        );
+        },
+        function (errorObject) {
+          console.log("The read failed: " + errorObject.code);
+        }
+      )
     }
   };
   timePlural = s => {
@@ -175,7 +179,7 @@ export default class ChatListScreen extends Component {
   };
   componentDidMount = () => {
     var that = this;
-    auth.onAuthStateChanged(function (user) {
+    onAuthStateChanged(auth, function (user) {
       if (user) {
         that.setState({
           loggedin: true,
